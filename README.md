@@ -24,3 +24,8 @@ Translations - i18next + react-i18next + expo-localization
 Team workflow - GitHub
 Accessibility Testing - TalkBack (Android) and VoiceOver (iOS), contrast checking (such as WebAIM)
 Catching hardcoded text - ESLint with eslint-plugin-i18next
+
+
+Project status:
+
+The project is currently in the initial setup and planning phase. Further development will follow.
