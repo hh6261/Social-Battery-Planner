@@ -1,0 +1,16 @@
+{
+  "app": {
+    "title": "Social Battery Planner"
+  },
+  "home": {
+    "greeting": "Hello, {{name}}!"
+  },
+  "event": {
+    "form": {
+      "save": "Save",
+      "title": "Event title"
+    },
+    "count_one": "{{count}} event",
+    "count_other": "{{count}} events"
+  }
+}
