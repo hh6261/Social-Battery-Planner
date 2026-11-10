@@ -1,0 +1,11 @@
+const { defineConfig } = require('eslint/config');
+const expoConfig = require('eslint-config-expo/flat');
+const i18next = require('eslint-plugin-i18next');
+
+module.exports = defineConfig([
+  expoConfig,
+  i18next.configs['flat/recommended'],
+  {
+    ignores: ['dist/*'],
+  },
+]);
