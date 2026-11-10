@@ -1,0 +1,17 @@
+{
+  "app": {
+    "title": "Planer društvene baterije"
+  },
+  "home": {
+    "greeting": "Bok, {{name}}!"
+  },
+  "event": {
+    "form": {
+      "save": "Spremi",
+      "title": "Naziv događaja"
+    },
+    "count_one": "{{count}} događaj",
+    "count_few": "{{count}} događaja",
+    "count_other": "{{count}} događaja"
+  }
+}

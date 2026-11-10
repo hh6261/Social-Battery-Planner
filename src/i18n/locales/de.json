@@ -1,0 +1,16 @@
+{
+  "app": {
+    "title": "Planer für den sozialen Akku"
+  },
+  "home": {
+    "greeting": "Hallo, {{name}}!"
+  },
+  "event": {
+    "form": {
+      "save": "Speichern",
+      "title": "Titel der Veranstaltung"
+    },
+    "count_one": "{{count}} Veranstaltung",
+    "count_other": "{{count}} Veranstaltungen"
+  }
+}
