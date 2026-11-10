@@ -7,7 +7,7 @@ export default function Index() {
   return (
     <View style={styles.container}>
       <Text>{t("app.title")}</Text>
-      <Text>{t("home.greeting", { name: "Ana" })}</Text>
+      <Text>{t("home.greeting", { name: "Hana, Roko i Matej" })}</Text>
       <Text>{t("event.count", { count: 3 })}</Text>
 
       {/* Temporary test buttons, remove once the settings screen exists */}
@@ -33,3 +33,4 @@ const styles = StyleSheet.create({
     marginTop: 16,
   },
 });
+
