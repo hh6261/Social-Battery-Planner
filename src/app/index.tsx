@@ -1,6 +1,8 @@
 import { View, Text, Button, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
 
+import WeatherCard from "@/components/WeatherCard";
+
 export default function Index() {
   const { t, i18n } = useTranslation();
 
@@ -9,6 +11,8 @@ export default function Index() {
       <Text>{t("app.title")}</Text>
       <Text>{t("home.greeting", { name: "Ana" })}</Text>
       <Text>{t("event.count", { count: 3 })}</Text>
+
+      <WeatherCard latitude={45.815} longitude={15.9819} placeName="Zagreb" />
 
       {/* Temporary test buttons, remove once the settings screen exists */}
       <View style={styles.buttons}>

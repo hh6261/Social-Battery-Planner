@@ -12,5 +12,33 @@
     },
     "count_one": "{{count}} Veranstaltung",
     "count_other": "{{count}} Veranstaltungen"
+  },
+  "weather": {
+    "title": "Wetter",
+    "loading": "Wetter wird geladen…",
+    "retry": "Erneut versuchen",
+    "attribution": "Wetterdaten von Open-Meteo.com",
+    "temperature": "{{value}} °C",
+    "wind": "Wind {{value}} km/h",
+    "condition": {
+      "clear": "Klarer Himmel",
+      "partlyCloudy": "Teils bewölkt",
+      "overcast": "Bedeckt",
+      "fog": "Nebel",
+      "drizzle": "Nieselregen",
+      "rain": "Regen",
+      "showers": "Regenschauer",
+      "snow": "Schnee",
+      "thunderstorm": "Gewitter",
+      "unknown": "Unbekannte Wetterlage"
+    },
+    "error": {
+      "network": "Keine Verbindung. Prüfe dein Internet und versuche es erneut.",
+      "timeout": "Der Wetterdienst antwortet zu langsam.",
+      "rateLimit": "Zu viele Anfragen. Bitte versuche es in einer Minute erneut.",
+      "server": "Der Wetterdienst ist gerade nicht erreichbar.",
+      "empty": "Keine Wetterdaten für diesen Ort gefunden.",
+      "malformed": "Der Wetterdienst hat unerwartete Daten gesendet."
+    }
   }
 }
