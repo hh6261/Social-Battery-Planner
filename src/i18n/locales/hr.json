@@ -13,5 +13,33 @@
     "count_one": "{{count}} događaj",
     "count_few": "{{count}} događaja",
     "count_other": "{{count}} događaja"
+  },
+  "weather": {
+    "title": "Vrijeme",
+    "loading": "Učitavanje vremena…",
+    "retry": "Pokušaj ponovno",
+    "attribution": "Vremenski podaci: Open-Meteo.com",
+    "temperature": "{{value}} °C",
+    "wind": "Vjetar {{value}} km/h",
+    "condition": {
+      "clear": "Vedro",
+      "partlyCloudy": "Djelomično oblačno",
+      "overcast": "Oblačno",
+      "fog": "Magla",
+      "drizzle": "Sitna kiša",
+      "rain": "Kiša",
+      "showers": "Pljuskovi",
+      "snow": "Snijeg",
+      "thunderstorm": "Grmljavina",
+      "unknown": "Nepoznati vremenski uvjeti"
+    },
+    "error": {
+      "network": "Nema veze. Provjerite internet i pokušajte ponovno.",
+      "timeout": "Vremenskom servisu treba predugo za odgovor.",
+      "rateLimit": "Previše zahtjeva. Pokušajte ponovno za minutu.",
+      "server": "Vremenski servis trenutačno nije dostupan.",
+      "empty": "Nema vremenskih podataka za ovo mjesto.",
+      "malformed": "Vremenski servis poslao je neočekivane podatke."
+    }
   }
 }

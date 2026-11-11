@@ -12,5 +12,33 @@
     },
     "count_one": "{{count}} event",
     "count_other": "{{count}} events"
+  },
+  "weather": {
+    "title": "Weather",
+    "loading": "Loading weather…",
+    "retry": "Try again",
+    "attribution": "Weather data by Open-Meteo.com",
+    "temperature": "{{value}} °C",
+    "wind": "Wind {{value}} km/h",
+    "condition": {
+      "clear": "Clear sky",
+      "partlyCloudy": "Partly cloudy",
+      "overcast": "Overcast",
+      "fog": "Fog",
+      "drizzle": "Drizzle",
+      "rain": "Rain",
+      "showers": "Rain showers",
+      "snow": "Snow",
+      "thunderstorm": "Thunderstorm",
+      "unknown": "Unknown conditions"
+    },
+    "error": {
+      "network": "No connection. Check your internet and try again.",
+      "timeout": "The weather service took too long to answer.",
+      "rateLimit": "Too many requests. Please try again in a minute.",
+      "server": "The weather service is unavailable right now.",
+      "empty": "No weather data found for this place.",
+      "malformed": "The weather service sent unexpected data."
+    }
   }
 }
