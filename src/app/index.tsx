@@ -1,10 +1,13 @@
+import { router, type Href } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Button, StyleSheet, Text, View } from "react-native";
 
+
 import WeatherCard from "@/components/WeatherCard";
+import { changeLocale } from "@/i18n/locale";
 
 export default function Index() {
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();   // we no longer need i18n here
 
   return (
     <View style={styles.container}>
@@ -16,10 +19,14 @@ export default function Index() {
 
       {/* Temporary test buttons, remove once the settings screen exists */}
       <View style={styles.buttons}>
-        <Button title="EN" onPress={() => i18n.changeLanguage("en")} />
-        <Button title="HR" onPress={() => i18n.changeLanguage("hr")} />
-        <Button title="DE" onPress={() => i18n.changeLanguage("de")} />
+        <Button title="EN" onPress={() => changeLocale("en")} />
+        <Button title="HR" onPress={() => changeLocale("hr")} />
+        <Button title="DE" onPress={() => changeLocale("de")} />
       </View>
+
+      {/* Dev-only link, hidden in release builds */}
+      {__DEV__ && <Button title="DB viewer" onPress={() => router.push("/dev-db" as Href)} />}
+      {__DEV__ && <Button title="Check-in" onPress={() => router.push('/checkin/battery')} />}
     </View>
   );
 }

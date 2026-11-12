@@ -4,6 +4,23 @@
   "loading": "Wird geladen…"
 },
 
+"checkin": {
+  "title": "Check-in",
+  "progress": "Schritt {{current}} von {{total}}",
+  "next": "Weiter",
+  "battery": {
+    "question": "Wie voll ist dein sozialer Akku gerade?",
+    "sliderLabel": "Stand des sozialen Akkus",
+    "lower": "Weniger",
+    "higher": "Mehr",
+    "state": {
+      "low": "Niedrig: Zeit für etwas Ruhe",
+      "medium": "Mittel",
+      "high": "Hoch: viel Energie"
+    }
+  }
+},
+
   "home": {
     "greeting": "Hallo, {{name}}!"
   },

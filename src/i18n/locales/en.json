@@ -3,6 +3,22 @@
   "title": "Social Battery Planner",
   "loading": "Loading…"
 },
+"checkin": {
+  "title": "Check-in",
+  "progress": "Step {{current}} of {{total}}",
+  "next": "Next",
+  "battery": {
+    "question": "How full is your social battery right now?",
+    "sliderLabel": "Social battery level",
+    "lower": "Lower",
+    "higher": "Higher",
+    "state": {
+      "low": "Low: time for some quiet",
+      "medium": "Medium",
+      "high": "High: plenty of energy"
+    }
+  }
+},
 
   "home": {
     "greeting": "Hello, {{name}}!"
