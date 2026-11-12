@@ -1,5 +1,5 @@
-import { View, Text, Button, StyleSheet } from "react-native";
 import { useTranslation } from "react-i18next";
+import { Button, StyleSheet, Text, View } from "react-native";
 
 import WeatherCard from "@/components/WeatherCard";
 
