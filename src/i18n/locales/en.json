@@ -1,7 +1,9 @@
 {
-  "app": {
-    "title": "Social Battery Planner"
-  },
+   "app": {
+  "title": "Social Battery Planner",
+  "loading": "Loading…"
+},
+
   "home": {
     "greeting": "Hello, {{name}}!"
   },
