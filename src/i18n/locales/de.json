@@ -1,7 +1,9 @@
 {
-  "app": {
-    "title": "Planer für den sozialen Akku"
-  },
+   "app": {
+  "title": "Planer für den sozialen Akku",
+  "loading": "Wird geladen…"
+},
+
   "home": {
     "greeting": "Hallo, {{name}}!"
   },

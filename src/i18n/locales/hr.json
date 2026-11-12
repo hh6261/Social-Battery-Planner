@@ -1,7 +1,9 @@
 {
-  "app": {
-    "title": "Planer društvene baterije"
-  },
+   "app": {
+  "title": "Planer društvene baterije",
+  "loading": "Učitavanje…"
+},
+
   "home": {
     "greeting": "Bok, {{name}}!"
   },
