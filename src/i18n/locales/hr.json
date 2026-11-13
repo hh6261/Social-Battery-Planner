@@ -22,7 +22,10 @@
   },
   "mood": {
     "question": "Kako se osjećaš?",
-    "hint": "Odaberi jedno ili više.",
+    "hint": "Odaberi sve što odgovara.",
+    "selectedCount_one": "Odabrano: {{count}} emocija",
+    "selectedCount_few": "Odabrano: {{count}} emocije",
+    "selectedCount_other": "Odabrano: {{count}} emocija",
     "loading": "Učitavanje raspoloženja…",
     "error": "Raspoloženja se nisu mogla učitati.",
     "empty": "Nema dostupnih raspoloženja.",
@@ -34,7 +37,13 @@
       "tired": "Umorno",
       "anxious": "Tjeskobno",
       "irritable": "Razdražljivo",
-      "overwhelmed": "Preopterećeno"
+      "overwhelmed": "Preopterećeno",
+      "bad": "Loše",
+      "fearful": "Uplašeno",
+      "angry": "Ljutito",
+      "disgusted": "Zgađeno",
+      "sad": "Tužno",
+      "surprised": "Iznenađeno"
     }
   }
 },
@@ -77,6 +86,223 @@
       "server": "Vremenski servis trenutačno nije dostupan.",
       "empty": "Nema vremenskih podataka za ovo mjesto.",
       "malformed": "Vremenski servis poslao je neočekivane podatke."
+    }
+  },
+  "state": {
+    "loading": {
+      "title": "Učitavanje…"
+    },
+    "empty": {
+      "title": "Ovdje još nema ničega",
+      "message": "Kad nešto dodaš, pojavit će se ovdje."
+    },
+    "error": {
+      "title": "Nešto je pošlo po zlu",
+      "message": "Podaci se nisu mogli učitati. Pokušaj ponovno."
+    },
+    "offline": {
+      "title": "Nisi povezan s internetom",
+      "message": "Provjeri vezu i pokušaj ponovno."
+    },
+    "retry": "Pokušaj ponovno"
+  },
+  "eventType": {
+    "family": "Obiteljsko okupljanje",
+    "coffee": "Kava s prijateljem",
+    "work": "Poslovni sastanak",
+    "party": "Zabava",
+    "walk": "Vrijeme za sebe"
+  },
+  "planner": {
+    "title": "Planiraj unaprijed",
+    "add": "+ Dodaj događaj",
+    "loadError": "Događaji se nisu mogli učitati.",
+    "empty": {
+      "title": "Nema događaja u sljedećih 7 dana",
+      "message": "Dodaj događaj i vidi koliko će te iscrpiti."
+    },
+    "forecastFor": "Prognoza za:",
+    "noForecast": "Događaji su prikazani bez prognoze.",
+    "forecast": "{{condition}}, do {{temp}} °C",
+    "forecastWithRain": "{{condition}}, do {{temp}} °C, vjerojatnost kiše {{rain}}",
+    "drains": "Troši oko {{percent}}",
+    "outdoors": "Na otvorenom",
+    "rainHint": "Kiša je vjerojatna. Pripremi i plan za unutra.",
+    "openHint": "Otvara događaj za uređivanje ili brisanje",
+    "quickAdd": {
+      "question": "Odvojiti {{minutes}} minuta za sebe?",
+      "add": "Dodaj",
+      "hint": "Dodaje vrijeme za odmor ovom danu",
+      "eventTitle": "Vrijeme za odmor"
+    },
+    "duration": {
+      "minutes": "{{minutes}} min",
+      "hours": "{{hours}} h",
+      "hoursMinutes": "{{hours}} h {{minutes}} min"
+    }
+  },
+  "eventForm": {
+    "titleNew": "Novi događaj",
+    "titleEdit": "Uredi događaj",
+    "type": "Kakav je to događaj?",
+    "name": "Naziv",
+    "namePlaceholder": "Npr. Anina rođendanska večera",
+    "location": "Mjesto (nije obavezno)",
+    "locationPlaceholder": "Npr. Zagreb",
+    "day": "Dan",
+    "today": "Danas",
+    "tomorrow": "Sutra",
+    "time": "Vrijeme",
+    "earlier": "{{minutes}} minuta ranije",
+    "later": "{{minutes}} minuta kasnije",
+    "duration": "Trajanje",
+    "shorter": "{{minutes}} minuta kraće",
+    "longer": "{{minutes}} minuta dulje",
+    "drain": "Očekivana potrošnja",
+    "lessDrain": "Manja potrošnja",
+    "moreDrain": "Veća potrošnja",
+    "drainHelp": "Koliko će ti ovo vjerojatno potrošiti društvene baterije. Počinje od uobičajene vrijednosti za tu vrstu.",
+    "outdoors": "Na otvorenom",
+    "outdoorsHelp": "Provjerit ćemo prognozu za taj dan.",
+    "labelValue": "{{label}}: {{value}}",
+    "save": "Spremi događaj",
+    "saving": "Spremanje…",
+    "delete": "Izbriši događaj",
+    "back": "Natrag",
+    "deleteConfirm": {
+      "title": "Izbrisati ovaj događaj?",
+      "message": "Ovo se ne može poništiti.",
+      "cancel": "Odustani",
+      "confirm": "Izbriši"
+    },
+    "error": {
+      "type": "Odaberi kakav je to događaj.",
+      "title": "Upiši naziv događaja.",
+      "past": "To je vrijeme već prošlo. Odaberi kasnije vrijeme.",
+      "save": "Događaj nije spremljen. Pokušaj ponovno.",
+      "load": "Događaj se nije mogao učitati.",
+      "notFound": "Ovaj događaj više ne postoji."
+    }
+  },
+  "insights": {
+    "title": "Uvidi",
+    "loadError": "Provjere stanja nisu se mogle učitati.",
+    "segment": {
+      "day": "Dan",
+      "week": "Tjedan"
+    },
+    "band": {
+      "high": "Visoko",
+      "medium": "Srednje",
+      "low": "Nisko"
+    },
+    "day": {
+      "previous": "Prethodni dan",
+      "next": "Sljedeći dan",
+      "today": "Danas",
+      "now": "Sada",
+      "empty": {
+        "title": "Nema provjera stanja za ovaj dan",
+        "message": "Svaka provjera stanja pojavit će se ovdje kao točka na grafikonu."
+      },
+      "checkInNow": "Provjeri stanje sada",
+      "checkIns_one": "{{count}} provjera stanja",
+      "checkIns_few": "{{count}} provjere stanja",
+      "checkIns_other": "{{count}} provjera stanja",
+      "chartSummary_one": "Grafikon baterije: {{count}} provjera, {{min}}",
+      "chartSummary_few": "Grafikon baterije: {{count}} provjere, od {{min}} do {{max}}",
+      "chartSummary_other": "Grafikon baterije: {{count}} provjera, od {{min}} do {{max}}",
+      "level": "{{percent}} · {{band}}"
+    },
+    "week": {
+      "previous": "Prethodni tjedan",
+      "next": "Sljedeći tjedan",
+      "range": "{{start}} – {{end}}",
+      "dayLabel": "{{day}}: od {{min}} do {{max}}, prosjek {{avg}}",
+      "dayNoData": "{{day}}: nema provjera",
+      "lowData": {
+        "title": "Još učimo",
+        "message_one": "Provjeri stanje još {{count}} dan ovaj tjedan da vidiš najbolje i najlošije dane te trend.",
+        "message_few": "Provjeri stanje još {{count}} dana ovaj tjedan da vidiš najbolje i najlošije dane te trend.",
+        "message_other": "Provjeri stanje još {{count}} dana ovaj tjedan da vidiš najbolje i najlošije dane te trend."
+      },
+      "trend": {
+        "improved": "Tvoja društvena baterija bolja je nego prošli tjedan!",
+        "dropped": "Tvoja društvena baterija bila je slabija nego prošli tjedan. Budi blag/a prema sebi.",
+        "steady": "Tvoja društvena baterija bila je otprilike kao prošli tjedan.",
+        "noCompare": "Prošli tjedan nema dovoljno provjera za usporedbu."
+      },
+      "lowest": "Najslabiji dan: {{day}} ({{percent}})",
+      "highest": "Najbolji dan: {{day}} ({{percent}})"
+    }
+  },
+  "patterns": {
+    "title": "Obrasci",
+    "period_one": "Prema tvojim provjerama stanja iz posljednjeg {{count}} dana.",
+    "period_few": "Prema tvojim provjerama stanja iz posljednja {{count}} dana.",
+    "period_other": "Prema tvojim provjerama stanja iz posljednjih {{count}} dana.",
+    "filterLabel": "Prikaži obrasce prema",
+    "filter": {
+      "who": "Tko",
+      "activity": "Aktivnost",
+      "time": "Doba dana"
+    },
+    "drains": "Obično me iscrpljuje",
+    "recharges": "Obično me puni",
+    "lowTimes": "Baterija mi je obično slabija",
+    "highTimes": "Baterija mi je obično jača",
+    "bucket": {
+      "morning": "Jutro",
+      "afternoon": "Poslijepodne",
+      "evening": "Večer",
+      "night": "Noć"
+    },
+    "strength": {
+      "1": "Malo",
+      "2": "Jasno",
+      "3": "Jako"
+    },
+    "itemLabel": "{{name}}: {{strength}}, {{count}}",
+    "none": "Još ništa nije jasno.",
+    "more": "Prikaži još {{count}}",
+    "less": "Prikaži manje",
+    "lowData_one": "Ocijeni kako se osjećala još {{count}} provjera stanja (iscrpila ili napunila) da vidiš obrasce.",
+    "lowData_few": "Ocijeni kako su se osjećale još {{count}} provjere stanja (iscrpile ili napunile) da vidiš obrasce.",
+    "lowData_other": "Ocijeni kako se osjećalo još {{count}} provjera stanja (iscrpilo ili napunilo) da vidiš obrasce.",
+    "toRecharge": "Ideje za punjenje baterije"
+  },
+  "recharge": {
+    "title": "Ideje za punjenje",
+    "iHave": "Imam",
+    "myList": "Moj popis",
+    "nothingFits": "Ništa s tvog popisa ne stane u ovo vrijeme. Odaberi više vremena ili dodaj svoje.",
+    "start": "Kreni",
+    "startLabel": "Kreni: {{name}}",
+    "started": "„{{name}}” je u današnjem planu. Uživaj.",
+    "removeLabel": "Ukloni {{name}} s mog popisa",
+    "removeConfirm": {
+      "title": "Ukloniti „{{name}}” s popisa?",
+      "confirm": "Ukloni"
+    },
+    "rainingNow": "Trenutačno pada kiša, možda kasnije.",
+    "fromCheckIns": "Prijedlozi iz tvojih provjera stanja",
+    "noSuggestions": "Kad provjere stanja ocijeniš kao punjenje, pojavit će se ovdje.",
+    "add": "Dodaj",
+    "addLabel": "Dodaj {{name}} na moj popis",
+    "addOwn": "Dodaj svoje",
+    "nameLabel": "Što te puni?",
+    "namePlaceholder": "Npr. čitanje u parku",
+    "ownMinutes": "Spremit će se kao aktivnost od {{minutes}} minuta (vrijeme odabrano gore).",
+    "addOwnButton": "Dodaj na popis",
+    "defaults": {
+      "alone": "Vrijeme za sebe",
+      "walk": "Šetnja vani",
+      "callFriend": "Nazovi prijatelja"
+    },
+    "error": {
+      "load": "Popis za punjenje nije se mogao učitati.",
+      "save": "Nije uspjelo. Pokušaj ponovno.",
+      "name": "Prvo upiši što te puni."
     }
   }
 }

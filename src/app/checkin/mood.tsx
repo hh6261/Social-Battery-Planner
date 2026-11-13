@@ -5,8 +5,12 @@ import { useTranslation } from 'react-i18next';
 
 import { listMoods } from '@/db/checkIns';
 import { useCheckInDraft } from '@/features/checkin/CheckInDraft';
+import EmotionList from '@/features/checkin/EmotionList';
+import EmotionWheel from '@/features/checkin/EmotionWheel';
 import StepFooter from '@/features/checkin/StepFooter';
 import StepProgress from '@/features/checkin/StepProgress';
+import { useScreenReaderEnabled } from '@/features/checkin/useScreenReaderEnabled';
+import { WHEEL_MOOD_ORDER } from '@/features/checkin/wheelMoods';
 
 type Mood = { key: string; label: string };
 
@@ -20,13 +24,19 @@ const CHECK = '\u2713'; // check mark, shown on selected chips
 export default function MoodStep() {
   const { t } = useTranslation();
   const { draft, update } = useCheckInDraft();
+  const screenReader = useScreenReaderEnabled();
   const [state, setState] = useState<State>({ status: 'loading' });
   const [attempt, setAttempt] = useState(0); // goes up by 1 each time the user taps "Try again"
 
   useEffect(() => {
     let cancelled = false;
     listMoods()
-      .then((moods) => {
+      .then((all) => {
+        // keep only the emotions of the wheel, in wheel order
+        const moods = WHEEL_MOOD_ORDER.flatMap((key) => {
+          const found = all.find((m) => m.key === key);
+          return found ? [found] : [];
+        });
         if (!cancelled) setState({ status: 'ready', moods });
       })
       .catch(() => {
@@ -42,7 +52,17 @@ export default function MoodStep() {
     setAttempt((n) => n + 1);
   };
 
+  const items =
+    state.status === 'ready'
+      ? state.moods.map((m) => ({
+          key: m.key,
+          label: t(`checkin.mood.options.${m.key}`, { defaultValue: m.label }),
+        }))
+      : [];
+
   const selected = draft.moods;
+  const count = selected.filter((k) => items.some((i) => i.key === k)).length;
+
   const toggle = (key: string) => {
     update({
       moods: selected.includes(key) ? selected.filter((k) => k !== key) : [...selected, key],
@@ -50,6 +70,10 @@ export default function MoodStep() {
   };
 
   const next = () => router.push('/checkin/activity');
+  const skip = () => {
+    update({ moods: [] });
+    router.push('/checkin/activity');
+  };
 
   return (
     <View style={styles.screen}>
@@ -75,34 +99,23 @@ export default function MoodStep() {
           </View>
         )}
 
-        {state.status === 'ready' && state.moods.length === 0 && (
-          <Text>{t('checkin.mood.empty')}</Text>
-        )}
+        {state.status === 'ready' && items.length === 0 && <Text>{t('checkin.mood.empty')}</Text>}
 
-        {state.status === 'ready' && state.moods.length > 0 && (
-          <View style={styles.chips}>
-            {state.moods.map((m) => {
-              const isOn = selected.includes(m.key);
-              const label = t(`checkin.mood.options.${m.key}`, { defaultValue: m.label });
-              return (
-                <Pressable
-                  key={m.key}
-                  accessibilityRole="checkbox"
-                  accessibilityState={{ checked: isOn }}
-                  accessibilityLabel={label}
-                  onPress={() => toggle(m.key)}
-                  style={[styles.chip, isOn && styles.chipOn]}
-                >
-                  <Text style={styles.check}>{isOn ? CHECK : null}</Text>
-                  <Text style={styles.chipText}>{label}</Text>
-                </Pressable>
-              );
-            })}
-          </View>
+        {state.status === 'ready' && items.length > 0 && (
+          <>
+            {screenReader ? (
+              <EmotionList items={items} selected={selected} onToggle={toggle} />
+            ) : (
+              <EmotionWheel items={items} selected={selected} onToggle={toggle} />
+            )}
+            <Text style={styles.count} accessibilityLiveRegion="polite">
+              {t('checkin.mood.selectedCount', { count })}
+            </Text>
+          </>
         )}
       </ScrollView>
 
-      <StepFooter onNext={next} nextDisabled={selected.length === 0} />
+      <StepFooter onNext={next} nextDisabled={count === 0} onSkip={skip} />
     </View>
   );
 }

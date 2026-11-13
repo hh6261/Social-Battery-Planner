@@ -49,3 +49,49 @@ export type NewJournalEntry = {
 };
 
 export type JournalPatch = Partial<NewJournalEntry>;
+
+export type EventType = {
+  id: number;
+  key: string; // stable id for translations: t(`eventType.${key}`)
+  name: string; // English name stored in the database (fallback only)
+  emoji: string | null;
+  defaultDrain: number; // 0-100
+};
+
+export type PlannedEvent = {
+  id: number;
+  eventTypeId: number;
+  typeKey: string;
+  title: string;
+  location: string | null;
+  startsAtUtc: string;
+  endsAtUtc: string | null;
+  expectedDrain: number | null; // 0-100, how much of the social battery it is likely to use
+  isOutdoor: boolean;
+};
+
+export type NewEvent = {
+  eventTypeId: number;
+  title: string;
+  location?: string | null;
+  startsAtUtc: string;
+  endsAtUtc?: string | null;
+  expectedDrain?: number | null; // defaults to the type's default_drain
+  isOutdoor?: boolean;
+};
+
+export type EventPatch = Partial<NewEvent>;
+
+export type RechargeActivity = {
+  id: number;
+  key: string | null; // built-in idea, translated: t(`recharge.defaults.${key}`)
+  name: string | null; // the user's own activity
+  minutes: 15 | 30 | 60;
+  isOutdoor: boolean;
+};
+
+export type NewRechargeActivity = {
+  name: string;
+  minutes: 15 | 30 | 60;
+  isOutdoor?: boolean;
+};
