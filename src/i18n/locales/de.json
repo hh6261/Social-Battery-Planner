@@ -182,5 +182,54 @@
       "load": "Der Termin konnte nicht geladen werden.",
       "notFound": "Diesen Termin gibt es nicht mehr."
     }
+  },
+  "insights": {
+    "title": "Einblicke",
+    "loadError": "Deine Check-ins konnten nicht geladen werden.",
+    "segment": {
+      "day": "Tag",
+      "week": "Woche"
+    },
+    "band": {
+      "high": "Hoch",
+      "medium": "Mittel",
+      "low": "Niedrig"
+    },
+    "day": {
+      "previous": "Vorheriger Tag",
+      "next": "Nächster Tag",
+      "today": "Heute",
+      "now": "Jetzt",
+      "empty": {
+        "title": "Keine Check-ins an diesem Tag",
+        "message": "Jeder Check-in erscheint hier als Punkt im Diagramm."
+      },
+      "checkInNow": "Jetzt einchecken",
+      "checkIns_one": "{{count}} Check-in",
+      "checkIns_other": "{{count}} Check-ins",
+      "chartSummary_one": "Akku-Diagramm: {{count}} Check-in bei {{min}}",
+      "chartSummary_other": "Akku-Diagramm: {{count}} Check-ins, von {{min}} bis {{max}}",
+      "level": "{{percent}} · {{band}}"
+    },
+    "week": {
+      "previous": "Vorherige Woche",
+      "next": "Nächste Woche",
+      "range": "{{start}} – {{end}}",
+      "dayLabel": "{{day}}: von {{min}} bis {{max}}, Durchschnitt {{avg}}",
+      "dayNoData": "{{day}}: keine Check-ins",
+      "lowData": {
+        "title": "Noch am Lernen",
+        "message_one": "Checke diese Woche an {{count}} weiteren Tag ein, um Hochs, Tiefs und den Trend zu sehen.",
+        "message_other": "Checke diese Woche an {{count}} weiteren Tagen ein, um Hochs, Tiefs und den Trend zu sehen."
+      },
+      "trend": {
+        "improved": "Dein sozialer Akku ist besser als letzte Woche!",
+        "dropped": "Dein sozialer Akku war schwächer als letzte Woche. Sei nachsichtig mit dir.",
+        "steady": "Dein sozialer Akku war ungefähr wie letzte Woche.",
+        "noCompare": "Letzte Woche gibt es noch zu wenige Check-ins zum Vergleichen."
+      },
+      "lowest": "Schwächster Tag: {{day}} ({{percent}})",
+      "highest": "Stärkster Tag: {{day}} ({{percent}})"
+    }
   }
 }

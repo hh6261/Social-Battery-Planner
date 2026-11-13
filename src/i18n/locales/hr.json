@@ -183,5 +183,57 @@
       "load": "Događaj se nije mogao učitati.",
       "notFound": "Ovaj događaj više ne postoji."
     }
+  },
+  "insights": {
+    "title": "Uvidi",
+    "loadError": "Provjere stanja nisu se mogle učitati.",
+    "segment": {
+      "day": "Dan",
+      "week": "Tjedan"
+    },
+    "band": {
+      "high": "Visoko",
+      "medium": "Srednje",
+      "low": "Nisko"
+    },
+    "day": {
+      "previous": "Prethodni dan",
+      "next": "Sljedeći dan",
+      "today": "Danas",
+      "now": "Sada",
+      "empty": {
+        "title": "Nema provjera stanja za ovaj dan",
+        "message": "Svaka provjera stanja pojavit će se ovdje kao točka na grafikonu."
+      },
+      "checkInNow": "Provjeri stanje sada",
+      "checkIns_one": "{{count}} provjera stanja",
+      "checkIns_few": "{{count}} provjere stanja",
+      "checkIns_other": "{{count}} provjera stanja",
+      "chartSummary_one": "Grafikon baterije: {{count}} provjera, {{min}}",
+      "chartSummary_few": "Grafikon baterije: {{count}} provjere, od {{min}} do {{max}}",
+      "chartSummary_other": "Grafikon baterije: {{count}} provjera, od {{min}} do {{max}}",
+      "level": "{{percent}} · {{band}}"
+    },
+    "week": {
+      "previous": "Prethodni tjedan",
+      "next": "Sljedeći tjedan",
+      "range": "{{start}} – {{end}}",
+      "dayLabel": "{{day}}: od {{min}} do {{max}}, prosjek {{avg}}",
+      "dayNoData": "{{day}}: nema provjera",
+      "lowData": {
+        "title": "Još učimo",
+        "message_one": "Provjeri stanje još {{count}} dan ovaj tjedan da vidiš najbolje i najlošije dane te trend.",
+        "message_few": "Provjeri stanje još {{count}} dana ovaj tjedan da vidiš najbolje i najlošije dane te trend.",
+        "message_other": "Provjeri stanje još {{count}} dana ovaj tjedan da vidiš najbolje i najlošije dane te trend."
+      },
+      "trend": {
+        "improved": "Tvoja društvena baterija bolja je nego prošli tjedan!",
+        "dropped": "Tvoja društvena baterija bila je slabija nego prošli tjedan. Budi blag/a prema sebi.",
+        "steady": "Tvoja društvena baterija bila je otprilike kao prošli tjedan.",
+        "noCompare": "Prošli tjedan nema dovoljno provjera za usporedbu."
+      },
+      "lowest": "Najslabiji dan: {{day}} ({{percent}})",
+      "highest": "Najbolji dan: {{day}} ({{percent}})"
+    }
   }
 }

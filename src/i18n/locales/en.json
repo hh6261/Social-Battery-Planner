@@ -181,5 +181,54 @@
       "load": "The event could not be loaded.",
       "notFound": "This event no longer exists."
     }
+  },
+  "insights": {
+    "title": "Insights",
+    "loadError": "Your check-ins could not be loaded.",
+    "segment": {
+      "day": "Day",
+      "week": "Week"
+    },
+    "band": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "day": {
+      "previous": "Previous day",
+      "next": "Next day",
+      "today": "Today",
+      "now": "Now",
+      "empty": {
+        "title": "No check-ins on this day",
+        "message": "Each check-in you record shows up here as a point on the chart."
+      },
+      "checkInNow": "Check in now",
+      "checkIns_one": "{{count}} check-in",
+      "checkIns_other": "{{count}} check-ins",
+      "chartSummary_one": "Battery chart: {{count}} check-in at {{min}}",
+      "chartSummary_other": "Battery chart: {{count}} check-ins, from {{min}} to {{max}}",
+      "level": "{{percent}} · {{band}}"
+    },
+    "week": {
+      "previous": "Previous week",
+      "next": "Next week",
+      "range": "{{start}} – {{end}}",
+      "dayLabel": "{{day}}: from {{min}} to {{max}}, average {{avg}}",
+      "dayNoData": "{{day}}: no check-ins",
+      "lowData": {
+        "title": "Still learning",
+        "message_one": "Check in on {{count}} more day this week to see your highs, lows and trend.",
+        "message_other": "Check in on {{count}} more days this week to see your highs, lows and trend."
+      },
+      "trend": {
+        "improved": "Your social battery has improved since last week!",
+        "dropped": "Your social battery was lower than last week. Be gentle with yourself.",
+        "steady": "Your social battery was about the same as last week.",
+        "noCompare": "Not enough check-ins last week to compare yet."
+      },
+      "lowest": "Lowest day: {{day}} ({{percent}})",
+      "highest": "Highest day: {{day}} ({{percent}})"
+    }
   }
 }
