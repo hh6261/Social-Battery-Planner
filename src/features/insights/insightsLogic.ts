@@ -97,3 +97,57 @@ export function summarizeWeek(days: DayStats[], lastWeekItems: CheckIn[]): WeekS
   }
   return { kind: 'ready', trend, lowest, highest };
 }
+
+// ---------- Patterns (screen 22) ----------
+
+/** Patterns need at least this many rated check-ins before anything is shown. */
+export const MIN_RATED_FOR_PATTERNS = 3;
+
+export type Strength = 1 | 2 | 3;
+
+export type PatternItem = {
+  key: string; // activity name, person, or time bucket
+  strength: Strength; // shown as dots, so there are no harsh numbers (wireframe 03)
+  count: number;
+};
+
+/**
+ * Impact is rated 1 (drained me) to 5 (recharged me). Average 2.5 or lower counts as
+ * draining, 3.5 or higher as recharging; anything in between is left out as "mixed".
+ */
+export function splitByImpact(
+  items: { name: string; avgImpact: number; count: number }[],
+): { drains: PatternItem[]; recharges: PatternItem[] } {
+  const strength = (avg: number): Strength => {
+    const d = Math.abs(avg - 3);
+    return d >= 1.5 ? 3 : d >= 1 ? 2 : 1;
+  };
+  const drains = items
+    .filter((i) => i.avgImpact <= 2.5)
+    .sort((a, b) => a.avgImpact - b.avgImpact)
+    .map((i) => ({ key: i.name, strength: strength(i.avgImpact), count: i.count }));
+  const recharges = items
+    .filter((i) => i.avgImpact >= 3.5)
+    .sort((a, b) => b.avgImpact - a.avgImpact)
+    .map((i) => ({ key: i.name, strength: strength(i.avgImpact), count: i.count }));
+  return { drains, recharges };
+}
+
+/** Times of day with an average battery under 50 % count as low, the rest as high. */
+export function splitByBattery(
+  items: { bucket: string; avgBattery: number; count: number }[],
+): { drains: PatternItem[]; recharges: PatternItem[] } {
+  const strength = (avg: number): Strength => {
+    const d = Math.abs(avg - 50);
+    return d >= 30 ? 3 : d >= 15 ? 2 : 1;
+  };
+  const toItem = (i: { bucket: string; avgBattery: number; count: number }) => ({
+    key: i.bucket,
+    strength: strength(i.avgBattery),
+    count: i.count,
+  });
+  return {
+    drains: items.filter((i) => i.avgBattery < 50).sort((a, b) => a.avgBattery - b.avgBattery).map(toItem),
+    recharges: items.filter((i) => i.avgBattery >= 50).sort((a, b) => b.avgBattery - a.avgBattery).map(toItem),
+  };
+}

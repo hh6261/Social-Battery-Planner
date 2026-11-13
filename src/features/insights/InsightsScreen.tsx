@@ -5,15 +5,15 @@ import { useTranslation } from 'react-i18next';
 import { colors, minTouchSize, spacing } from '@/theme/colors';
 
 import DayView from './DayView';
+import PatternsView from './PatternsView';
 import WeekView from './WeekView';
 
-type Segment = 'day' | 'week';
-const SEGMENTS: Segment[] = ['day', 'week'];
+type Segment = 'day' | 'week' | 'patterns';
+const SEGMENTS: Segment[] = ['day', 'week', 'patterns'];
 
 /**
- * Insights (merged screens 20 and 21, Roko's wireframes 01 and 02): the Day / Week
- * buttons switch between the Daily Timeline and the Weekly Overview.
- * Patterns (screen 22) will be added as a third button.
+ * Insights (merged screens 20, 21 and 22, Roko's wireframes 01 to 03): the Day / Week /
+ * Patterns buttons switch between the Daily Timeline, the Weekly Overview and Patterns.
  */
 export default function InsightsScreen() {
   const { t } = useTranslation();
@@ -33,13 +33,15 @@ export default function InsightsScreen() {
               style={[styles.segment, selected && styles.segmentSelected]}
             >
               <Text style={[styles.segmentText, selected && styles.segmentTextSelected]}>
-                {t(`insights.segment.${s}`)}
+                {s === 'patterns' ? t('patterns.title') : t(`insights.segment.${s}`)}
               </Text>
             </Pressable>
           );
         })}
       </View>
-      {segment === 'day' ? <DayView /> : <WeekView />}
+      {segment === 'day' && <DayView />}
+      {segment === 'week' && <WeekView />}
+      {segment === 'patterns' && <PatternsView />}
     </View>
   );
 }
