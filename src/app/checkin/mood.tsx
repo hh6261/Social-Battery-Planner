@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Button, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, Button, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
@@ -18,6 +18,8 @@ type State =
   | { status: 'loading' }
   | { status: 'error' }
   | { status: 'ready'; moods: Mood[] };
+
+const CHECK = '\u2713'; // check mark, shown on selected chips
 
 export default function MoodStep() {
   const { t } = useTranslation();
@@ -41,7 +43,7 @@ export default function MoodStep() {
         if (!cancelled) setState({ status: 'error' });
       });
     return () => {
-      cancelled = true;
+      cancelled = true; // ignore an answer that arrives after the screen is gone
     };
   }, [attempt]);
 
@@ -125,5 +127,19 @@ const styles = StyleSheet.create({
   hint: { fontSize: 14, color: '#344054' },
   row: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   column: { gap: 8 },
-  count: { fontSize: 14, textAlign: 'center', color: '#344054' },
+  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
+  chip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    minHeight: 48,
+    paddingHorizontal: 16,
+    borderRadius: 24,
+    borderWidth: 2,
+    borderColor: '#667085',
+    backgroundColor: '#FFFFFF',
+  },
+  chipOn: { borderColor: '#1D4ED8', backgroundColor: '#DBEAFE' },
+  check: { width: 16, fontSize: 16, fontWeight: '700', color: '#1D4ED8' },
+  chipText: { fontSize: 16, color: '#101828' },
 });
