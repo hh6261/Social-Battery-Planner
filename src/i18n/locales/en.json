@@ -7,6 +7,8 @@
   "title": "Check-in",
   "progress": "Step {{current}} of {{total}}",
   "next": "Next",
+  "skip": "Skip",
+  "retry": "Try again",
   "battery": {
     "question": "How full is your social battery right now?",
     "sliderLabel": "Social battery level",
@@ -16,6 +18,31 @@
       "low": "Low: time for some quiet",
       "medium": "Medium",
       "high": "High: plenty of energy"
+    }
+  },
+  "mood": {
+    "question": "How do you feel?",
+    "hint": "Select all that apply.",
+    "selectedCount_one": "{{count}} emotion selected",
+    "selectedCount_other": "{{count}} emotions selected",
+    "loading": "Loading moods…",
+    "error": "The moods could not be loaded.",
+    "empty": "No moods available.",
+    "options": {
+      "calm": "Calm",
+      "happy": "Happy",
+      "energised": "Energised",
+      "content": "Content",
+      "tired": "Tired",
+      "anxious": "Anxious",
+      "irritable": "Irritable",
+      "overwhelmed": "Overwhelmed",
+      "bad": "Bad",
+      "fearful": "Fearful",
+      "angry": "Angry",
+      "disgusted": "Disgusted",
+      "sad": "Sad",
+      "surprised": "Surprised"
     }
   }
 },

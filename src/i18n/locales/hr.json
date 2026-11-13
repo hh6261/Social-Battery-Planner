@@ -7,6 +7,8 @@
   "title": "Provjera stanja",
   "progress": "Korak {{current}} od {{total}}",
   "next": "Dalje",
+  "skip": "Preskoči",
+  "retry": "Pokušaj ponovno",
   "battery": {
     "question": "Koliko je društvena baterija napunjena upravo sada?",
     "sliderLabel": "Razina društvene baterije",
@@ -16,6 +18,32 @@
       "low": "Niska: vrijeme je za odmor",
       "medium": "Srednja",
       "high": "Visoka: dovoljno energije"
+    }
+  },
+  "mood": {
+    "question": "Kako se osjećaš?",
+    "hint": "Odaberi sve što odgovara.",
+    "selectedCount_one": "Odabrano: {{count}} emocija",
+    "selectedCount_few": "Odabrano: {{count}} emocije",
+    "selectedCount_other": "Odabrano: {{count}} emocija",
+    "loading": "Učitavanje raspoloženja…",
+    "error": "Raspoloženja se nisu mogla učitati.",
+    "empty": "Nema dostupnih raspoloženja.",
+    "options": {
+      "calm": "Smireno",
+      "happy": "Sretno",
+      "energised": "Puno energije",
+      "content": "Zadovoljno",
+      "tired": "Umorno",
+      "anxious": "Tjeskobno",
+      "irritable": "Razdražljivo",
+      "overwhelmed": "Preopterećeno",
+      "bad": "Loše",
+      "fearful": "Uplašeno",
+      "angry": "Ljutito",
+      "disgusted": "Zgađeno",
+      "sad": "Tužno",
+      "surprised": "Iznenađeno"
     }
   }
 },
