@@ -86,5 +86,101 @@
       "empty": "Keine Wetterdaten für diesen Ort gefunden.",
       "malformed": "Der Wetterdienst hat unerwartete Daten gesendet."
     }
+  },
+  "state": {
+    "loading": {
+      "title": "Wird geladen …"
+    },
+    "empty": {
+      "title": "Hier ist noch nichts",
+      "message": "Sobald du etwas hinzufügst, erscheint es hier."
+    },
+    "error": {
+      "title": "Etwas ist schiefgelaufen",
+      "message": "Die Daten konnten nicht geladen werden. Bitte versuche es erneut."
+    },
+    "offline": {
+      "title": "Keine Internetverbindung",
+      "message": "Prüfe deine Verbindung und versuche es erneut."
+    },
+    "retry": "Erneut versuchen"
+  },
+  "eventType": {
+    "family": "Familientreffen",
+    "coffee": "Kaffee mit einem Freund",
+    "work": "Arbeitsbesprechung",
+    "party": "Party",
+    "walk": "Zeit für mich"
+  },
+  "planner": {
+    "title": "Vorausplanen",
+    "add": "+ Termin hinzufügen",
+    "loadError": "Deine Termine konnten nicht geladen werden.",
+    "empty": {
+      "title": "Keine Termine in den nächsten 7 Tagen",
+      "message": "Füge einen Termin hinzu und sieh, wie viel Energie er kostet."
+    },
+    "forecastFor": "Vorhersage für:",
+    "noForecast": "Deine Termine werden ohne Vorhersage angezeigt.",
+    "forecast": "{{condition}}, bis {{temp}} °C",
+    "forecastWithRain": "{{condition}}, bis {{temp}} °C, Regenwahrscheinlichkeit {{rain}}",
+    "drains": "Verbraucht etwa {{percent}}",
+    "outdoors": "Im Freien",
+    "rainHint": "Regen ist wahrscheinlich. Halte eine Alternative drinnen bereit.",
+    "openHint": "Öffnet den Termin zum Bearbeiten oder Löschen",
+    "quickAdd": {
+      "question": "{{minutes}} Minuten Zeit für dich allein?",
+      "add": "Hinzufügen",
+      "hint": "Fügt diesem Tag eine ruhige Pause hinzu",
+      "eventTitle": "Ruhige Zeit"
+    },
+    "duration": {
+      "minutes": "{{minutes}} Min.",
+      "hours": "{{hours}} Std.",
+      "hoursMinutes": "{{hours}} Std. {{minutes}} Min."
+    }
+  },
+  "eventForm": {
+    "titleNew": "Neuer Termin",
+    "titleEdit": "Termin bearbeiten",
+    "type": "Was für ein Termin ist es?",
+    "name": "Titel",
+    "namePlaceholder": "Zum Beispiel Anas Geburtstagsessen",
+    "location": "Ort (optional)",
+    "locationPlaceholder": "Zum Beispiel Zagreb",
+    "day": "Tag",
+    "today": "Heute",
+    "tomorrow": "Morgen",
+    "time": "Uhrzeit",
+    "earlier": "{{minutes}} Minuten früher",
+    "later": "{{minutes}} Minuten später",
+    "duration": "Dauer",
+    "shorter": "{{minutes}} Minuten kürzer",
+    "longer": "{{minutes}} Minuten länger",
+    "drain": "Erwarteter Energieverbrauch",
+    "lessDrain": "Weniger Verbrauch",
+    "moreDrain": "Mehr Verbrauch",
+    "drainHelp": "Wie viel von deinem sozialen Akku das voraussichtlich kostet. Startet beim üblichen Wert für diese Art.",
+    "outdoors": "Im Freien",
+    "outdoorsHelp": "Wir prüfen die Wettervorhersage für diesen Tag.",
+    "labelValue": "{{label}}: {{value}}",
+    "save": "Termin speichern",
+    "saving": "Wird gespeichert …",
+    "delete": "Termin löschen",
+    "back": "Zurück",
+    "deleteConfirm": {
+      "title": "Diesen Termin löschen?",
+      "message": "Das kann nicht rückgängig gemacht werden.",
+      "cancel": "Abbrechen",
+      "confirm": "Löschen"
+    },
+    "error": {
+      "type": "Wähle aus, was für ein Termin es ist.",
+      "title": "Gib dem Termin einen Titel.",
+      "past": "Diese Uhrzeit ist schon vorbei. Wähle eine spätere Uhrzeit.",
+      "save": "Der Termin wurde nicht gespeichert. Bitte versuche es erneut.",
+      "load": "Der Termin konnte nicht geladen werden.",
+      "notFound": "Diesen Termin gibt es nicht mehr."
+    }
   }
 }

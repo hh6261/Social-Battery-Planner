@@ -85,5 +85,101 @@
       "empty": "No weather data found for this place.",
       "malformed": "The weather service sent unexpected data."
     }
+  },
+  "state": {
+    "loading": {
+      "title": "Loading…"
+    },
+    "empty": {
+      "title": "Nothing here yet",
+      "message": "When you add something, it will show up here."
+    },
+    "error": {
+      "title": "Something went wrong",
+      "message": "The data could not be loaded. Please try again."
+    },
+    "offline": {
+      "title": "You are offline",
+      "message": "Check your connection and try again."
+    },
+    "retry": "Try again"
+  },
+  "eventType": {
+    "family": "Family gathering",
+    "coffee": "Coffee with a friend",
+    "work": "Work meeting",
+    "party": "Party",
+    "walk": "Time alone"
+  },
+  "planner": {
+    "title": "Plan ahead",
+    "add": "+ Add event",
+    "loadError": "Your events could not be loaded.",
+    "empty": {
+      "title": "No events in the next 7 days",
+      "message": "Add an event to see how much it will drain you."
+    },
+    "forecastFor": "Forecast for:",
+    "noForecast": "Your events are shown without a forecast.",
+    "forecast": "{{condition}}, up to {{temp}} °C",
+    "forecastWithRain": "{{condition}}, up to {{temp}} °C, {{rain}} chance of rain",
+    "drains": "Drains about {{percent}}",
+    "outdoors": "Outdoors",
+    "rainHint": "Rain is likely. Keep an indoor option ready.",
+    "openHint": "Opens the event to edit or delete it",
+    "quickAdd": {
+      "question": "Take {{minutes}} minutes alone?",
+      "add": "Add",
+      "hint": "Adds quiet time to this day",
+      "eventTitle": "Quiet time"
+    },
+    "duration": {
+      "minutes": "{{minutes}} min",
+      "hours": "{{hours}} h",
+      "hoursMinutes": "{{hours}} h {{minutes}} min"
+    }
+  },
+  "eventForm": {
+    "titleNew": "New event",
+    "titleEdit": "Edit event",
+    "type": "What kind of event?",
+    "name": "Title",
+    "namePlaceholder": "For example, Ana’s birthday dinner",
+    "location": "Place (optional)",
+    "locationPlaceholder": "For example, Zagreb",
+    "day": "Day",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "time": "Time",
+    "earlier": "{{minutes}} minutes earlier",
+    "later": "{{minutes}} minutes later",
+    "duration": "Duration",
+    "shorter": "{{minutes}} minutes shorter",
+    "longer": "{{minutes}} minutes longer",
+    "drain": "Expected drain",
+    "lessDrain": "Less drain",
+    "moreDrain": "More drain",
+    "drainHelp": "How much of your social battery this will probably use. It starts at the usual value for the type.",
+    "outdoors": "Outdoors",
+    "outdoorsHelp": "We will check the forecast for this day.",
+    "labelValue": "{{label}}: {{value}}",
+    "save": "Save event",
+    "saving": "Saving…",
+    "delete": "Delete event",
+    "back": "Go back",
+    "deleteConfirm": {
+      "title": "Delete this event?",
+      "message": "This cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete"
+    },
+    "error": {
+      "type": "Pick what kind of event this is.",
+      "title": "Give the event a title.",
+      "past": "That time has already passed. Pick a later time.",
+      "save": "The event was not saved. Please try again.",
+      "load": "The event could not be loaded.",
+      "notFound": "This event no longer exists."
+    }
   }
 }
