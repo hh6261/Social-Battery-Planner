@@ -28,6 +28,7 @@ export default function Index() {
       {__DEV__ && <Button title="DB viewer" onPress={() => router.push("/dev-db" as Href)} />}
       {__DEV__ && <Button title="Check-in" onPress={() => router.push('/checkin/battery')} />}
       {__DEV__ && <Button title={t("planner.title")} onPress={() => router.push("/planner" as Href)} />}
+      {__DEV__ && <Button title={t("insights.title")} onPress={() => router.push("/insights" as Href)} />}
     </View>
   );
 }
