@@ -81,3 +81,17 @@ export type NewEvent = {
 };
 
 export type EventPatch = Partial<NewEvent>;
+
+export type RechargeActivity = {
+  id: number;
+  key: string | null; // built-in idea, translated: t(`recharge.defaults.${key}`)
+  name: string | null; // the user's own activity
+  minutes: 15 | 30 | 60;
+  isOutdoor: boolean;
+};
+
+export type NewRechargeActivity = {
+  name: string;
+  minutes: 15 | 30 | 60;
+  isOutdoor?: boolean;
+};
