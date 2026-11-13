@@ -29,6 +29,8 @@
     "loading": "Stimmungen werden geladen…",
     "error": "Die Stimmungen konnten nicht geladen werden.",
     "empty": "Keine Stimmungen verfügbar.",
+    "showList": "Als Liste anzeigen",
+    "showWheel": "Als Rad anzeigen",
     "options": {
       "calm": "Ruhig",
       "happy": "Glücklich",

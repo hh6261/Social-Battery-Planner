@@ -1,25 +1,37 @@
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, Button, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import {
+  AccessibilityInfo,
+  ActivityIndicator,
+  Button,
+  Platform,
+  ScrollView,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
 import { listMoods } from '@/db/checkIns';
 import { useCheckInDraft } from '@/features/checkin/CheckInDraft';
 import EmotionList from '@/features/checkin/EmotionList';
-import EmotionWheel from '@/features/checkin/EmotionWheel';
+import EmotionWheel, { type EmotionItem } from '@/features/checkin/EmotionWheel';
 import StepFooter from '@/features/checkin/StepFooter';
 import StepProgress from '@/features/checkin/StepProgress';
 import { useScreenReaderEnabled } from '@/features/checkin/useScreenReaderEnabled';
 import { WHEEL_MOOD_ORDER } from '@/features/checkin/wheelMoods';
 
-type Mood = { key: string; label: string };
+type Mood = Awaited<ReturnType<typeof listMoods>>[number];
 
 type State =
   | { status: 'loading' }
   | { status: 'error' }
   | { status: 'ready'; moods: Mood[] };
 
-const CHECK = '\u2713'; // check mark, shown on selected chips
+// iOS ignores accessibilityLiveRegion, so announce there explicitly.
+function announceOnIOS(message: string) {
+  if (Platform.OS === 'ios') AccessibilityInfo.announceForAccessibility(message);
+}
 
 export default function MoodStep() {
   const { t } = useTranslation();
@@ -27,6 +39,9 @@ export default function MoodStep() {
   const screenReader = useScreenReaderEnabled();
   const [state, setState] = useState<State>({ status: 'loading' });
   const [attempt, setAttempt] = useState(0); // goes up by 1 each time the user taps "Try again"
+  // null = follow the screen reader setting; true/false = the user's own choice.
+  const [listChoice, setListChoice] = useState<boolean | null>(null);
+  const showList = listChoice ?? screenReader;
 
   useEffect(() => {
     let cancelled = false;
@@ -47,12 +62,16 @@ export default function MoodStep() {
     };
   }, [attempt]);
 
+  useEffect(() => {
+    if (state.status === 'error') announceOnIOS(t('checkin.mood.error'));
+  }, [state.status, t]);
+
   const retry = () => {
     setState({ status: 'loading' });
     setAttempt((n) => n + 1);
   };
 
-  const items =
+  const items: EmotionItem[] =
     state.status === 'ready'
       ? state.moods.map((m) => ({
           key: m.key,
@@ -61,12 +80,16 @@ export default function MoodStep() {
       : [];
 
   const selected = draft.moods;
-  const count = selected.filter((k) => items.some((i) => i.key === k)).length;
+  // While the list is loading or failed, trust the draft so earlier choices still count.
+  const count =
+    state.status === 'ready'
+      ? selected.filter((k) => items.some((i) => i.key === k)).length
+      : selected.length;
 
   const toggle = (key: string) => {
-    update({
-      moods: selected.includes(key) ? selected.filter((k) => k !== key) : [...selected, key],
-    });
+    const moods = selected.includes(key) ? selected.filter((k) => k !== key) : [...selected, key];
+    update({ moods });
+    announceOnIOS(t('checkin.mood.selectedCount', { count: moods.length }));
   };
 
   const next = () => router.push('/checkin/activity');
@@ -86,7 +109,7 @@ export default function MoodStep() {
         <Text style={styles.hint}>{t('checkin.mood.hint')}</Text>
 
         {state.status === 'loading' && (
-          <View style={styles.row} accessible accessibilityLabel={t('checkin.mood.loading')}>
+          <View style={styles.row} accessible>
             <ActivityIndicator />
             <Text>{t('checkin.mood.loading')}</Text>
           </View>
@@ -94,7 +117,9 @@ export default function MoodStep() {
 
         {state.status === 'error' && (
           <View style={styles.column}>
-            <Text accessibilityRole="alert">{t('checkin.mood.error')}</Text>
+            <Text accessibilityRole="alert" accessibilityLiveRegion="assertive">
+              {t('checkin.mood.error')}
+            </Text>
             <Button title={t('checkin.retry')} onPress={retry} />
           </View>
         )}
@@ -103,7 +128,14 @@ export default function MoodStep() {
 
         {state.status === 'ready' && items.length > 0 && (
           <>
-            {screenReader ? (
+            {/* A normal button, so Switch Control, Voice Control and keyboard users can reach the list. */}
+            <View style={styles.toggle}>
+              <Button
+                title={showList ? t('checkin.mood.showWheel') : t('checkin.mood.showList')}
+                onPress={() => setListChoice(!showList)}
+              />
+            </View>
+            {showList ? (
               <EmotionList items={items} selected={selected} onToggle={toggle} />
             ) : (
               <EmotionWheel items={items} selected={selected} onToggle={toggle} />
@@ -127,19 +159,6 @@ const styles = StyleSheet.create({
   hint: { fontSize: 14, color: '#344054' },
   row: { flexDirection: 'row', alignItems: 'center', gap: 8 },
   column: { gap: 8 },
-  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
-  chip: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 6,
-    minHeight: 48,
-    paddingHorizontal: 16,
-    borderRadius: 24,
-    borderWidth: 2,
-    borderColor: '#667085',
-    backgroundColor: '#FFFFFF',
-  },
-  chipOn: { borderColor: '#1D4ED8', backgroundColor: '#DBEAFE' },
-  check: { width: 16, fontSize: 16, fontWeight: '700', color: '#1D4ED8' },
-  chipText: { fontSize: 16, color: '#101828' },
+  toggle: { alignSelf: 'flex-start' },
+  count: { fontSize: 16, color: '#101828' },
 });
