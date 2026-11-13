@@ -15,7 +15,9 @@ export const formatPercent = (n: number) =>
   new Intl.NumberFormat(locale(), { style: 'percent' }).format(n);
 
 export const formatList = (items: string[]) =>
-  new Intl.ListFormat(locale(), { style: 'long', type: 'conjunction' }).format(items);
+  typeof Intl.ListFormat === 'function'
+    ? new Intl.ListFormat(locale(), { style: 'long', type: 'conjunction' }).format(items)
+    : items.join(', ');
 
 export const sortStrings = (items: string[]) =>
   [...items].sort(new Intl.Collator(locale()).compare);
