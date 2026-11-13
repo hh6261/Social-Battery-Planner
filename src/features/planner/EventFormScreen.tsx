@@ -62,7 +62,8 @@ export default function EventFormScreen({ eventId }: { eventId: number | null })
   }, [eventId, attempt]);
 
   const title = t(eventId === null ? 'eventForm.titleNew' : 'eventForm.titleEdit');
-  const header = <Stack.Screen options={{ title }} />;
+  // On iOS 26 the header is see-through by default and would cover the top of the screen.
+  const header = <Stack.Screen options={{ title, headerTransparent: false }} />;
 
   if (loadFailed) {
     return (
