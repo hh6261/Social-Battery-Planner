@@ -8,6 +8,8 @@
   "title": "Check-in",
   "progress": "Schritt {{current}} von {{total}}",
   "next": "Weiter",
+  "skip": "Überspringen",
+  "retry": "Erneut versuchen",
   "battery": {
     "question": "Wie voll ist dein sozialer Akku gerade?",
     "sliderLabel": "Stand des sozialen Akkus",
@@ -17,6 +19,23 @@
       "low": "Niedrig: Zeit für etwas Ruhe",
       "medium": "Mittel",
       "high": "Hoch: viel Energie"
+    }
+  },
+  "mood": {
+    "question": "Wie fühlst du dich?",
+    "hint": "Wähle eine oder mehrere.",
+    "loading": "Stimmungen werden geladen…",
+    "error": "Die Stimmungen konnten nicht geladen werden.",
+    "empty": "Keine Stimmungen verfügbar.",
+    "options": {
+      "calm": "Ruhig",
+      "happy": "Glücklich",
+      "energised": "Energiegeladen",
+      "content": "Zufrieden",
+      "tired": "Müde",
+      "anxious": "Ängstlich",
+      "irritable": "Gereizt",
+      "overwhelmed": "Überfordert"
     }
   }
 },
