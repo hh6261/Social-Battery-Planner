@@ -29,6 +29,8 @@
     "loading": "Učitavanje raspoloženja…",
     "error": "Raspoloženja se nisu mogla učitati.",
     "empty": "Nema dostupnih raspoloženja.",
+    "showList": "Prikaži kao popis",
+    "showWheel": "Prikaži kao kotač",
     "options": {
       "calm": "Smireno",
       "happy": "Sretno",

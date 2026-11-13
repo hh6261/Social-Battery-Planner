@@ -28,6 +28,8 @@
     "loading": "Loading moods…",
     "error": "The moods could not be loaded.",
     "empty": "No moods available.",
+    "showList": "Show as list",
+    "showWheel": "Show as wheel",
     "options": {
       "calm": "Calm",
       "happy": "Happy",
