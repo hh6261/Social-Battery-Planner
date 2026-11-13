@@ -12,18 +12,19 @@ export async function seedIfEmpty(db: SQLiteDatabase): Promise<void> {
   if ((row?.n ?? 0) > 0) return;
 
   await db.withTransactionAsync(async () => {
-    const types: [string, string, number][] = [
-      ['Family gathering', '👨‍👩‍👧', 45],
-      ['Coffee with a friend', '☕', 20],
-      ['Work meeting', '💼', 35],
-      ['Party', '🎉', 70],
-      ['Solo walk', '🚶', -15],
+    // key = stable id used for translations (eventType.<key>), added in migration 004
+    const types: [string, string, string, number][] = [
+      ['family', 'Family gathering', '👨‍👩‍👧', 45],
+      ['coffee', 'Coffee with a friend', '☕', 20],
+      ['work', 'Work meeting', '💼', 35],
+      ['party', 'Party', '🎉', 70],
+      ['walk', 'Solo walk', '🚶', -15],
     ];
     const typeId: Record<string, number> = {};
-    for (const [name, emoji, drain] of types) {
+    for (const [key, name, emoji, drain] of types) {
       const r = await db.runAsync(
-        'INSERT INTO event_type (name, emoji, default_drain) VALUES (?, ?, ?)',
-        [name, emoji, Math.max(0, drain)]
+        'INSERT INTO event_type (key, name, emoji, default_drain) VALUES (?, ?, ?, ?)',
+        [key, name, emoji, Math.max(0, drain)]
       );
       typeId[name] = r.lastInsertRowId;
     }
