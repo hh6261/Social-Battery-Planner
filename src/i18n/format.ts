@@ -33,3 +33,11 @@ export const formatDayHeading = (d: Date | number) => {
 /** Short weekday and day for chips: "Thu 22". */
 export const formatShortDay = (d: Date | number) =>
   new Intl.DateTimeFormat(locale(), { weekday: 'short', day: 'numeric' }).format(d);
+
+/** "14 Nov" style date, for the week range. */
+export const formatDayMonth = (d: Date | number) =>
+  new Intl.DateTimeFormat(locale(), { day: 'numeric', month: 'short' }).format(d);
+
+/** Short weekday name: "Mon", "pon", "Mo". */
+export const formatWeekdayShort = (d: Date | number) =>
+  new Intl.DateTimeFormat(locale(), { weekday: 'short' }).format(d);
