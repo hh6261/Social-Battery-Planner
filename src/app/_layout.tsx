@@ -19,5 +19,9 @@ export default function RootLayout() {
 
   if (!dbReady) return <Text>{t('app.loading')}</Text>;
 
-  return <Stack />;
+    return (
+    <Stack>
+      <Stack.Screen name="checkin" options={{ headerShown: false }} />
+    </Stack>
+  );
 }

@@ -3,6 +3,22 @@
   "title": "Planer društvene baterije",
   "loading": "Učitavanje…"
 },
+"checkin": {
+  "title": "Provjera stanja",
+  "progress": "Korak {{current}} od {{total}}",
+  "next": "Dalje",
+  "battery": {
+    "question": "Koliko je društvena baterija napunjena upravo sada?",
+    "sliderLabel": "Razina društvene baterije",
+    "lower": "Manje",
+    "higher": "Više",
+    "state": {
+      "low": "Niska: vrijeme je za odmor",
+      "medium": "Srednja",
+      "high": "Visoka: dovoljno energije"
+    }
+  }
+},
 
   "home": {
     "greeting": "Bok, {{name}}!"
