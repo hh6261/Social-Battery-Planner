@@ -235,5 +235,74 @@
       "lowest": "Najslabiji dan: {{day}} ({{percent}})",
       "highest": "Najbolji dan: {{day}} ({{percent}})"
     }
+  },
+  "patterns": {
+    "title": "Obrasci",
+    "period_one": "Prema tvojim provjerama stanja iz posljednjeg {{count}} dana.",
+    "period_few": "Prema tvojim provjerama stanja iz posljednja {{count}} dana.",
+    "period_other": "Prema tvojim provjerama stanja iz posljednjih {{count}} dana.",
+    "filterLabel": "Prikaži obrasce prema",
+    "filter": {
+      "who": "Tko",
+      "activity": "Aktivnost",
+      "time": "Doba dana"
+    },
+    "drains": "Obično me iscrpljuje",
+    "recharges": "Obično me puni",
+    "lowTimes": "Baterija mi je obično slabija",
+    "highTimes": "Baterija mi je obično jača",
+    "bucket": {
+      "morning": "Jutro",
+      "afternoon": "Poslijepodne",
+      "evening": "Večer",
+      "night": "Noć"
+    },
+    "strength": {
+      "1": "Malo",
+      "2": "Jasno",
+      "3": "Jako"
+    },
+    "itemLabel": "{{name}}: {{strength}}, {{count}}",
+    "none": "Još ništa nije jasno.",
+    "more": "Prikaži još {{count}}",
+    "less": "Prikaži manje",
+    "lowData_one": "Ocijeni kako se osjećala još {{count}} provjera stanja (iscrpila ili napunila) da vidiš obrasce.",
+    "lowData_few": "Ocijeni kako su se osjećale još {{count}} provjere stanja (iscrpile ili napunile) da vidiš obrasce.",
+    "lowData_other": "Ocijeni kako se osjećalo još {{count}} provjera stanja (iscrpilo ili napunilo) da vidiš obrasce.",
+    "toRecharge": "Ideje za punjenje baterije"
+  },
+  "recharge": {
+    "title": "Ideje za punjenje",
+    "iHave": "Imam",
+    "myList": "Moj popis",
+    "nothingFits": "Ništa s tvog popisa ne stane u ovo vrijeme. Odaberi više vremena ili dodaj svoje.",
+    "start": "Kreni",
+    "startLabel": "Kreni: {{name}}",
+    "started": "„{{name}}” je u današnjem planu. Uživaj.",
+    "removeLabel": "Ukloni {{name}} s mog popisa",
+    "removeConfirm": {
+      "title": "Ukloniti „{{name}}” s popisa?",
+      "confirm": "Ukloni"
+    },
+    "rainingNow": "Trenutačno pada kiša, možda kasnije.",
+    "fromCheckIns": "Prijedlozi iz tvojih provjera stanja",
+    "noSuggestions": "Kad provjere stanja ocijeniš kao punjenje, pojavit će se ovdje.",
+    "add": "Dodaj",
+    "addLabel": "Dodaj {{name}} na moj popis",
+    "addOwn": "Dodaj svoje",
+    "nameLabel": "Što te puni?",
+    "namePlaceholder": "Npr. čitanje u parku",
+    "ownMinutes": "Spremit će se kao aktivnost od {{minutes}} minuta (vrijeme odabrano gore).",
+    "addOwnButton": "Dodaj na popis",
+    "defaults": {
+      "alone": "Vrijeme za sebe",
+      "walk": "Šetnja vani",
+      "callFriend": "Nazovi prijatelja"
+    },
+    "error": {
+      "load": "Popis za punjenje nije se mogao učitati.",
+      "save": "Nije uspjelo. Pokušaj ponovno.",
+      "name": "Prvo upiši što te puni."
+    }
   }
 }

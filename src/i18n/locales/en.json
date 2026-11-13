@@ -230,5 +230,72 @@
       "lowest": "Lowest day: {{day}} ({{percent}})",
       "highest": "Highest day: {{day}} ({{percent}})"
     }
+  },
+  "patterns": {
+    "title": "Patterns",
+    "period_one": "Based on your check-ins from the last {{count}} day.",
+    "period_other": "Based on your check-ins from the last {{count}} days.",
+    "filterLabel": "Show patterns by",
+    "filter": {
+      "who": "Who",
+      "activity": "Activity",
+      "time": "Time of day"
+    },
+    "drains": "Usually drains me",
+    "recharges": "Usually recharges me",
+    "lowTimes": "My battery is usually lower",
+    "highTimes": "My battery is usually higher",
+    "bucket": {
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "evening": "Evening",
+      "night": "Night"
+    },
+    "strength": {
+      "1": "Slightly",
+      "2": "Clearly",
+      "3": "Strongly"
+    },
+    "itemLabel": "{{name}}: {{strength}}, {{count}}",
+    "none": "Nothing clear yet.",
+    "more": "Show {{count}} more",
+    "less": "Show fewer",
+    "lowData_one": "Rate how {{count}} more check-in felt (drained or recharged) to see your patterns.",
+    "lowData_other": "Rate how {{count}} more check-ins felt (drained or recharged) to see your patterns.",
+    "toRecharge": "See recharge ideas"
+  },
+  "recharge": {
+    "title": "Recharge ideas",
+    "iHave": "I have",
+    "myList": "My list",
+    "nothingFits": "Nothing in your list fits this time. Pick more time or add your own.",
+    "start": "Start",
+    "startLabel": "Start {{name}}",
+    "started": "“{{name}}” is in today’s plan. Enjoy it.",
+    "removeLabel": "Remove {{name}} from my list",
+    "removeConfirm": {
+      "title": "Remove “{{name}}” from your list?",
+      "confirm": "Remove"
+    },
+    "rainingNow": "It is raining right now, maybe later.",
+    "fromCheckIns": "Suggested from your check-ins",
+    "noSuggestions": "When you rate check-ins as recharging, they will show up here.",
+    "add": "Add",
+    "addLabel": "Add {{name}} to my list",
+    "addOwn": "Add your own",
+    "nameLabel": "What recharges you?",
+    "namePlaceholder": "For example, reading in the park",
+    "ownMinutes": "It will be saved as a {{minutes}}-minute activity (the time chosen above).",
+    "addOwnButton": "Add to my list",
+    "defaults": {
+      "alone": "Time alone",
+      "walk": "Walk outside",
+      "callFriend": "Call a friend"
+    },
+    "error": {
+      "load": "Your recharge list could not be loaded.",
+      "save": "That did not work. Please try again.",
+      "name": "Write what recharges you first."
+    }
   }
 }

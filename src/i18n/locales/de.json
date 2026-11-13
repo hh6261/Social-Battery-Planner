@@ -231,5 +231,72 @@
       "lowest": "Schwächster Tag: {{day}} ({{percent}})",
       "highest": "Stärkster Tag: {{day}} ({{percent}})"
     }
+  },
+  "patterns": {
+    "title": "Muster",
+    "period_one": "Basierend auf deinen Check-ins des letzten {{count}} Tages.",
+    "period_other": "Basierend auf deinen Check-ins der letzten {{count}} Tage.",
+    "filterLabel": "Muster anzeigen nach",
+    "filter": {
+      "who": "Wer",
+      "activity": "Aktivität",
+      "time": "Tageszeit"
+    },
+    "drains": "Kostet mich meist Energie",
+    "recharges": "Lädt mich meist auf",
+    "lowTimes": "Mein Akku ist meist schwächer",
+    "highTimes": "Mein Akku ist meist stärker",
+    "bucket": {
+      "morning": "Morgen",
+      "afternoon": "Nachmittag",
+      "evening": "Abend",
+      "night": "Nacht"
+    },
+    "strength": {
+      "1": "Etwas",
+      "2": "Deutlich",
+      "3": "Stark"
+    },
+    "itemLabel": "{{name}}: {{strength}}, {{count}}",
+    "none": "Noch nichts Eindeutiges.",
+    "more": "{{count}} weitere anzeigen",
+    "less": "Weniger anzeigen",
+    "lowData_one": "Bewerte bei {{count}} weiteren Check-in, wie er sich angefühlt hat, um deine Muster zu sehen.",
+    "lowData_other": "Bewerte bei {{count}} weiteren Check-ins, wie sie sich angefühlt haben, um deine Muster zu sehen.",
+    "toRecharge": "Ideen zum Aufladen"
+  },
+  "recharge": {
+    "title": "Ideen zum Aufladen",
+    "iHave": "Ich habe",
+    "myList": "Meine Liste",
+    "nothingFits": "Nichts auf deiner Liste passt in diese Zeit. Wähle mehr Zeit oder füge etwas Eigenes hinzu.",
+    "start": "Starten",
+    "startLabel": "{{name}} starten",
+    "started": "„{{name}}“ steht im heutigen Plan. Viel Freude.",
+    "removeLabel": "{{name}} von meiner Liste entfernen",
+    "removeConfirm": {
+      "title": "„{{name}}“ von der Liste entfernen?",
+      "confirm": "Entfernen"
+    },
+    "rainingNow": "Gerade regnet es, vielleicht später.",
+    "fromCheckIns": "Vorschläge aus deinen Check-ins",
+    "noSuggestions": "Wenn du Check-ins als aufladend bewertest, erscheinen sie hier.",
+    "add": "Hinzufügen",
+    "addLabel": "{{name}} zu meiner Liste hinzufügen",
+    "addOwn": "Eigenes hinzufügen",
+    "nameLabel": "Was lädt dich auf?",
+    "namePlaceholder": "Zum Beispiel Lesen im Park",
+    "ownMinutes": "Wird als Aktivität mit {{minutes}} Minuten gespeichert (die oben gewählte Zeit).",
+    "addOwnButton": "Zur Liste hinzufügen",
+    "defaults": {
+      "alone": "Zeit für mich",
+      "walk": "Spaziergang draußen",
+      "callFriend": "Freund anrufen"
+    },
+    "error": {
+      "load": "Deine Liste konnte nicht geladen werden.",
+      "save": "Das hat nicht geklappt. Bitte versuche es erneut.",
+      "name": "Schreib zuerst, was dich auflädt."
+    }
   }
 }
