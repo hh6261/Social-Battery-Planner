@@ -237,7 +237,7 @@ function EventForm({ types, existing }: { types: EventType[]; existing: PlannedE
               <Pressable
                 key={type.id}
                 accessibilityRole="radio"
-                accessibilityState={{ checked: selected }}
+                aria-checked={selected}
                 onPress={() => pickType(type)}
                 style={[styles.chip, selected && styles.chipSelected]}
               >
@@ -300,7 +300,7 @@ function EventForm({ types, existing }: { types: EventType[]; existing: PlannedE
               <Pressable
                 key={offset}
                 accessibilityRole="radio"
-                accessibilityState={{ checked: selected }}
+                aria-checked={selected}
                 onPress={() => {
                   setDayOffset(offset);
                   if (error === 'past') setError(null);
@@ -377,7 +377,8 @@ function EventForm({ types, existing }: { types: EventType[]; existing: PlannedE
 
       <Pressable
         accessibilityRole="button"
-        accessibilityState={{ disabled: saving, busy: saving }}
+        aria-disabled={saving}
+        aria-busy={saving}
         disabled={saving}
         onPress={save}
         style={({ pressed }) => [styles.saveButton, (pressed || saving) && styles.pressed]}
@@ -476,7 +477,7 @@ const styles = StyleSheet.create({
   chipSelected: { backgroundColor: colors.primarySurface, borderColor: colors.primary, borderWidth: 2 },
   chipText: { fontSize: 15, color: colors.text },
   chipTextSelected: { color: colors.primary, fontWeight: '700' },
-  stepperRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, flexWrap: 'wrap' },
+  stepperRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, flexWrap: 'wrap' },
   stepperLabel: { flexGrow: 1, flexBasis: 100 },
   stepButton: {
     width: minTouchSize,
@@ -488,7 +489,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   stepButtonText: { fontSize: 22, color: colors.primary, fontWeight: '600' },
-  stepValue: { minWidth: 90, textAlign: 'center', fontSize: 17, fontWeight: '600', color: colors.text },
+  stepValue: { minWidth: 64, textAlign: 'center', fontSize: 17, fontWeight: '600', color: colors.text },
   switchRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   switchText: { flex: 1, gap: 2 },
   error: {

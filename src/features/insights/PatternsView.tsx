@@ -79,7 +79,7 @@ export default function PatternsView() {
             <Pressable
               key={f}
               accessibilityRole="radio"
-              accessibilityState={{ checked: selected }}
+              aria-checked={selected}
               onPress={() => setFilter(f)}
               style={[styles.chip, selected && styles.chipSelected]}
             >
