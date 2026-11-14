@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Share } from 'react-native';
+import { useState } from "react";
+import { Share } from "react-native";
 import {
   AppDialog,
   AppText,
@@ -10,13 +10,13 @@ import {
   SectionLabel,
   Toggle,
   useDialog,
-} from '../../components';
-import { useAuth, useCurrentUser } from '../../context/AuthContext';
-import { useSaveSettings } from '../../hooks/useSaveSettings';
-import { dataService } from '../../services';
-import { makeStyles } from '../../theme/ThemeProvider';
-import { openAppLink } from '../../utils/links';
-import { requestPhotoPermission } from '../../utils/photoPicker';
+} from "../../components";
+import { useAuth, useCurrentUser } from "../../context/AuthContext";
+import { useSaveSettings } from "../../hooks/useSaveSettings";
+import { dataService } from "../../services";
+import { makeStyles } from "../../theme/ThemeProvider";
+import { openAppLink } from "../../utils/links";
+import { requestPhotoPermission } from "../../utils/photoPicker";
 
 /** Screen 30 · Privacy & Data (includes the Delete account dialog) */
 export function PrivacyDataScreen() {
@@ -40,13 +40,13 @@ export function PrivacyDataScreen() {
       const granted = await requestPhotoPermission();
       if (!granted) {
         showMessage(
-          'Photo access is off',
-          'To use this, allow Social Battery to access your photos in your phone’s settings.',
+          "Photo access is off",
+          "To use this, allow Social Battery to access your photos in your phone’s settings.",
         );
         return;
       }
     }
-    setConnection('photos', value);
+    setConnection("photos", value);
   };
 
   const exportData = async () => {
@@ -54,9 +54,12 @@ export function PrivacyDataScreen() {
     setExporting(true);
     try {
       const json = await dataService.exportData(user.id);
-      await Share.share({ title: 'Social Battery data export', message: json });
+      await Share.share({ title: "Social Battery data export", message: json });
     } catch {
-      showMessage('Couldn’t export your data', 'Please check your connection and try again.');
+      showMessage(
+        "Couldn’t export your data",
+        "Please check your connection and try again.",
+      );
     } finally {
       setExporting(false);
     }
@@ -70,12 +73,12 @@ export function PrivacyDataScreen() {
       // RootNavigator swaps back to the Splash screen.
     } catch {
       setDeleting(false);
-      setDeleteError('We couldn’t delete your account. Please try again.');
+      setDeleteError("We couldn’t delete your account. Please try again.");
     }
   };
 
   return (
-    <Screen edges={['top']}>
+    <Screen edges={["top"]}>
       <BackLink label="Profile" />
       <AppText variant="eyebrow" style={styles.eyebrow}>
         Privacy & Data
@@ -84,38 +87,52 @@ export function PrivacyDataScreen() {
         Your data and plans are private
       </AppText>
       <AppText variant="body" color="muted" style={styles.intro}>
-        You can choose what the app connects to and how your information is handled.
+        You can choose what the app connects to and how your information is
+        handled.
       </AppText>
 
       <SectionLabel>Connections</SectionLabel>
       <ListGroup>
         <ListRow
-          title="Messages"
-          subtitle="Use message details you choose to share"
-          right={
-            <Toggle value={connections.messages} onValueChange={(v) => setConnection('messages', v)} accessibilityLabel="Messages connection" />
-          }
-        />
-        <ListRow
           title="Calendar"
           subtitle="Help you plan around upcoming events"
           right={
-            <Toggle value={connections.calendar} onValueChange={(v) => setConnection('calendar', v)} accessibilityLabel="Calendar connection" />
+            <Toggle
+              value={connections.calendar}
+              onValueChange={(v) => setConnection("calendar", v)}
+              accessibilityLabel="Calendar connection"
+            />
           }
         />
         <ListRow
           title="Photos"
           subtitle="Let you choose a profile picture"
-          right={<Toggle value={connections.photos} onValueChange={togglePhotos} accessibilityLabel="Photos connection" />}
+          right={
+            <Toggle
+              value={connections.photos}
+              onValueChange={togglePhotos}
+              accessibilityLabel="Photos connection"
+            />
+          }
         />
       </ListGroup>
 
       <SectionLabel>Privacy</SectionLabel>
       <ListGroup>
-        <ListRow title="Terms & Conditions" emphasis={false} onPress={() => openAppLink('terms', 'Terms & Conditions', showMessage)} />
-        <ListRow title="Help & FAQ" emphasis={false} onPress={() => openAppLink('helpFaq', 'Help & FAQ', showMessage)} />
         <ListRow
-          title={exporting ? 'Preparing export…' : 'Export data'}
+          title="Terms & Conditions"
+          emphasis={false}
+          onPress={() =>
+            openAppLink("terms", "Terms & Conditions", showMessage)
+          }
+        />
+        <ListRow
+          title="Help & FAQ"
+          emphasis={false}
+          onPress={() => openAppLink("helpFaq", "Help & FAQ", showMessage)}
+        />
+        <ListRow
+          title={exporting ? "Preparing export…" : "Export data"}
           emphasis={false}
           disabled={exporting}
           onPress={exportData}
@@ -125,7 +142,11 @@ export function PrivacyDataScreen() {
 
       <SectionLabel>Delete account</SectionLabel>
       <ListGroup style={styles.lastGroup}>
-        <ListRow title="Delete account" emphasis={false} onPress={() => setDeleteOpen(true)} />
+        <ListRow
+          title="Delete account"
+          emphasis={false}
+          onPress={() => setDeleteOpen(true)}
+        />
       </ListGroup>
 
       <AppDialog
