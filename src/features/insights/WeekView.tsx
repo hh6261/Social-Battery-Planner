@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 import { useFocusEffect } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
@@ -11,7 +11,7 @@ import {
   formatPercent,
   formatWeekdayShort,
 } from '@/i18n/format';
-import { colors, minTouchSize, spacing } from '@/theme/colors';
+import { type LegacyColors, makeLegacyStyles, minTouchSize, useLegacyColors } from '@/theme/legacy';
 
 import {
   bandOf,
@@ -28,16 +28,17 @@ type State =
   | { status: 'error' }
   | { status: 'ready'; days: DayStats[]; summary: WeekSummary };
 
-const bandColor: Record<Band, string> = {
+const bandColors = (colors: LegacyColors): Record<Band, string> => ({
   high: colors.batteryHigh,
   medium: colors.batteryMid,
   low: colors.batteryLow,
-};
+});
 
 const BAR_AREA = 150;
 
 /** Weekly Overview (merged screen 21, Roko's wireframe 02). */
 export default function WeekView() {
+  const styles = useStyles();
   const { t } = useTranslation();
   const thisWeek = startOfWeek(new Date());
   const [weekStart, setWeekStart] = useState<Date>(thisWeek);
@@ -129,6 +130,9 @@ export default function WeekView() {
 
 /** One column per day: the bar spans the lowest to the highest battery of that day. */
 function WeekBars({ days }: { days: DayStats[] }) {
+  const styles = useStyles();
+  const colors = useLegacyColors();
+  const bandColor = bandColors(colors);
   const { t } = useTranslation();
   return (
     <View style={styles.bars}>
@@ -169,6 +173,7 @@ function WeekBars({ days }: { days: DayStats[] }) {
 }
 
 function SummaryBox({ summary }: { summary: WeekSummary }) {
+  const styles = useStyles();
   const { t } = useTranslation();
   if (summary.kind === 'lowData') {
     return (
@@ -195,7 +200,7 @@ function SummaryBox({ summary }: { summary: WeekSummary }) {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeLegacyStyles((colors, spacing) => ({
   content: { padding: spacing.lg, gap: spacing.lg, paddingBottom: spacing.xl * 2 },
   dateRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   arrow: {
@@ -224,4 +229,4 @@ const styles = StyleSheet.create({
   box: { gap: spacing.xs, padding: spacing.md, borderRadius: 10, backgroundColor: colors.surface },
   boxTitle: { fontSize: 16, fontWeight: '700', color: colors.text },
   boxText: { fontSize: 15, color: colors.text },
-});
+}));

@@ -3,7 +3,6 @@ import {
   Alert,
   Pressable,
   ScrollView,
-  StyleSheet,
   Switch,
   Text,
   TextInput,
@@ -22,7 +21,7 @@ import { RECHARGE_TYPE_KEY } from '@/features/planner/plannerLogic';
 import { formatNumber } from '@/i18n/format';
 import { weatherCodeToCondition } from '@/services/weatherCodes';
 import { getCurrentWeather } from '@/services/weatherService';
-import { colors, minTouchSize, spacing } from '@/theme/colors';
+import { makeLegacyStyles, minTouchSize, useLegacyColors } from '@/theme/legacy';
 
 type Minutes = 15 | 30 | 60;
 const MINUTE_OPTIONS: Minutes[] = [15, 30, 60];
@@ -44,6 +43,7 @@ const WET = new Set(['rain', 'showers', 'drizzle', 'thunderstorm', 'snow']);
  * and from the low-battery screen (15). "Start" puts the activity in today's plan.
  */
 export default function RechargeScreen() {
+  const styles = useStyles();
   const { t } = useTranslation();
   const [minutes, setMinutes] = useState<Minutes>(30);
   const [state, setState] = useState<State>({ status: 'loading' });
@@ -277,6 +277,8 @@ function AddOwn({
   onAdded: () => void;
   onError: () => void;
 }) {
+  const styles = useStyles();
+  const colors = useLegacyColors();
   const { t } = useTranslation();
   const [name, setName] = useState('');
   const [isOutdoor, setIsOutdoor] = useState(false);
@@ -348,7 +350,7 @@ function AddOwn({
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeLegacyStyles((colors, spacing) => ({
   screen: { flex: 1, backgroundColor: colors.background },
   content: { padding: spacing.lg, gap: spacing.xl, paddingBottom: spacing.xl * 2 },
   field: { gap: spacing.sm },
@@ -427,4 +429,4 @@ const styles = StyleSheet.create({
   },
   primaryButtonText: { color: colors.onPrimary, fontSize: 17, fontWeight: '700' },
   pressed: { opacity: 0.8 },
-});
+}));

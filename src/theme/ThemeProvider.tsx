@@ -3,6 +3,7 @@ import { StyleSheet, useColorScheme, type ImageStyle, type TextStyle, type ViewS
 import { useSettings } from '../context/SettingsContext';
 import {
   borderWidth,
+  colorblindPalette,
   darkPalette,
   fontScales,
   lightPalette,
@@ -10,9 +11,13 @@ import {
   radius,
   shadowOffset,
   spacing,
+  type ThemeName,
 } from './tokens';
 
 export interface Theme {
+  /** Which palette is active. */
+  name: ThemeName;
+  /** Light or dark base, used for the status bar. The colour-blind theme is light. */
   scheme: 'light' | 'dark';
   colors: Palette;
   spacing: typeof spacing;
@@ -33,12 +38,13 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const { theme: themePref, fontSize } = settings.display;
 
   const theme = useMemo<Theme>(() => {
-    const scheme =
+    const name: ThemeName =
       themePref === 'device' ? (deviceScheme === 'dark' ? 'dark' : 'light') : themePref;
     const fontScale = fontScales[fontSize];
     return {
-      scheme,
-      colors: scheme === 'dark' ? darkPalette : lightPalette,
+      name,
+      scheme: name === 'dark' ? 'dark' : 'light',
+      colors: name === 'dark' ? darkPalette : name === 'colorblind' ? colorblindPalette : lightPalette,
       spacing,
       radius,
       borderWidth,

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 import { router, useFocusEffect } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
@@ -8,23 +8,24 @@ import { listCheckInsByDay } from '@/db/checkIns';
 import type { CheckIn } from '@/db/types';
 import { addDays, startOfDay } from '@/features/planner/dates';
 import { formatDayHeading, formatList, formatPercent, formatTime } from '@/i18n/format';
-import { colors, minTouchSize, spacing } from '@/theme/colors';
+import { type LegacyColors, makeLegacyStyles, minTouchSize, useLegacyColors } from '@/theme/legacy';
 
 import { bandOf, chartX, type Band } from './insightsLogic';
 
 type State = { status: 'loading' } | { status: 'error' } | { status: 'ready'; items: CheckIn[] };
 
-const bandColor: Record<Band, string> = {
+const bandColors = (colors: LegacyColors): Record<Band, string> => ({
   high: colors.batteryHigh,
   medium: colors.batteryMid,
   low: colors.batteryLow,
-};
+});
 
 const CHART_HEIGHT = 168;
 const DOT = 14;
 
 /** Daily Timeline (merged screen 20, Roko's wireframe 01). */
 export default function DayView() {
+  const styles = useStyles();
   const { t } = useTranslation();
   const today = startOfDay(new Date());
   const [day, setDay] = useState<Date>(today);
@@ -129,6 +130,9 @@ export default function DayView() {
  * one-sentence summary; the list under the chart has every check-in as text.
  */
 function DayChart({ items, showNow }: { items: CheckIn[]; showNow: boolean }) {
+  const styles = useStyles();
+  const colors = useLegacyColors();
+  const bandColor = bandColors(colors);
   const { t } = useTranslation();
   const [width, setWidth] = useState(0);
   const levels = items.map((c) => c.batteryLevel);
@@ -193,6 +197,9 @@ function DayChart({ items, showNow }: { items: CheckIn[]; showNow: boolean }) {
 }
 
 function CheckInRow({ item }: { item: CheckIn }) {
+  const styles = useStyles();
+  const colors = useLegacyColors();
+  const bandColor = bandColors(colors);
   const { t } = useTranslation();
   const band = bandOf(item.batteryLevel);
   const moods = item.moods.map((m) => t(`checkin.mood.options.${m}`, { defaultValue: m }));
@@ -215,7 +222,7 @@ function CheckInRow({ item }: { item: CheckIn }) {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeLegacyStyles((colors, spacing) => ({
   content: { padding: spacing.lg, gap: spacing.md, paddingBottom: spacing.xl * 2 },
   dateRow: { flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' },
   arrow: {
@@ -231,7 +238,7 @@ const styles = StyleSheet.create({
   arrowText: { fontSize: 26, color: colors.primary, lineHeight: 28 },
   dateText: { flex: 1, textAlign: 'center', fontSize: 18, fontWeight: '700', color: colors.text },
   emptyBox: { minHeight: 260 },
-  chartRow: { flexDirection: 'row', gap: spacing.sm },
+  chartRow: { flexDirection: 'row', gap: spacing.sm, direction: 'ltr' },
   bandLabels: { height: CHART_HEIGHT, justifyContent: 'space-around' },
   bandLabel: { fontSize: 12, color: colors.textMuted },
   chart: { flex: 1, height: CHART_HEIGHT, borderLeftWidth: 1, borderBottomWidth: 1, borderColor: colors.border },
@@ -245,9 +252,9 @@ const styles = StyleSheet.create({
     borderStyle: 'dashed',
     borderColor: colors.textMuted,
   },
-  nowText: { fontSize: 11, color: colors.textMuted, marginLeft: 3 },
+  nowText: { fontSize: 11, color: colors.textMuted, marginStart: 3 },
   dot: { position: 'absolute', width: DOT, height: DOT, borderRadius: DOT / 2, borderWidth: 2, borderColor: colors.background },
-  hourRow: { flexDirection: 'row', justifyContent: 'space-between', marginLeft: 48 },
+  hourRow: { flexDirection: 'row', justifyContent: 'space-between', marginLeft: 48, direction: 'ltr' },
   hourLabel: { fontSize: 12, color: colors.textMuted },
   sectionTitle: { fontSize: 17, fontWeight: '700', color: colors.text, marginTop: spacing.sm },
   row: {
@@ -262,4 +269,4 @@ const styles = StyleSheet.create({
   rowLevel: { fontSize: 15, fontWeight: '700' },
   rowText: { fontSize: 15, color: colors.text },
   rowMuted: { fontSize: 14, color: colors.textMuted },
-});
+}));
