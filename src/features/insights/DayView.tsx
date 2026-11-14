@@ -75,7 +75,7 @@ export default function DayView() {
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={t('insights.day.next')}
-          accessibilityState={{ disabled: isToday }}
+          aria-disabled={isToday}
           disabled={isToday}
           onPress={() => changeDay(1)}
           style={[styles.arrow, isToday && styles.arrowDisabled]}

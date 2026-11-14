@@ -28,7 +28,7 @@ export default function InsightsScreen() {
             <Pressable
               key={s}
               accessibilityRole="tab"
-              accessibilityState={{ selected }}
+              aria-selected={selected}
               onPress={() => setSegment(s)}
               style={[styles.segment, selected && styles.segmentSelected]}
             >

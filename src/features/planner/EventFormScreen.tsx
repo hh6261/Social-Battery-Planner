@@ -377,7 +377,8 @@ function EventForm({ types, existing }: { types: EventType[]; existing: PlannedE
 
       <Pressable
         accessibilityRole="button"
-        accessibilityState={{ disabled: saving, busy: saving }}
+        aria-disabled={saving}
+        aria-busy={saving}
         disabled={saving}
         onPress={save}
         style={({ pressed }) => [styles.saveButton, (pressed || saving) && styles.pressed]}

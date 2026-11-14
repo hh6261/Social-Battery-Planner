@@ -95,7 +95,7 @@ export default function WeekView() {
         <Pressable
           accessibilityRole="button"
           accessibilityLabel={t('insights.week.next')}
-          accessibilityState={{ disabled: isThisWeek }}
+          aria-disabled={isThisWeek}
           disabled={isThisWeek}
           onPress={() => changeWeek(1)}
           style={[styles.arrow, isThisWeek && styles.arrowDisabled]}
