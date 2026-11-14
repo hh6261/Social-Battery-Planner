@@ -28,8 +28,23 @@ export type UserProfile = {
   id: 1;
   displayName: string | null;
   locale: string; // e.g. "en", "hr", "ja"
+  birthday: string | null; // yyyy-mm-dd (migration 003)
+  photoUri: string | null; // (migration 003)
+  onboardedAtUtc: string | null; // NULL until personalization is finished (migration 003)
   createdAtUtc: string;
   updatedAtUtc: string;
+};
+
+/** The local account (migration 003). The password hash never leaves src/db/account.ts. */
+export type AccountRecord = {
+  email: string;
+  createdAtUtc: string;
+  updatedAtUtc: string;
+};
+
+export type AuthSessionRecord = {
+  remember: boolean;
+  signedInAtUtc: string;
 };
 
 export type JournalEntry = {
