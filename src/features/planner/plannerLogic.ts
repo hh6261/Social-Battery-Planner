@@ -5,7 +5,7 @@ import { formatNumber } from '@/i18n/format';
 import type { DailyForecast } from '@/services/weatherService';
 import { weatherCodeToCondition } from '@/services/weatherCodes';
 
-import { localDayKey } from './dates';
+import { addDays, localDayKey, startOfDay } from './dates';
 
 // Pure functions for the planner (no database, no React), so they are easy to test.
 
@@ -48,13 +48,16 @@ export function needsRecharge(events: PlannedEvent[]): boolean {
 /**
  * Where the quiet time goes: right after the last event if it still fits before midnight,
  * otherwise just before the first event, so it always lands on the day it was offered for.
+ * If the first event starts before 00:30 there is no room before it either, so the quiet
+ * time starts at the beginning of that day instead of slipping into the day before.
  */
 export function rechargeStart(events: PlannedEvent[]): Date {
   const first = new Date(Math.min(...events.map((e) => Date.parse(e.startsAtUtc))));
   const afterLast = new Date(Math.max(...events.map((e) => endOf(e).getTime())));
-  const midnight = new Date(first.getFullYear(), first.getMonth(), first.getDate() + 1);
+  const dayStart = startOfDay(first);
+  const midnight = addDays(dayStart, 1);
   if (afterLast.getTime() + RECHARGE_MINUTES * 60_000 <= midnight.getTime()) return afterLast;
-  return new Date(first.getTime() - RECHARGE_MINUTES * 60_000);
+  return new Date(Math.max(first.getTime() - RECHARGE_MINUTES * 60_000, dayStart.getTime()));
 }
 
 /** True when an outdoor plan is likely to get wet: rain, showers, drizzle, storm, snow or 50 %+ chance. */
