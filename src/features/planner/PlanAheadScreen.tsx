@@ -200,7 +200,7 @@ function CityPicker({ city, onChange }: { city: City; onChange: (c: City) => voi
             <Pressable
               key={c.id}
               accessibilityRole="radio"
-              accessibilityState={{ checked: selected }}
+              aria-checked={selected}
               onPress={() => onChange(c)}
               style={[styles.chip, selected && styles.chipSelected]}
             >

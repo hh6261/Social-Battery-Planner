@@ -166,7 +166,7 @@ export default function RechargeScreen() {
               <Pressable
                 key={m}
                 accessibilityRole="radio"
-                accessibilityState={{ checked: selected }}
+                aria-checked={selected}
                 onPress={() => setMinutes(m)}
                 style={[styles.chip, selected && styles.chipSelected]}
               >
