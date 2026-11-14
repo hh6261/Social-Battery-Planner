@@ -58,6 +58,10 @@ function RootStack() {
         <Stack.Protected guard={status === 'signedIn'}>
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="checkin" />
+          <Stack.Screen name="planner/index" options={{ headerShown: true }} />
+          <Stack.Screen name="planner/event" options={{ headerShown: true }} />
+          <Stack.Screen name="insights/index" options={{ headerShown: true }} />
+          <Stack.Screen name="recharge" options={{ headerShown: true }} />
           <Stack.Screen name="dev-db" options={{ headerShown: true }} />
         </Stack.Protected>
       </Stack>

@@ -3,8 +3,8 @@
 //
 // The app is single-user and offline: the account lives only on this device,
 // so like user_profile, `account`, `auth_session` and `user_settings` are single-row tables.
-export const migration003 = {
-  version: 3,
+export const migration006 = {
+  version: 6,
   sql: `
 ALTER TABLE user_profile ADD COLUMN birthday TEXT;           -- yyyy-mm-dd
 ALTER TABLE user_profile ADD COLUMN photo_uri TEXT;          -- file in the app's document folder

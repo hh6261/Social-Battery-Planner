@@ -21,11 +21,15 @@
     }
   },
   "mood": {
-    "question": "How are you feeling?",
-    "hint": "Choose one or more.",
+    "question": "How do you feel?",
+    "hint": "Select all that apply.",
+    "selectedCount_one": "{{count}} emotion selected",
+    "selectedCount_other": "{{count}} emotions selected",
     "loading": "Loading moods…",
     "error": "The moods could not be loaded.",
     "empty": "No moods available.",
+    "showList": "Show as list",
+    "showWheel": "Show as wheel",
     "options": {
       "calm": "Calm",
       "happy": "Happy",
@@ -34,7 +38,13 @@
       "tired": "Tired",
       "anxious": "Anxious",
       "irritable": "Irritable",
-      "overwhelmed": "Overwhelmed"
+      "overwhelmed": "Overwhelmed",
+      "bad": "Bad",
+      "fearful": "Fearful",
+      "angry": "Angry",
+      "disgusted": "Disgusted",
+      "sad": "Sad",
+      "surprised": "Surprised"
     }
   }
 },
@@ -76,6 +86,218 @@
       "server": "The weather service is unavailable right now.",
       "empty": "No weather data found for this place.",
       "malformed": "The weather service sent unexpected data."
+    }
+  },
+  "state": {
+    "loading": {
+      "title": "Loading…"
+    },
+    "empty": {
+      "title": "Nothing here yet",
+      "message": "When you add something, it will show up here."
+    },
+    "error": {
+      "title": "Something went wrong",
+      "message": "The data could not be loaded. Please try again."
+    },
+    "offline": {
+      "title": "You are offline",
+      "message": "Check your connection and try again."
+    },
+    "retry": "Try again"
+  },
+  "eventType": {
+    "family": "Family gathering",
+    "coffee": "Coffee with a friend",
+    "work": "Work meeting",
+    "party": "Party",
+    "walk": "Time alone"
+  },
+  "planner": {
+    "title": "Plan ahead",
+    "add": "+ Add event",
+    "loadError": "Your events could not be loaded.",
+    "empty": {
+      "title": "No events in the next 7 days",
+      "message": "Add an event to see how much it will drain you."
+    },
+    "forecastFor": "Forecast for:",
+    "noForecast": "Your events are shown without a forecast.",
+    "forecast": "{{condition}}, up to {{temp}} °C",
+    "forecastWithRain": "{{condition}}, up to {{temp}} °C, {{rain}} chance of rain",
+    "drains": "Drains about {{percent}}",
+    "outdoors": "Outdoors",
+    "rainHint": "Rain is likely. Keep an indoor option ready.",
+    "openHint": "Opens the event to edit or delete it",
+    "quickAdd": {
+      "question": "Take {{minutes}} minutes alone?",
+      "add": "Add",
+      "hint": "Adds quiet time to this day",
+      "eventTitle": "Quiet time"
+    },
+    "duration": {
+      "minutes": "{{minutes}} min",
+      "hours": "{{hours}} h",
+      "hoursMinutes": "{{hours}} h {{minutes}} min"
+    }
+  },
+  "eventForm": {
+    "titleNew": "New event",
+    "titleEdit": "Edit event",
+    "type": "What kind of event?",
+    "name": "Title",
+    "namePlaceholder": "For example, Ana’s birthday dinner",
+    "location": "Place (optional)",
+    "locationPlaceholder": "For example, Zagreb",
+    "day": "Day",
+    "today": "Today",
+    "tomorrow": "Tomorrow",
+    "time": "Time",
+    "earlier": "{{minutes}} minutes earlier",
+    "later": "{{minutes}} minutes later",
+    "duration": "Duration",
+    "shorter": "{{minutes}} minutes shorter",
+    "longer": "{{minutes}} minutes longer",
+    "drain": "Expected drain",
+    "lessDrain": "Less drain",
+    "moreDrain": "More drain",
+    "drainHelp": "How much of your social battery this will probably use. It starts at the usual value for the type.",
+    "outdoors": "Outdoors",
+    "outdoorsHelp": "We will check the forecast for this day.",
+    "labelValue": "{{label}}: {{value}}",
+    "save": "Save event",
+    "saving": "Saving…",
+    "delete": "Delete event",
+    "back": "Go back",
+    "deleteConfirm": {
+      "title": "Delete this event?",
+      "message": "This cannot be undone.",
+      "cancel": "Cancel",
+      "confirm": "Delete"
+    },
+    "error": {
+      "type": "Pick what kind of event this is.",
+      "title": "Give the event a title.",
+      "past": "That time has already passed. Pick a later time.",
+      "save": "The event was not saved. Please try again.",
+      "load": "The event could not be loaded.",
+      "notFound": "This event no longer exists."
+    }
+  },
+  "insights": {
+    "title": "Insights",
+    "loadError": "Your check-ins could not be loaded.",
+    "segment": {
+      "day": "Day",
+      "week": "Week"
+    },
+    "band": {
+      "high": "High",
+      "medium": "Medium",
+      "low": "Low"
+    },
+    "day": {
+      "previous": "Previous day",
+      "next": "Next day",
+      "today": "Today",
+      "now": "Now",
+      "empty": {
+        "title": "No check-ins on this day",
+        "message": "Each check-in you record shows up here as a point on the chart."
+      },
+      "checkInNow": "Check in now",
+      "checkIns_one": "{{count}} check-in",
+      "checkIns_other": "{{count}} check-ins",
+      "chartSummary_one": "Battery chart: {{count}} check-in at {{min}}",
+      "chartSummary_other": "Battery chart: {{count}} check-ins, from {{min}} to {{max}}",
+      "level": "{{percent}} · {{band}}"
+    },
+    "week": {
+      "previous": "Previous week",
+      "next": "Next week",
+      "range": "{{start}} – {{end}}",
+      "dayLabel": "{{day}}: from {{min}} to {{max}}, average {{avg}}",
+      "dayNoData": "{{day}}: no check-ins",
+      "lowData": {
+        "title": "Still learning",
+        "message_one": "Check in on {{count}} more day this week to see your highs, lows and trend.",
+        "message_other": "Check in on {{count}} more days this week to see your highs, lows and trend."
+      },
+      "trend": {
+        "improved": "Your social battery has improved since last week!",
+        "dropped": "Your social battery was lower than last week. Be gentle with yourself.",
+        "steady": "Your social battery was about the same as last week.",
+        "noCompare": "Not enough check-ins last week to compare yet."
+      },
+      "lowest": "Lowest day: {{day}} ({{percent}})",
+      "highest": "Highest day: {{day}} ({{percent}})"
+    }
+  },
+  "patterns": {
+    "title": "Patterns",
+    "period_one": "Based on your check-ins from the last {{count}} day.",
+    "period_other": "Based on your check-ins from the last {{count}} days.",
+    "filterLabel": "Show patterns by",
+    "filter": {
+      "who": "Who",
+      "activity": "Activity",
+      "time": "Time of day"
+    },
+    "drains": "Usually drains me",
+    "recharges": "Usually recharges me",
+    "lowTimes": "My battery is usually lower",
+    "highTimes": "My battery is usually higher",
+    "bucket": {
+      "morning": "Morning",
+      "afternoon": "Afternoon",
+      "evening": "Evening",
+      "night": "Night"
+    },
+    "strength": {
+      "1": "Slightly",
+      "2": "Clearly",
+      "3": "Strongly"
+    },
+    "itemLabel": "{{name}}: {{strength}}, {{count}}",
+    "none": "Nothing clear yet.",
+    "more": "Show {{count}} more",
+    "less": "Show fewer",
+    "lowData_one": "Rate how {{count}} more check-in felt (drained or recharged) to see your patterns.",
+    "lowData_other": "Rate how {{count}} more check-ins felt (drained or recharged) to see your patterns.",
+    "toRecharge": "See recharge ideas"
+  },
+  "recharge": {
+    "title": "Recharge ideas",
+    "iHave": "I have",
+    "myList": "My list",
+    "nothingFits": "Nothing in your list fits this time. Pick more time or add your own.",
+    "start": "Start",
+    "startLabel": "Start {{name}}",
+    "started": "“{{name}}” is in today’s plan. Enjoy it.",
+    "removeLabel": "Remove {{name}} from my list",
+    "removeConfirm": {
+      "title": "Remove “{{name}}” from your list?",
+      "confirm": "Remove"
+    },
+    "rainingNow": "It is raining right now, maybe later.",
+    "fromCheckIns": "Suggested from your check-ins",
+    "noSuggestions": "When you rate check-ins as recharging, they will show up here.",
+    "add": "Add",
+    "addLabel": "Add {{name}} to my list",
+    "addOwn": "Add your own",
+    "nameLabel": "What recharges you?",
+    "namePlaceholder": "For example, reading in the park",
+    "ownMinutes": "It will be saved as a {{minutes}}-minute activity (the time chosen above).",
+    "addOwnButton": "Add to my list",
+    "defaults": {
+      "alone": "Time alone",
+      "walk": "Walk outside",
+      "callFriend": "Call a friend"
+    },
+    "error": {
+      "load": "Your recharge list could not be loaded.",
+      "save": "That did not work. Please try again.",
+      "name": "Write what recharges you first."
     }
   }
 }

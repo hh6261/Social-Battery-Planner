@@ -1,5 +1,12 @@
-import { PlaceholderScreen } from '@/screens/PlaceholderScreen';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import PlanAheadScreen from '@/features/planner/PlanAheadScreen';
 
+// Tracker tab shows the team's Plan Ahead screen. It normally sits under a
+// header, so the safe area keeps it clear of the status bar here.
 export default function TrackerTab() {
-  return <PlaceholderScreen title="Tracker" owner="The Journal (tab 2)" />;
+  return (
+    <SafeAreaView style={{ flex: 1 }} edges={['top']}>
+      <PlanAheadScreen />
+    </SafeAreaView>
+  );
 }

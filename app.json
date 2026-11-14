@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "sbp-temp",
-    "slug": "sbp-temp",
+    "name": "Social Battery Planner",
+    "slug": "Social_Battery_Planner",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
