@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { router, useFocusEffect, type Href } from 'expo-router';
 import { useTranslation } from 'react-i18next';
@@ -105,7 +105,11 @@ export default function PlanAheadScreen() {
     setAttempt((n) => n + 1);
   };
 
+  // A quick second tap would otherwise add the same quiet time twice before the list reloads.
+  const addingQuietTime = useRef(false);
   const addQuietTime = async (dayEvents: PlannedEvent[]) => {
+    if (addingQuietTime.current) return;
+    addingQuietTime.current = true;
     try {
       const types = await listEventTypes();
       const quiet = types.find((x) => x.key === RECHARGE_TYPE_KEY);
@@ -122,6 +126,8 @@ export default function PlanAheadScreen() {
     } catch (e) {
       if (__DEV__) console.warn('[planner] quick add failed', e);
       setEventsState({ status: 'error' });
+    } finally {
+      addingQuietTime.current = false;
     }
   };
 

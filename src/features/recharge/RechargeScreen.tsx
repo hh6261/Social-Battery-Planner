@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import {
   Alert,
   Pressable,
@@ -90,35 +90,49 @@ export default function RechargeScreen() {
 
   const nameOf = (a: RechargeActivity) => (a.key ? t(`recharge.defaults.${a.key}`) : a.name ?? '');
 
-  const start = async (a: RechargeActivity) => {
+  // One save at a time: a quick double tap must not start the same activity or add the same idea twice.
+  const busy = useRef(false);
+  const once = async (action: () => Promise<void>) => {
+    if (busy.current) return;
+    busy.current = true;
     try {
-      const types = await listEventTypes();
-      const quiet = types.find((x) => x.key === RECHARGE_TYPE_KEY);
-      if (!quiet) return;
-      const now = new Date();
-      await createEvent({
-        eventTypeId: quiet.id,
-        title: nameOf(a),
-        startsAtUtc: now.toISOString(),
-        endsAtUtc: new Date(now.getTime() + a.minutes * 60_000).toISOString(),
-        expectedDrain: 0,
-        isOutdoor: a.isOutdoor,
-      });
-      setNotice(t('recharge.started', { name: nameOf(a) }));
-    } catch (e) {
-      if (__DEV__) console.warn('[recharge] start failed', e);
-      setNotice(t('recharge.error.save'));
+      await action();
+    } finally {
+      busy.current = false;
     }
   };
 
-  const addSuggestion = async (s: Suggestion) => {
-    try {
-      await addRechargeActivity({ name: s.name, minutes });
-      setReload((n) => n + 1);
-    } catch {
-      setNotice(t('recharge.error.save'));
-    }
-  };
+  const start = (a: RechargeActivity) =>
+    once(async () => {
+      try {
+        const types = await listEventTypes();
+        const quiet = types.find((x) => x.key === RECHARGE_TYPE_KEY);
+        if (!quiet) return;
+        const now = new Date();
+        await createEvent({
+          eventTypeId: quiet.id,
+          title: nameOf(a),
+          startsAtUtc: now.toISOString(),
+          endsAtUtc: new Date(now.getTime() + a.minutes * 60_000).toISOString(),
+          expectedDrain: 0,
+          isOutdoor: a.isOutdoor,
+        });
+        setNotice(t('recharge.started', { name: nameOf(a) }));
+      } catch (e) {
+        if (__DEV__) console.warn('[recharge] start failed', e);
+        setNotice(t('recharge.error.save'));
+      }
+    });
+
+  const addSuggestion = (s: Suggestion) =>
+    once(async () => {
+      try {
+        await addRechargeActivity({ name: s.name, minutes });
+        setReload((n) => n + 1);
+      } catch {
+        setNotice(t('recharge.error.save'));
+      }
+    });
 
   const remove = (a: RechargeActivity) => {
     Alert.alert(t('recharge.removeConfirm.title', { name: nameOf(a) }), undefined, [
@@ -267,9 +281,12 @@ function AddOwn({
   const [name, setName] = useState('');
   const [isOutdoor, setIsOutdoor] = useState(false);
   const [missingName, setMissingName] = useState(false);
+  const adding = useRef(false);
 
   const add = async () => {
     if (name.trim() === '') return setMissingName(true);
+    if (adding.current) return;
+    adding.current = true;
     try {
       await addRechargeActivity({ name, minutes, isOutdoor });
       setName('');
@@ -277,6 +294,8 @@ function AddOwn({
       onAdded();
     } catch {
       onError();
+    } finally {
+      adding.current = false;
     }
   };
 
