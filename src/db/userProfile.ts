@@ -6,6 +6,9 @@ type Row = {
   id: 1;
   display_name: string | null;
   locale: string;
+  birthday: string | null;
+  photo_uri: string | null;
+  onboarded_at_utc: string | null;
   created_at_utc: string;
   updated_at_utc: string;
 };
@@ -18,6 +21,9 @@ export async function getProfile(): Promise<UserProfile> {
     id: 1,
     displayName: row.display_name,
     locale: row.locale,
+    birthday: row.birthday,
+    photoUri: row.photo_uri,
+    onboardedAtUtc: row.onboarded_at_utc,
     createdAtUtc: row.created_at_utc,
     updatedAtUtc: row.updated_at_utc,
   };
@@ -35,4 +41,16 @@ export async function setDisplayName(displayName: string | null): Promise<void> 
     displayName,
     nowUtc(),
   ]);
+}
+
+export async function setPhotoUri(photoUri: string | null): Promise<void> {
+  const db = await getDb();
+  await db.runAsync('UPDATE user_profile SET photo_uri = ?, updated_at_utc = ? WHERE id = 1', [photoUri, nowUtc()]);
+}
+
+/** Called when the user taps Finish on the personalization screen. */
+export async function markOnboarded(): Promise<void> {
+  const db = await getDb();
+  const ts = nowUtc();
+  await db.runAsync('UPDATE user_profile SET onboarded_at_utc = ?, updated_at_utc = ? WHERE id = 1', [ts, ts]);
 }

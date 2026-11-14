@@ -1,10 +1,15 @@
 import { useEffect, useState } from 'react';
 import { Text } from 'react-native';
 import { Stack } from 'expo-router';
+import { StatusBar } from 'expo-status-bar';
 import { useTranslation } from 'react-i18next';
 import '../i18n';
 import { initDatabase } from '../db/client';
 import { loadSavedLocale } from '../i18n/locale';
+import { DialogProvider } from '../components/DialogProvider';
+import { AuthProvider, useAuth } from '../context/AuthContext';
+import { SettingsProvider } from '../context/SettingsContext';
+import { ThemeProvider, useTheme } from '../theme/ThemeProvider';
 
 export default function RootLayout() {
   const { t } = useTranslation();
@@ -19,9 +24,43 @@ export default function RootLayout() {
 
   if (!dbReady) return <Text>{t('app.loading')}</Text>;
 
-    return (
-    <Stack>
-      <Stack.Screen name="checkin" options={{ headerShown: false }} />
-    </Stack>
+  return (
+    <AuthProvider>
+      <SettingsProvider>
+        <ThemeProvider>
+          <DialogProvider>
+            <RootStack />
+          </DialogProvider>
+        </ThemeProvider>
+      </SettingsProvider>
+    </AuthProvider>
+  );
+}
+
+function RootStack() {
+  const { status } = useAuth();
+  const theme = useTheme();
+
+  if (status === 'loading') return null;
+
+  return (
+    <>
+      <StatusBar style={theme.scheme === 'dark' ? 'light' : 'dark'} />
+            <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Protected guard={status === 'signedOut'}>
+          <Stack.Screen name="(auth)" />
+        </Stack.Protected>
+
+        <Stack.Protected guard={status === 'onboarding'}>
+          <Stack.Screen name="(onboarding)" />
+        </Stack.Protected>
+
+        <Stack.Protected guard={status === 'signedIn'}>
+          <Stack.Screen name="(tabs)" />
+          <Stack.Screen name="checkin" />
+          <Stack.Screen name="dev-db" options={{ headerShown: true }} />
+        </Stack.Protected>
+      </Stack>
+    </>
   );
 }

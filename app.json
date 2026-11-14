@@ -36,7 +36,12 @@
         }
       ],
       "expo-sqlite",
-      "expo-localization"
+      "expo-localization",
+      "expo-status-bar",
+      [
+        "expo-image-picker",
+        { "photosPermission": "Social Battery uses your photos so you can choose a profile picture." }
+      ]
     ],
     "experiments": {
       "typedRoutes": true,

@@ -16,6 +16,10 @@ const TABLES = [
   'check_in',
   'check_in_mood',
   'journal_entry',
+  'account',
+  'auth_session',
+  'situation',
+  'user_settings'
 ] as const;
 
 type Table = (typeof TABLES)[number];
