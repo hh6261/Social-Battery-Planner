@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
-import { Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 import { router, useFocusEffect, type Href } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
 import { ScreenState } from '@/components/ScreenState';
 import { getInsights, type InsightsData } from '@/db/insights';
-import { colors, minTouchSize, spacing } from '@/theme/colors';
+import { makeLegacyStyles, minTouchSize, useLegacyColors } from '@/theme/legacy';
 
 import {
   MIN_RATED_FOR_PATTERNS,
@@ -23,6 +23,7 @@ type State = { status: 'loading' } | { status: 'error' } | { status: 'ready'; da
 
 /** Patterns: Drains and Recharges (merged screen 22, Roko's wireframe 03). Based on the last 30 days. */
 export default function PatternsView() {
+  const styles = useStyles();
   const { t } = useTranslation();
   const [filter, setFilter] = useState<Filter>('activity');
   const [state, setState] = useState<State>({ status: 'loading' });
@@ -137,6 +138,8 @@ function PatternList({
   kind: 'drain' | 'recharge';
   label: (key: string) => string;
 }) {
+  const styles = useStyles();
+  const colors = useLegacyColors();
   const { t } = useTranslation();
   const [showAll, setShowAll] = useState(false);
   const visible = showAll ? items : items.slice(0, SHOW_FIRST);
@@ -190,7 +193,7 @@ function PatternList({
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeLegacyStyles((colors, spacing) => ({
   content: { padding: spacing.lg, gap: spacing.lg, paddingBottom: spacing.xl * 2 },
   muted: { fontSize: 14, color: colors.textMuted },
   chipRow: { flexDirection: 'row', flexWrap: 'wrap', gap: spacing.sm },
@@ -234,4 +237,4 @@ const styles = StyleSheet.create({
   },
   primaryButtonText: { color: colors.onPrimary, fontSize: 17, fontWeight: '700' },
   pressed: { opacity: 0.8 },
-});
+}));

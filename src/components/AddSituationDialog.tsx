@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { View } from 'react-native';
-import { LEVEL_LABELS } from '../constants/situations';
+import { useTranslation } from 'react-i18next';
+import { levelLabel } from '../constants/situations';
 import type { EnergyLevel, SituationKind } from '../services/types';
 import { makeStyles } from '../theme/ThemeProvider';
 import { AppDialog } from './AppDialog';
@@ -23,29 +24,33 @@ const MAX_LENGTH = 40;
 const LEVELS: EnergyLevel[] = ['low', 'moderate', 'strong'];
 
 export function AddSituationDialog({ visible, kind, fixedLevel, existing, onSubmit, onClose }: Props) {
+  const { t } = useTranslation();
   const styles = useStyles();
   const [label, setLabel] = useState('');
   const [level, setLevel] = useState<EnergyLevel>(fixedLevel ?? 'moderate');
   const [error, setError] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
+  // Start from an empty form every time the dialog opens (state adjusted while rendering, no effect).
+  const [wasVisible, setWasVisible] = useState(visible);
+  if (visible !== wasVisible) {
+    setWasVisible(visible);
     if (visible) {
       setLabel('');
       setLevel(fixedLevel ?? 'moderate');
       setError(null);
       setSaving(false);
     }
-  }, [visible, fixedLevel]);
+  }
 
   const submit = async () => {
     const trimmed = label.trim();
     if (!trimmed) {
-      setError('Please describe the situation.');
+      setError(t('situation.errorEmpty'));
       return;
     }
     if (existing.some((e) => e.toLowerCase() === trimmed.toLowerCase())) {
-      setError('That one is already on your list.');
+      setError(t('situation.errorDuplicate'));
       return;
     }
     try {
@@ -53,7 +58,7 @@ export function AddSituationDialog({ visible, kind, fixedLevel, existing, onSubm
       await onSubmit(trimmed, level);
       onClose();
     } catch {
-      setError('We couldn’t save that. Please try again.');
+      setError(t('situation.errorSave'));
     } finally {
       setSaving(false);
     }
@@ -63,26 +68,22 @@ export function AddSituationDialog({ visible, kind, fixedLevel, existing, onSubm
   return (
     <AppDialog
       visible={visible}
-      title={isDrain ? 'Add a stressor' : 'Add a relaxer'}
-      message={
-        isDrain
-          ? 'What’s a situation that tends to use your social energy?'
-          : 'What’s something that helps you feel recharged?'
-      }
-      primaryLabel="Add"
+      title={t(isDrain ? 'situation.addStressor' : 'situation.addRelaxer')}
+      message={t(isDrain ? 'situation.stressorMessage' : 'situation.relaxerMessage')}
+      primaryLabel={t('common.add')}
       onPrimary={submit}
       primaryLoading={saving}
-      secondaryLabel="Cancel"
+      secondaryLabel={t('common.cancel')}
       onSecondary={onClose}
     >
       <TextField
         value={label}
-        onChangeText={(t) => {
-          setLabel(t);
+        onChangeText={(text) => {
+          setLabel(text);
           if (error) setError(null);
         }}
-        placeholder={isDrain ? 'e.g. Video calls' : 'e.g. Cooking'}
-        accessibilityLabel="Situation"
+        placeholder={t(isDrain ? 'situation.stressorPlaceholder' : 'situation.relaxerPlaceholder')}
+        accessibilityLabel={t('situation.fieldLabel')}
         maxLength={MAX_LENGTH}
         autoFocus
         returnKeyType="done"
@@ -93,11 +94,11 @@ export function AddSituationDialog({ visible, kind, fixedLevel, existing, onSubm
       {!fixedLevel && (
         <View style={styles.levels}>
           <AppText variant="label" style={styles.levelsLabel}>
-            {isDrain ? 'How much energy does it use?' : 'How restoring is it?'}
+            {t(isDrain ? 'situation.stressorLevel' : 'situation.relaxerLevel')}
           </AppText>
           <ChipWrap>
             {LEVELS.map((l) => (
-              <Chip key={l} size="sm" label={LEVEL_LABELS[kind][l]} selected={level === l} onPress={() => setLevel(l)} />
+              <Chip key={l} size="sm" label={levelLabel(kind, l)} selected={level === l} onPress={() => setLevel(l)} />
             ))}
           </ChipWrap>
         </View>

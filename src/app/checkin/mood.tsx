@@ -1,25 +1,18 @@
 import { useEffect, useState } from 'react';
-import {
-  AccessibilityInfo,
-  ActivityIndicator,
-  Button,
-  Platform,
-  ScrollView,
-  StyleSheet,
-  Text,
-  View,
-} from 'react-native';
+import { AccessibilityInfo, ActivityIndicator, Platform, View } from 'react-native';
 import { router } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
+import { AppText } from '@/components/AppText';
+import { Button } from '@/components/Button';
 import { listMoods } from '@/db/checkIns';
 import { useCheckInDraft } from '@/features/checkin/CheckInDraft';
 import EmotionList from '@/features/checkin/EmotionList';
 import EmotionWheel, { type EmotionItem } from '@/features/checkin/EmotionWheel';
-import StepFooter from '@/features/checkin/StepFooter';
-import StepProgress from '@/features/checkin/StepProgress';
+import StepScreen from '@/features/checkin/StepScreen';
 import { useScreenReaderEnabled } from '@/features/checkin/useScreenReaderEnabled';
 import { WHEEL_MOOD_ORDER } from '@/features/checkin/wheelMoods';
+import { makeStyles, useTheme } from '@/theme/ThemeProvider';
 
 type Mood = Awaited<ReturnType<typeof listMoods>>[number];
 
@@ -35,6 +28,8 @@ function announceOnIOS(message: string) {
 
 export default function MoodStep() {
   const { t } = useTranslation();
+  const theme = useTheme();
+  const styles = useStyles();
   const { draft, update } = useCheckInDraft();
   const screenReader = useScreenReaderEnabled();
   const [state, setState] = useState<State>({ status: 'loading' });
@@ -99,66 +94,58 @@ export default function MoodStep() {
   };
 
   return (
-    <View style={styles.screen}>
-      <ScrollView contentContainerStyle={styles.container}>
-        <StepProgress current={2} />
+    <StepScreen
+      step={2}
+      title={t('checkin.mood.question')}
+      hint={t('checkin.mood.hint')}
+      onNext={next}
+      nextDisabled={count === 0}
+      onSkip={skip}
+    >
+      {state.status === 'loading' && (
+        <View style={styles.row} accessible>
+          <ActivityIndicator color={theme.colors.ink} />
+          <AppText>{t('checkin.mood.loading')}</AppText>
+        </View>
+      )}
 
-        <Text style={styles.question} accessibilityRole="header">
-          {t('checkin.mood.question')}
-        </Text>
-        <Text style={styles.hint}>{t('checkin.mood.hint')}</Text>
+      {state.status === 'error' && (
+        <View style={styles.column}>
+          <AppText accessibilityRole="alert" accessibilityLiveRegion="assertive" color="error">
+            {t('checkin.mood.error')}
+          </AppText>
+          <Button variant="outline" size="md" label={t('checkin.retry')} onPress={retry} />
+        </View>
+      )}
 
-        {state.status === 'loading' && (
-          <View style={styles.row} accessible>
-            <ActivityIndicator />
-            <Text>{t('checkin.mood.loading')}</Text>
-          </View>
-        )}
+      {state.status === 'ready' && items.length === 0 && <AppText>{t('checkin.mood.empty')}</AppText>}
 
-        {state.status === 'error' && (
-          <View style={styles.column}>
-            <Text accessibilityRole="alert" accessibilityLiveRegion="assertive">
-              {t('checkin.mood.error')}
-            </Text>
-            <Button title={t('checkin.retry')} onPress={retry} />
-          </View>
-        )}
-
-        {state.status === 'ready' && items.length === 0 && <Text>{t('checkin.mood.empty')}</Text>}
-
-        {state.status === 'ready' && items.length > 0 && (
-          <>
-            {/* A normal button, so Switch Control, Voice Control and keyboard users can reach the list. */}
-            <View style={styles.toggle}>
-              <Button
-                title={showList ? t('checkin.mood.showWheel') : t('checkin.mood.showList')}
-                onPress={() => setListChoice(!showList)}
-              />
-            </View>
-            {showList ? (
-              <EmotionList items={items} selected={selected} onToggle={toggle} />
-            ) : (
-              <EmotionWheel items={items} selected={selected} onToggle={toggle} />
-            )}
-            <Text style={styles.count} accessibilityLiveRegion="polite">
-              {t('checkin.mood.selectedCount', { count })}
-            </Text>
-          </>
-        )}
-      </ScrollView>
-
-      <StepFooter onNext={next} nextDisabled={count === 0} onSkip={skip} />
-    </View>
+      {state.status === 'ready' && items.length > 0 && (
+        <>
+          {/* A normal button, so Switch Control, Voice Control and keyboard users can reach the list. */}
+          <Button
+            variant="outline"
+            size="md"
+            label={showList ? t('checkin.mood.showWheel') : t('checkin.mood.showList')}
+            onPress={() => setListChoice(!showList)}
+            style={styles.toggle}
+          />
+          {showList ? (
+            <EmotionList items={items} selected={selected} onToggle={toggle} />
+          ) : (
+            <EmotionWheel items={items} selected={selected} onToggle={toggle} />
+          )}
+          <AppText variant="label" align="center" accessibilityLiveRegion="polite">
+            {t('checkin.mood.selectedCount', { count })}
+          </AppText>
+        </>
+      )}
+    </StepScreen>
   );
 }
 
-const styles = StyleSheet.create({
-  screen: { flex: 1 },
-  container: { padding: 24, gap: 16 },
-  question: { fontSize: 22, fontWeight: '600' },
-  hint: { fontSize: 14, color: '#344054' },
-  row: { flexDirection: 'row', alignItems: 'center', gap: 8 },
-  column: { gap: 8 },
+const useStyles = makeStyles((t) => ({
+  row: { flexDirection: 'row', alignItems: 'center', gap: t.spacing.xs },
+  column: { gap: t.spacing.sm },
   toggle: { alignSelf: 'flex-start' },
-  count: { fontSize: 16, color: '#101828' },
-});
+}));

@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
-import { ActivityIndicator, Button, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, View } from "react-native";
 import { useTranslation } from "react-i18next";
 
+import { AppText } from "@/components/AppText";
+import { Button } from "@/components/Button";
+import { Card } from "@/components/Card";
 import { formatNumber } from "@/i18n/format";
 import { weatherCodeToCondition } from "@/services/weatherCodes";
+import { makeStyles, useTheme } from "@/theme/ThemeProvider";
 import {
   getCurrentWeather,
   WeatherData,
@@ -30,6 +34,8 @@ const toKind = (error: unknown): WeatherErrorKind =>
 
 export default function WeatherCard({ latitude, longitude, placeName }: Props) {
   const { t } = useTranslation();
+  const theme = useTheme();
+  const styles = useStyles();
   const [state, setState] = useState<State>({ status: "loading" });
   const [attempt, setAttempt] = useState(0); // goes up by 1 each time the user taps "Try again"
 
@@ -56,55 +62,47 @@ export default function WeatherCard({ latitude, longitude, placeName }: Props) {
   };
 
   return (
-    <View style={styles.card} accessibilityLiveRegion="polite">
-      <Text style={styles.title} accessibilityRole="header">
-        {t("weather.title")}
-      </Text>
+    <Card style={styles.card}>
+      <View accessibilityLiveRegion="polite" style={styles.column}>
+        <AppText variant="subheading" accessibilityRole="header">
+          {t("weather.title")}
+        </AppText>
 
-      {state.status === "loading" && (
-        <View style={styles.row} accessible accessibilityLabel={t("weather.loading")}>
-          <ActivityIndicator />
-          <Text>{t("weather.loading")}</Text>
-        </View>
-      )}
+        {state.status === "loading" && (
+          <View style={styles.row} accessible accessibilityLabel={t("weather.loading")}>
+            <ActivityIndicator color={theme.colors.ink} />
+            <AppText>{t("weather.loading")}</AppText>
+          </View>
+        )}
 
-      {state.status === "error" && (
-        <View style={styles.column}>
-          <Text accessibilityRole="alert">{t(`weather.error.${state.kind}`)}</Text>
-          <Button title={t("weather.retry")} onPress={retry} />
-        </View>
-      )}
+        {state.status === "error" && (
+          <View style={styles.column}>
+            <AppText accessibilityRole="alert">{t(`weather.error.${state.kind}`)}</AppText>
+            <Button label={t("weather.retry")} variant="outline" size="md" onPress={retry} />
+          </View>
+        )}
 
-      {state.status === "ready" && (
-        <View style={styles.column}>
-          <Text style={styles.place}>{placeName}</Text>
-          <Text>{t(`weather.condition.${weatherCodeToCondition(state.data.weatherCode)}`)}</Text>
-          <Text>
-            {t("weather.temperature", { value: formatNumber(round(state.data.temperature)) })}
-          </Text>
-          <Text>{t("weather.wind", { value: formatNumber(round(state.data.windSpeed)) })}</Text>
-        </View>
-      )}
+        {state.status === "ready" && (
+          <View style={styles.column}>
+            <AppText variant="label">{placeName}</AppText>
+            <AppText>{t(`weather.condition.${weatherCodeToCondition(state.data.weatherCode)}`)}</AppText>
+            <AppText>
+              {t("weather.temperature", { value: formatNumber(round(state.data.temperature)) })}
+            </AppText>
+            <AppText>{t("weather.wind", { value: formatNumber(round(state.data.windSpeed)) })}</AppText>
+          </View>
+        )}
 
-      <Text style={styles.attribution}>{t("weather.attribution")}</Text>
-    </View>
+        <AppText variant="caption" color="muted">
+          {t("weather.attribution")}
+        </AppText>
+      </View>
+    </Card>
   );
 }
 
-const styles = StyleSheet.create({
-  card: {
-    alignSelf: "stretch",
-    marginHorizontal: 24,
-    marginTop: 24,
-    padding: 16,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: "#999",
-    gap: 8,
-  },
-  title: { fontSize: 18, fontWeight: "600" },
-  place: { fontSize: 16, fontWeight: "500" },
-  row: { flexDirection: "row", alignItems: "center", gap: 8 },
-  column: { gap: 4 },
-  attribution: { fontSize: 12, opacity: 0.7 },
-});
+const useStyles = makeStyles((t) => ({
+  card: { alignSelf: "stretch", marginHorizontal: t.spacing.xl, marginTop: t.spacing.xl },
+  row: { flexDirection: "row", alignItems: "center", gap: t.spacing.xs },
+  column: { gap: t.spacing.xxs },
+}));

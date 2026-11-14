@@ -62,6 +62,6 @@ const useStyles = makeStyles((t) => ({
   },
   boxChecked: { backgroundColor: t.colors.primary, borderColor: t.colors.primary },
   boxError: { borderColor: t.colors.error },
-  labelWrap: { flex: 1, marginLeft: t.spacing.sm },
-  error: { marginTop: t.spacing.xxs, marginLeft: 34 },
+  labelWrap: { flex: 1, marginStart: t.spacing.sm },
+  error: { marginTop: t.spacing.xxs, marginStart: 34 },
 }));

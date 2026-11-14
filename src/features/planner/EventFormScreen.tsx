@@ -3,7 +3,6 @@ import {
   Alert,
   Pressable,
   ScrollView,
-  StyleSheet,
   Switch,
   Text,
   TextInput,
@@ -16,7 +15,7 @@ import { ScreenState } from '@/components/ScreenState';
 import { createEvent, deleteEvent, getEvent, listEventTypes, updateEvent } from '@/db/events';
 import type { EventType, PlannedEvent } from '@/db/types';
 import { formatDate, formatPercent, formatShortDay, formatTime } from '@/i18n/format';
-import { colors, minTouchSize, spacing } from '@/theme/colors';
+import { makeLegacyStyles, minTouchSize, useLegacyColors } from '@/theme/legacy';
 
 import { addDays, startOfDay } from './dates';
 import { durationMinutes, formatDuration } from './plannerLogic';
@@ -111,6 +110,8 @@ export default function EventFormScreen({ eventId }: { eventId: number | null })
 }
 
 function EventForm({ types, existing }: { types: EventType[]; existing: PlannedEvent | null }) {
+  const styles = useStyles();
+  const colors = useLegacyColors();
   const { t } = useTranslation();
   const today = useMemo(() => startOfDay(new Date()), []);
 
@@ -400,6 +401,7 @@ function EventForm({ types, existing }: { types: EventType[]; existing: PlannedE
 }
 
 function ErrorText({ text }: { text: string }) {
+  const styles = useStyles();
   return (
     <Text style={styles.error} accessibilityRole="alert" accessibilityLiveRegion="assertive">
       {text}
@@ -415,6 +417,7 @@ function Stepper(props: {
   onDecrease: () => void;
   onIncrease: () => void;
 }) {
+  const styles = useStyles();
   const { t } = useTranslation();
   return (
     <View style={styles.stepperRow}>
@@ -450,7 +453,7 @@ function Stepper(props: {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeLegacyStyles((colors, spacing) => ({
   screen: { flex: 1, backgroundColor: colors.background },
   content: { padding: spacing.lg, gap: spacing.xl, paddingBottom: spacing.xl * 2 },
   field: { gap: spacing.sm },
@@ -517,4 +520,4 @@ const styles = StyleSheet.create({
   },
   deleteText: { color: colors.danger, fontSize: 16, fontWeight: '600' },
   pressed: { opacity: 0.8 },
-});
+}));

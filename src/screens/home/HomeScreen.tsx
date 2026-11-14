@@ -1,14 +1,15 @@
-import Slider from '@expo/ui/community/slider';
+import { Slider } from '@expo/ui/community/slider';
 import { Feather } from '@expo/vector-icons';
 import { router, useFocusEffect } from 'expo-router';
 import React, { useCallback, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { Button as NativeButton, Pressable, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { AppText, Button, Card, Screen } from '../../components';
 import { useCurrentUser } from '../../context/AuthContext';
+import { formatPercent } from '../../i18n/format';
 import { getLatestBatteryLevel, listEventsForDay, type DayEvent } from '../../db/home';
 import { makeStyles, useTheme } from '../../theme/ThemeProvider';
-import { DRAIN_LABELS, drainLevel, formatTime } from '../../utils/drain';
+import { drainLabel, drainLevel, formatTime } from '../../utils/drain';
 import { TomorrowReminder } from './TomorrowReminder';
 
 const clamp = (n: number) => Math.min(100, Math.max(0, Math.round(n)));
@@ -17,7 +18,7 @@ const clamp = (n: number) => Math.min(100, Math.max(0, Math.round(n)));
 export function HomeScreen() {
   const theme = useTheme();
   const styles = useStyles();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const user = useCurrentUser();
 
   const [battery, setBattery] = useState<number | null>(null);
@@ -56,7 +57,7 @@ export function HomeScreen() {
       <Card style={styles.card}>
         <AppText variant="eyebrow">{dateLabel}</AppText>
         <AppText variant="title" style={styles.greeting} accessibilityRole="header">
-          {`Hello, ${user.username}. How are you?`}
+          {t('home.greeting', { name: user.username })}
         </AppText>
       </Card>
 
@@ -66,20 +67,20 @@ export function HomeScreen() {
           style={styles.battery}
           accessible
           accessibilityRole="image"
-          accessibilityLabel={battery === null ? 'No battery estimate yet' : `Social battery about ${battery} percent`}
+          accessibilityLabel={battery === null ? t('home.noEstimate') : t('home.batteryAbout', { percent: battery })}
         >
           <View style={styles.batteryBody}>
             <View style={[styles.batteryFill, { width: `${battery ?? 0}%` }]} />
             <AppText variant="heading" style={styles.batteryLabel}>
-              {battery === null ? '–' : `${battery}%`}
+              {battery === null ? '–' : formatPercent(battery / 100)}
             </AppText>
           </View>
           <View style={styles.batteryTip} />
         </View>
         <View style={styles.batteryText}>
-          <AppText variant="subheading">Estimated current social battery percentage</AppText>
+          <AppText variant="subheading">{t('home.estimatedTitle')}</AppText>
           <AppText variant="bodySmall" color="muted" style={styles.batteryHint}>
-            {battery === null ? 'Do a quick check-in below to get your first estimate' : 'Based on your latest check-in'}
+            {battery === null ? t('home.estimateEmpty') : t('home.estimateBased')}
           </AppText>
         </View>
       </Card>
@@ -87,8 +88,8 @@ export function HomeScreen() {
       {/* Quick energy check-in */}
       <Card style={styles.card}>
         <View style={styles.rowBetween}>
-          <AppText variant="subheading">Quick energy check-in</AppText>
-          <AppText variant="subheading" accessibilityLiveRegion="polite">{`${level}%`}</AppText>
+          <AppText variant="subheading">{t('home.quickTitle')}</AppText>
+          <AppText variant="subheading" accessibilityLiveRegion="polite">{formatPercent(level / 100)}</AppText>
         </View>
         <Slider
           value={level}
@@ -99,18 +100,18 @@ export function HomeScreen() {
           minimumTrackTintColor={theme.colors.ink}
           maximumTrackTintColor={theme.colors.line}
           thumbTintColor={theme.colors.ink}
-          accessibilityLabel="Social battery level"
+          accessibilityLabel={t('home.sliderLabel')}
           style={styles.slider}
         />
         <View style={styles.rowBetween}>
-          <AppText variant="eyebrow">Low</AppText>
-          <AppText variant="eyebrow">High</AppText>
+          <AppText variant="eyebrow">{t('home.low')}</AppText>
+          <AppText variant="eyebrow">{t('home.high')}</AppText>
         </View>
         <Button
-          label={`Check in at ${level}%`}
+          label={t('home.checkInAt', { percent: formatPercent(level / 100) })}
           size="md"
           onPress={() => router.push({ pathname: '/checkin/battery', params: { level: String(level) } })}
-          accessibilityHint="Opens the check-in with this battery level"
+          accessibilityHint={t('home.checkInHint')}
           style={styles.checkInButton}
         />
       </Card>
@@ -119,15 +120,15 @@ export function HomeScreen() {
       <Card style={styles.card}>
         <View style={styles.rowBetween}>
           <View>
-            <AppText variant="eyebrow">Today</AppText>
+            <AppText variant="eyebrow">{t('home.today')}</AppText>
             <AppText variant="heading" accessibilityRole="header">
-              Upcoming plans
+              {t('home.upcoming')}
             </AppText>
           </View>
           <Pressable
             onPress={() => router.push('/tracker')}
             accessibilityRole="button"
-            accessibilityLabel="Add a plan"
+            accessibilityLabel={t('home.addPlan')}
             hitSlop={8}
             style={({ pressed }) => [styles.addButton, pressed && styles.pressed]}
           >
@@ -137,7 +138,7 @@ export function HomeScreen() {
 
         {today === null ? null : today.length === 0 ? (
           <AppText variant="bodySmall" color="muted" style={styles.empty}>
-            Nothing planned for today.
+            {t('home.nothingToday')}
           </AppText>
         ) : (
           <View style={styles.timeline}>
@@ -146,7 +147,7 @@ export function HomeScreen() {
                 <View
                   style={styles.planCard}
                   accessible
-                  accessibilityLabel={`${formatTime(e.startsAtUtc, i18n.language)}, ${e.title}, drain ${DRAIN_LABELS[drainLevel(e.drain)]}`}
+                  accessibilityLabel={t('home.planLabel', { time: formatTime(e.startsAtUtc, i18n.language), title: e.title, drain: drainLabel(drainLevel(e.drain)) })}
                 >
                   <AppText variant="label" align="right">
                     {formatTime(e.startsAtUtc, i18n.language)}
@@ -155,7 +156,7 @@ export function HomeScreen() {
                     {e.title}
                   </AppText>
                   <AppText variant="bodySmall" color="muted" align="right">
-                    {`Drain: ${DRAIN_LABELS[drainLevel(e.drain)]}`}
+                    {t('home.drain', { level: drainLabel(drainLevel(e.drain)) })}
                   </AppText>
                 </View>
                 <View style={styles.track}>
@@ -180,7 +181,7 @@ const useStyles = makeStyles((t) => ({
   card: { marginBottom: t.spacing.lg },
   greeting: { marginTop: t.spacing.xs },
   batteryCard: { flexDirection: 'row', alignItems: 'center', gap: t.spacing.md },
-  battery: { flexDirection: 'row', alignItems: 'center' },
+  battery: { flexDirection: 'row', alignItems: 'center', direction: 'ltr' },
   batteryBody: {
     width: BATTERY_W,
     height: BATTERY_H,
@@ -194,7 +195,7 @@ const useStyles = makeStyles((t) => ({
   },
   batteryFill: {
     position: 'absolute',
-    left: 5,
+    start: 5,
     top: 5,
     bottom: 5,
     maxWidth: BATTERY_W - 16,
@@ -205,7 +206,7 @@ const useStyles = makeStyles((t) => ({
   batteryTip: {
     width: 6,
     height: BATTERY_H * 0.36,
-    marginLeft: 2,
+    marginStart: 2,
     borderTopRightRadius: 3,
     borderBottomRightRadius: 3,
     backgroundColor: t.colors.border,

@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import { View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import {
   AddChip,
   AddSituationDialog,
@@ -11,7 +12,7 @@ import {
   Screen,
   useDialog,
 } from '../../components';
-import { DRAIN_GROUPS, makeSituation, RECHARGE_GROUPS, SituationGroup } from '../../constants/situations';
+import { getSituationGroups, makeSituation, SituationGroup } from '../../constants/situations';
 import { useAuth } from '../../context/AuthContext';
 import { dataService, EnergyLevel, Situation, SituationKind } from '../../services';
 import { makeStyles } from '../../theme/ThemeProvider';
@@ -28,13 +29,14 @@ const toOptions = (groups: SituationGroup[]): Option[] =>
 
 /** Screen 5 · App personalization */
 export function PersonalizationScreen() {
+  const { t } = useTranslation();
   const styles = useStyles();
   const { user, finishOnboarding } = useAuth();
   const { showMessage } = useDialog();
 
   const [options, setOptions] = useState<Record<SituationKind, Option[]>>({
-    drain: toOptions(DRAIN_GROUPS),
-    recharge: toOptions(RECHARGE_GROUPS),
+    drain: toOptions(getSituationGroups('drain')),
+    recharge: toOptions(getSituationGroups('recharge')),
   });
   const [selected, setSelected] = useState<Record<SituationKind, Set<string>>>({
     drain: new Set(),
@@ -73,7 +75,7 @@ export function PersonalizationScreen() {
       // RootNavigator swaps to the tab navigator and lands on Home.
     } catch {
       setSaving(false);
-      showMessage('Couldn’t save your choices', 'Please check your connection and try again.');
+      showMessage(t('personalization.saveErrorTitle'), t('personalization.saveErrorMessage'));
     }
   };
 
@@ -84,7 +86,7 @@ export function PersonalizationScreen() {
 
   const renderStep = (kind: SituationKind, step: number, title: string, subtitle: string, groups: SituationGroup[]) => (
     <Card style={styles.card}>
-      <AppText variant="eyebrow">{`Step ${step}`}</AppText>
+      <AppText variant="eyebrow">{t('personalization.step', { number: step })}</AppText>
       <AppText variant="heading" style={styles.cardTitle} accessibilityRole="header">
         {title}
       </AppText>
@@ -121,22 +123,22 @@ export function PersonalizationScreen() {
   return (
     <Screen>
       <AppText variant="eyebrow" style={styles.eyebrow}>
-        Almost there
+        {t('personalization.eyebrow')}
       </AppText>
       <AppText variant="title" accessibilityRole="header">
-        You’re getting started
+        {t('personalization.title')}
       </AppText>
       <AppText variant="body" color="muted" style={styles.intro}>
-        A few choices can help shape suggestions around what feels right for you.
+        {t('personalization.intro')}
       </AppText>
 
-      {renderStep('drain', 1, 'What tends to drain you?', 'Choose any situations that may use your social energy.', DRAIN_GROUPS)}
-      {renderStep('recharge', 2, 'What helps you recharge?', 'Choose the moments that may help your energy return.', RECHARGE_GROUPS)}
+      {renderStep('drain', 1, t('personalization.drainTitle'), t('personalization.drainSubtitle'), getSituationGroups('drain'))}
+      {renderStep('recharge', 2, t('personalization.rechargeTitle'), t('personalization.rechargeSubtitle'), getSituationGroups('recharge'))}
 
       <AppText variant="caption" color="muted" align="center" style={styles.note}>
-        These choices aren’t permanent. You can adjust them at any time from your profile.
+        {t('personalization.note')}
       </AppText>
-      <Button label="Finish" onPress={finish} loading={saving} />
+      <Button label={t('personalization.finish')} onPress={finish} loading={saving} />
 
       <AddSituationDialog
         visible={!!adding}

@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Animated, Pressable } from 'react-native';
 import { makeStyles, useTheme } from '../theme/ThemeProvider';
 
@@ -21,7 +21,7 @@ const TRAVEL = TRACK_W - BORDER * 2 - (PAD - BORDER) * 2 - KNOB;
 export function Toggle({ value, onValueChange, accessibilityLabel, disabled }: Props) {
   const theme = useTheme();
   const styles = useStyles();
-  const anim = useRef(new Animated.Value(value ? 1 : 0)).current;
+  const [anim] = useState(() => new Animated.Value(value ? 1 : 0));
 
   useEffect(() => {
     Animated.timing(anim, { toValue: value ? 1 : 0, duration: 160, useNativeDriver: false }).start();

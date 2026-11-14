@@ -27,7 +27,7 @@ const LOCAL_USER_ID = 'local';
 
 async function loadUser(): Promise<User> {
   const [account, profile] = await Promise.all([getAccount(), getProfile()]);
-  if (!account) throw new ServiceError('not_found', 'There’s no account on this device.');
+  if (!account) throw new ServiceError('not_found');
   return {
     id: LOCAL_USER_ID,
     username: profile.displayName ?? '',
@@ -50,7 +50,7 @@ async function guard<T>(work: () => Promise<T>): Promise<T> {
   } catch (e) {
     if (e instanceof ServiceError) throw e;
     if (__DEV__) console.warn('[sqliteDataService]', e);
-    throw new ServiceError('unknown', 'Something went wrong saving your data. Please try again.');
+    throw new ServiceError('unknown');
   }
 }
 
@@ -71,13 +71,10 @@ export function createSqliteDataService(): DataService {
     signIn: (email, password, remember) =>
       guard(async () => {
         if (!(await hasAccount())) {
-          throw new ServiceError(
-            'invalid_credentials',
-            'There’s no account on this device yet. Create one to get started.',
-          );
+          throw new ServiceError('no_account');
         }
         if (!(await verifyCredentials(email, password))) {
-          throw new ServiceError('invalid_credentials', 'That email and password don’t match. Please try again.');
+          throw new ServiceError('invalid_credentials');
         }
         await startSession(remember);
         return loadSession();
@@ -86,10 +83,7 @@ export function createSqliteDataService(): DataService {
     register: (input) =>
       guard(async () => {
         if (await hasAccount()) {
-          throw new ServiceError(
-            'account_exists',
-            'This device already has a Social Battery account. Log in instead, or reset your password from the log-in screen.',
-          );
+          throw new ServiceError('account_exists');
         }
         const photoUri = persistAvatar(input.photoUri);
         await createAccount({
@@ -111,7 +105,7 @@ export function createSqliteDataService(): DataService {
           account.email.toLowerCase() === email.trim().toLowerCase() &&
           profile.birthday === birthday;
         if (!matches) {
-          throw new ServiceError('invalid_credentials', 'Those details don’t match the account on this device.');
+          throw new ServiceError('invalid_credentials');
         }
         await setPassword(newPassword);
       }),

@@ -6,6 +6,8 @@
  * never have to change.
  */
 
+import i18n from '../i18n';
+
 export interface User {
   id: string;
   username: string;
@@ -44,7 +46,7 @@ export interface UserPreferences {
 }
 
 export type ReminderFrequency = 'every_day' | 'weekdays' | 'weekends' | 'weekly';
-export type ThemePreference = 'device' | 'light' | 'dark';
+export type ThemePreference = 'device' | 'light' | 'dark' | 'colorblind';
 export type FontSizePreference = 'small' | 'regular' | 'large';
 
 export interface UserSettings {
@@ -89,6 +91,7 @@ export type UserPatch = Partial<Pick<User, 'username' | 'photoUri'>>;
 
 /** Error type the screens know how to show. `message` is user-facing. */
 export class ServiceError extends Error {
+  detail?: string;
   constructor(
     public code:
       | 'invalid_credentials'
@@ -96,11 +99,14 @@ export class ServiceError extends Error {
       | 'email_taken'
       | 'username_taken'
       | 'not_found'
+      | 'no_account'
       | 'network'
       | 'unknown',
-    message: string,
+    /** Developer detail only. The user-facing text always comes from the locale files by code. */
+    detail?: string,
   ) {
-    super(message);
+    super(i18n.t(`serviceError.${code}`));
+    this.detail = detail;
     this.name = 'ServiceError';
   }
 }

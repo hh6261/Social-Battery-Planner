@@ -17,48 +17,53 @@ const SettingsContext = createContext<SettingsContextValue | null>(null);
 
 export function SettingsProvider({ children }: { children: React.ReactNode }) {
   const { user } = useAuth();
-  const [settings, setSettings] = useState<UserSettings>(DEFAULT_SETTINGS);
-  const [loading, setLoading] = useState(false);
-  const latest = useRef(settings);
-  latest.current = settings;
+  const userId = user?.id ?? null;
+  // The loaded settings are stored together with the user they belong to. When nobody is
+  // signed in (or a different user signed in) the defaults are shown, with no effect needed.
+  const [loaded, setLoaded] = useState<{ userId: string; settings: UserSettings } | null>(null);
+  const latest = useRef<UserSettings>(DEFAULT_SETTINGS);
+
+  const ready = userId !== null && loaded?.userId === userId;
+  const settings = ready && loaded ? loaded.settings : DEFAULT_SETTINGS;
+  const loading = userId !== null && !ready;
 
   useEffect(() => {
-    if (!user) {
-      setSettings(DEFAULT_SETTINGS);
-      return;
-    }
+    if (userId === null) return;
     let cancelled = false;
-    setLoading(true);
     dataService
-      .getSettings(user.id)
-      .then((loaded) => {
-        if (!cancelled) setSettings(loaded);
+      .getSettings(userId)
+      .then((s) => {
+        if (cancelled) return;
+        latest.current = s;
+        setLoaded({ userId, settings: s });
       })
       .catch(() => {
         // Keep defaults; the next successful save will create the record.
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false);
+        if (cancelled) return;
+        latest.current = DEFAULT_SETTINGS;
+        setLoaded({ userId, settings: DEFAULT_SETTINGS });
       });
     return () => {
       cancelled = true;
     };
-  }, [user?.id]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [userId]);
 
   const updateSettings = useCallback(
     async (updater: (current: UserSettings) => UserSettings) => {
+      if (userId === null) return;
       const previous = latest.current;
       const next = updater(previous);
-      setSettings(next);
-      if (!user) return;
+      latest.current = next;
+      setLoaded({ userId, settings: next });
       try {
-        await dataService.saveSettings(user.id, next);
+        await dataService.saveSettings(userId, next);
       } catch (error) {
-        setSettings(previous);
+        latest.current = previous;
+        setLoaded({ userId, settings: previous });
         throw error;
       }
     },
-    [user],
+    [userId],
   );
 
   const value = useMemo(() => ({ settings, loading, updateSettings }), [settings, loading, updateSettings]);

@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Linking, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
+import { Linking, Pressable, ScrollView, Text, View } from 'react-native';
 import { router, useFocusEffect, type Href } from 'expo-router';
 import { useTranslation } from 'react-i18next';
 
@@ -14,7 +14,7 @@ import {
   type DailyForecast,
   type WeatherErrorKind,
 } from '@/services/weatherService';
-import { colors, minTouchSize, spacing } from '@/theme/colors';
+import { makeLegacyStyles, minTouchSize } from '@/theme/legacy';
 
 import { CITIES, DEFAULT_CITY, type City } from './cities';
 import { addDays, startOfDay } from './dates';
@@ -48,6 +48,7 @@ type ForecastState =
  * day get a warning: this is where the weather API data is actually used (F4).
  */
 export default function PlanAheadScreen() {
+  const styles = useStyles();
   const { t } = useTranslation();
   const [eventsState, setEventsState] = useState<EventsState>({ status: 'loading' });
   const [city, setCity] = useState<City>(DEFAULT_CITY);
@@ -189,6 +190,7 @@ export default function PlanAheadScreen() {
 }
 
 function CityPicker({ city, onChange }: { city: City; onChange: (c: City) => void }) {
+  const styles = useStyles();
   const { t } = useTranslation();
   return (
     <View style={styles.cityBlock}>
@@ -220,6 +222,7 @@ function CityPicker({ city, onChange }: { city: City; onChange: (c: City) => voi
 }
 
 function ForecastNotice({ state, onRetry }: { state: ForecastState; onRetry: () => void }) {
+  const styles = useStyles();
   const { t } = useTranslation();
   if (state.status === 'loading') {
     return (
@@ -256,6 +259,7 @@ function DaySection({
   onOpen: (id: number) => void;
   onAddQuietTime: () => void;
 }) {
+  const styles = useStyles();
   const { t } = useTranslation();
   const wet = forecast ? isWetDay(forecast) : false;
 
@@ -307,6 +311,7 @@ function DaySection({
 }
 
 function EventRow({ event, onPress }: { event: PlannedEvent; onPress: () => void }) {
+  const styles = useStyles();
   const { t } = useTranslation();
   const time = formatTime(new Date(event.startsAtUtc));
   const type = t(`eventType.${event.typeKey}`);
@@ -345,7 +350,7 @@ function EventRow({ event, onPress }: { event: PlannedEvent; onPress: () => void
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeLegacyStyles((colors, spacing) => ({
   screen: { flex: 1, backgroundColor: colors.background },
   content: { padding: spacing.lg, gap: spacing.lg, paddingBottom: spacing.xl * 2 },
   emptyBox: { minHeight: 240 },
@@ -428,4 +433,4 @@ const styles = StyleSheet.create({
   },
   secondaryButtonText: { color: colors.primary, fontSize: 15, fontWeight: '600' },
   pressed: { opacity: 0.8 },
-});
+}));

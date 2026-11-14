@@ -1,5 +1,6 @@
 import { PixelRatio, StyleSheet, useWindowDimensions, View } from 'react-native';
 import Svg, { G, Path, Text as SvgText } from 'react-native-svg';
+import { useTheme } from '@/theme/ThemeProvider';
 
 export type EmotionItem = { key: string; label: string };
 
@@ -27,6 +28,7 @@ function slicePath(center: number, radius: number, startDeg: number, endDeg: num
 }
 
 export default function EmotionWheel({ items, selected, onToggle }: Props) {
+  const theme = useTheme();
   const { width } = useWindowDimensions();
   // Shrink to fit narrow phones instead of overflowing the screen padding.
   const size = Math.min(MAX_SIZE, width - SCREEN_PADDING * 2);
@@ -61,8 +63,8 @@ export default function EmotionWheel({ items, selected, onToggle }: Props) {
             >
               <Path
                 d={slicePath(center, radius, start, end)}
-                fill={isOn ? '#101828' : '#F2F4F7'}
-                stroke="#344054"
+                fill={isOn ? theme.colors.primary : theme.colors.card}
+                stroke={theme.colors.border}
                 strokeWidth={2}
                 strokeLinejoin="round"
               />
@@ -75,7 +77,7 @@ export default function EmotionWheel({ items, selected, onToggle }: Props) {
                   fontSize={fontSize}
                   fontWeight="700"
                   textAnchor="middle"
-                  fill="#FFFFFF"
+                  fill={theme.colors.onPrimary}
                 >
                   {CHECK}
                 </SvgText>
@@ -87,7 +89,7 @@ export default function EmotionWheel({ items, selected, onToggle }: Props) {
                 fontSize={fontSize}
                 fontWeight="600"
                 textAnchor="middle"
-                fill={isOn ? '#FFFFFF' : '#101828'}
+                fill={isOn ? theme.colors.onPrimary : theme.colors.ink}
               >
                 {item.label}
               </SvgText>

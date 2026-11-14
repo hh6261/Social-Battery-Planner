@@ -1,6 +1,7 @@
 import { Feather } from "@expo/vector-icons";
 import { router } from "expo-router";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Image } from "expo-image";
 import { ActivityIndicator, Pressable, View } from "react-native";
 import {
@@ -29,6 +30,7 @@ import { validateUsername } from "../../utils/validation";
 
 /** Screen 27 · Profile */
 export function ProfileScreen() {
+  const { t } = useTranslation();
   const theme = useTheme();
   const styles = useStyles();
   const user = useCurrentUser();
@@ -45,10 +47,7 @@ export function ProfileScreen() {
         [key]: p[key].filter((s) => s.id !== item.id),
       }));
     } catch {
-      showMessage(
-        "Couldn’t remove that",
-        "Please check your connection and try again.",
-      );
+      showMessage(t("profile.removeErrorTitle"), t("profile.removeErrorMessage"));
     }
   };
 
@@ -84,11 +83,11 @@ export function ProfileScreen() {
             onRemove={() => remove(kind, item)}
           />
         ))}
-        <AddChip size="sm" label="Add +" onPress={() => setAdding(kind)} />
+        <AddChip size="sm" label={t("profile.addChip")} onPress={() => setAdding(kind)} />
       </ChipWrap>
       {items.length === 0 ? (
         <AppText variant="caption" color="muted" style={styles.empty}>
-          Nothing here yet. Tap “Add +” to add one.
+          {t("profile.empty")}
         </AppText>
       ) : null}
     </Card>
@@ -97,14 +96,14 @@ export function ProfileScreen() {
   return (
     <Screen edges={["top"]}>
       <AppText variant="title" accessibilityRole="header" style={styles.title}>
-        Profile
+        {t("tabs.profile")}
       </AppText>
 
       <Card style={styles.card} contentStyle={styles.profileCard}>
         <Pressable
           onPress={() => setEditing(true)}
           accessibilityRole="button"
-          accessibilityLabel="Edit profile"
+          accessibilityLabel={t("profile.edit")}
           style={({ pressed }) => [styles.avatar, pressed && styles.pressed]}
         >
           {user.photoUri ? (
@@ -117,7 +116,7 @@ export function ProfileScreen() {
           </View>
         </Pressable>
         <View style={styles.profileText}>
-          <AppText variant="eyebrow">Your profile</AppText>
+          <AppText variant="eyebrow">{t("profile.yourProfile")}</AppText>
           <AppText variant="heading" numberOfLines={1}>
             {user.username}
           </AppText>
@@ -130,7 +129,7 @@ export function ProfileScreen() {
         <Card style={styles.card}>
           <AppText variant="body">{error}</AppText>
           <Button
-            label="Try again"
+            label={t("common.tryAgain")}
             size="md"
             variant="outline"
             onPress={reload}
@@ -141,14 +140,14 @@ export function ProfileScreen() {
         <>
           {renderList(
             "drain",
-            "Your stressors",
-            "Situations that may drain your social energy.",
+            t("profile.stressors"),
+            t("profile.stressorsHint"),
             prefs.drains,
           )}
           {renderList(
             "recharge",
-            "Your relaxers",
-            "Things that may help you feel recharged.",
+            t("profile.relaxers"),
+            t("profile.relaxersHint"),
             prefs.recharges,
           )}
         </>
@@ -156,12 +155,12 @@ export function ProfileScreen() {
 
       <ListGroup style={styles.links}>
         <ListRow
-          title="Settings"
+          title={t("settings.title")}
           emphasis={false}
           onPress={() => router.push("/profile/settings")}
         />
         <ListRow
-          title="Privacy and Data"
+          title={t("profile.privacy")}
           emphasis={false}
           onPress={() => router.push("/profile/privacy")}
         />
@@ -202,6 +201,7 @@ function EditProfileDialog({
   onClose(): void;
   onOpenPrivacy(): void;
 }) {
+  const { t } = useTranslation();
   const theme = useTheme();
   const styles = useStyles();
   const user = useCurrentUser();
@@ -213,7 +213,10 @@ function EditProfileDialog({
   const [notice, setNotice] = useState<string | null>(null);
   const [saving, setSaving] = useState(false);
 
-  useEffect(() => {
+  // Fill the form with the current profile every time the dialog opens (state adjusted while rendering, no effect).
+  const [wasVisible, setWasVisible] = useState(visible);
+  if (visible !== wasVisible) {
+    setWasVisible(visible);
     if (visible) {
       setName(user.username);
       setPhotoUri(user.photoUri);
@@ -221,7 +224,7 @@ function EditProfileDialog({
       setNotice(null);
       setSaving(false);
     }
-  }, [visible, user.username, user.photoUri]);
+  }
 
   const changePhoto = async () => {
     setNotice(null);
@@ -235,9 +238,7 @@ function EditProfileDialog({
       }
     }
     if (result.status === "denied")
-      setNotice(
-        "Photo access was denied. You can allow it in your phone’s settings.",
-      );
+      setNotice(t("profile.photoDenied"));
   };
 
   const save = async () => {
@@ -254,7 +255,7 @@ function EditProfileDialog({
       setError(
         e instanceof ServiceError
           ? e.message
-          : "We couldn’t save your changes. Please try again.",
+          : t("profile.saveError"),
       );
       setSaving(false);
     }
@@ -263,11 +264,11 @@ function EditProfileDialog({
   return (
     <AppDialog
       visible={visible}
-      title="Edit profile"
-      primaryLabel="Save"
+      title={t("profile.edit")}
+      primaryLabel={t("common.save")}
       onPrimary={save}
       primaryLoading={saving}
-      secondaryLabel="Cancel"
+      secondaryLabel={t("common.cancel")}
       onSecondary={onClose}
     >
       <View style={styles.editPhotoRow}>
@@ -286,7 +287,7 @@ function EditProfileDialog({
             onPress={changePhoto}
             accessibilityRole="button"
           >
-            Change photo
+            {t("profile.changePhoto")}
           </AppText>
           {photoUri ? (
             <AppText
@@ -296,7 +297,7 @@ function EditProfileDialog({
               onPress={() => setPhotoUri(null)}
               accessibilityRole="button"
             >
-              Remove photo
+              {t("profile.removePhoto")}
             </AppText>
           ) : null}
         </View>
@@ -312,13 +313,13 @@ function EditProfileDialog({
               onPress={onOpenPrivacy}
               accessibilityRole="link"
             >
-              Open Privacy & Data
+              {t("profile.openPrivacy")}
             </AppText>
           ) : null}
         </AppText>
       ) : null}
       <TextField
-        label="Username"
+        label={t("register.username")}
         value={name}
         onChangeText={(v) => {
           setName(v);
@@ -358,7 +359,7 @@ const useStyles = makeStyles((t) => ({
   },
   editBadge: {
     position: "absolute",
-    right: -2,
+    end: -2,
     bottom: -2,
     width: 24,
     height: 24,
@@ -370,7 +371,7 @@ const useStyles = makeStyles((t) => ({
     justifyContent: "center",
   },
   pressed: { opacity: 0.7 },
-  profileText: { flex: 1, marginLeft: t.spacing.md },
+  profileText: { flex: 1, marginStart: t.spacing.md },
   loading: { marginVertical: t.spacing.xl },
   retry: { marginTop: t.spacing.md },
   empty: { marginTop: t.spacing.sm },
@@ -380,7 +381,7 @@ const useStyles = makeStyles((t) => ({
     alignItems: "center",
     marginBottom: t.spacing.md,
   },
-  editPhotoActions: { marginLeft: t.spacing.md },
+  editPhotoActions: { marginStart: t.spacing.md },
   removePhoto: { marginTop: t.spacing.xxs },
   underline: { textDecorationLine: "underline" },
   notice: { marginBottom: t.spacing.md },

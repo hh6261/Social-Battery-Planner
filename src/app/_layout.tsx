@@ -46,7 +46,16 @@ function RootStack() {
   return (
     <>
       <StatusBar style={theme.scheme === 'dark' ? 'light' : 'dark'} />
-            <Stack screenOptions={{ headerShown: false }}>
+      <Stack
+        screenOptions={{
+          headerShown: false,
+          // Screens that show a header (Plan ahead, Insights, Recharge) use the app colours too.
+          headerStyle: { backgroundColor: theme.colors.background },
+          headerTintColor: theme.colors.ink,
+          headerTitleStyle: { color: theme.colors.ink, fontWeight: '700' },
+          headerShadowVisible: false,
+        }}
+      >
         <Stack.Protected guard={status === 'signedOut'}>
           <Stack.Screen name="(auth)" />
         </Stack.Protected>
@@ -58,6 +67,11 @@ function RootStack() {
         <Stack.Protected guard={status === 'signedIn'}>
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="checkin" />
+          <Stack.Screen name="low-battery" options={{ gestureEnabled: false }} />
+          <Stack.Screen
+            name="checkin-options"
+            options={{ presentation: 'transparentModal', animation: 'fade' }}
+          />
           <Stack.Screen name="planner/index" options={{ headerShown: true }} />
           <Stack.Screen name="planner/event" options={{ headerShown: true }} />
           <Stack.Screen name="insights/index" options={{ headerShown: true }} />

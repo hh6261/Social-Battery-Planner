@@ -1,5 +1,6 @@
 import { Linking } from 'react-native';
 import { LINKS } from '../constants/config';
+import i18n from '../i18n';
 
 type ShowMessage = (title: string, message: string) => Promise<boolean>;
 
@@ -7,12 +8,12 @@ type ShowMessage = (title: string, message: string) => Promise<boolean>;
 export async function openAppLink(key: keyof typeof LINKS, title: string, showMessage: ShowMessage) {
   const url = LINKS[key];
   if (!url) {
-    await showMessage(title, 'This page isn’t available yet. Please check back soon.');
+    await showMessage(title, i18n.t('links.unavailable'));
     return;
   }
   try {
     await Linking.openURL(url);
   } catch {
-    await showMessage(title, 'We couldn’t open this page. Please try again later.');
+    await showMessage(title, i18n.t('links.failed'));
   }
 }
