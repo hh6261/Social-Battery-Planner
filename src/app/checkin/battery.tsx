@@ -1,12 +1,15 @@
 import { useState } from 'react';
-import { Button, StyleSheet, Text, View } from 'react-native';
+import { View } from 'react-native';
 import { router, useLocalSearchParams } from 'expo-router';
 import { useTranslation } from 'react-i18next';
-import Slider from '@expo/ui/community/slider';
 
+import { AppText } from '@/components/AppText';
+import BatteryIcon from '@/features/checkin/BatteryIcon';
 import { useCheckInDraft } from '@/features/checkin/CheckInDraft';
-import StepProgress from '@/features/checkin/StepProgress';
+import StepScreen from '@/features/checkin/StepScreen';
+import StepSlider from '@/features/checkin/StepSlider';
 import { formatPercent } from '@/i18n/format';
+import { makeStyles } from '@/theme/ThemeProvider';
 
 const clampLevel = (n: number) => Math.min(100, Math.max(0, Math.round(n)));
 
@@ -18,6 +21,7 @@ function stateOf(level: number): 'low' | 'medium' | 'high' {
 
 export default function BatteryStep() {
   const { t } = useTranslation();
+  const styles = useStyles();
   const { draft, update } = useCheckInDraft();
   const params = useLocalSearchParams<{ level?: string }>();
 
@@ -28,48 +32,44 @@ export default function BatteryStep() {
       : null;
   const [level, setLevel] = useState(draft.batteryLevel ?? fromParam ?? 50);
 
+  const change = (value: number) => {
+    setLevel(value);
+    update({ batteryLevel: value }); // keep the draft current, so Back never loses it
+  };
+
   const next = () => {
     update({ batteryLevel: level });
     router.push('/checkin/mood');
   };
 
   return (
-    <View style={styles.container}>
-      <StepProgress current={1} />
-
-      <Text style={styles.question} accessibilityRole="header">
-        {t('checkin.battery.question')}
-      </Text>
-
-      <Text style={styles.value} accessibilityLiveRegion="polite">
-        {formatPercent(level / 100)}
-      </Text>
-      <Text style={styles.state}>{t(`checkin.battery.state.${stateOf(level)}`)}</Text>
-
-      <Slider
-        value={level}
-        minimumValue={0}
-        maximumValue={100}
-        step={5}
-        onValueChange={(v: number) => setLevel(clampLevel(v))}
-        accessibilityLabel={t('checkin.battery.sliderLabel')}
-      />
-
-      {/* Buttons as an alternative to dragging, easier with a screen reader or limited motor control */}
-      <View style={styles.row}>
-        <Button title={t('checkin.battery.lower')} onPress={() => setLevel((l) => clampLevel(l - 5))} />
-        <Button title={t('checkin.battery.higher')} onPress={() => setLevel((l) => clampLevel(l + 5))} />
+    <StepScreen step={1} title={t('checkin.battery.question')} onNext={next}>
+      <View style={styles.center}>
+        <BatteryIcon level={level} />
+        <AppText variant="display" accessibilityLiveRegion="polite" style={styles.value}>
+          {formatPercent(level / 100)}
+        </AppText>
+        <AppText variant="subheading" color="muted">
+          {t(`checkin.battery.state.${stateOf(level)}`)}
+        </AppText>
       </View>
 
-      <Button title={t('checkin.next')} onPress={next} />
-    </View>
+      {/* Buttons next to the slider as an alternative to dragging (screen reader, motor control) */}
+      <StepSlider
+        value={level}
+        min={0}
+        max={100}
+        step={5}
+        onChange={change}
+        sliderLabel={t('checkin.battery.sliderLabel')}
+        decreaseLabel={t('checkin.battery.lower')}
+        increaseLabel={t('checkin.battery.higher')}
+      />
+    </StepScreen>
   );
 }
 
-const styles = StyleSheet.create({
-  container: { flex: 1, padding: 24, gap: 16 },
-  question: { fontSize: 22, fontWeight: '600' },
-  value: { fontSize: 48, fontWeight: '700', textAlign: 'center' },
-  state: { fontSize: 16, textAlign: 'center' },
-  row: { flexDirection: 'row', justifyContent: 'space-between' },
-});
+const useStyles = makeStyles((t) => ({
+  center: { alignItems: 'center', gap: t.spacing.xs },
+  value: { marginTop: t.spacing.md },
+}));

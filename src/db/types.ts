@@ -1,14 +1,25 @@
+export type GroupSize = 'lt5' | 'lt10' | 'lt15' | 'more';
+
 export type CheckIn = {
   id: number;
   batteryLevel: number; // 0-100
   activity: string | null;
   attendees: string | null;
-  impactRating: number | null; // 1-5 (1 = drained me, 5 = recharged me)
+  impactRating: number | null; // 1-5 (1 = drained me, 5 = recharged me), derived from energyChange
   notes: string | null;
   createdAtUtc: string;
   updatedAtUtc: string;
   eventId: number | null;
   moods: string[]; // mood keys, e.g. "calm"
+  groupSize: GroupSize | null;
+  oneOnOne: boolean | null;
+  strangerCount: number | null;
+  friendsMade: number | null;
+  energyChange: number | null; // -100 (drained me) to 100 (recharged me)
+  noteTitle: string | null;
+  weatherCode: number | null; // WMO code recorded automatically (migration 008)
+  weatherTemp: number | null; // degrees Celsius
+  weatherCity: string | null;
 };
 
 export type NewCheckIn = {
@@ -20,6 +31,15 @@ export type NewCheckIn = {
   createdAtUtc?: string; // defaults to now (UTC)
   eventId?: number | null;
   moods?: string[];
+  groupSize?: GroupSize | null;
+  oneOnOne?: boolean | null;
+  strangerCount?: number | null;
+  friendsMade?: number | null;
+  energyChange?: number | null;
+  noteTitle?: string | null;
+  weatherCode?: number | null;
+  weatherTemp?: number | null;
+  weatherCity?: string | null;
 };
 
 export type CheckInPatch = Partial<NewCheckIn>;
