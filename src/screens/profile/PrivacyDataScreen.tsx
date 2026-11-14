@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Share } from "react-native";
 import {
   AppDialog,
@@ -20,6 +21,7 @@ import { requestPhotoPermission } from "../../utils/photoPicker";
 
 /** Screen 30 · Privacy & Data (includes the Delete account dialog) */
 export function PrivacyDataScreen() {
+  const { t } = useTranslation();
   const styles = useStyles();
   const user = useCurrentUser();
   const { deleteAccount } = useAuth();
@@ -40,8 +42,8 @@ export function PrivacyDataScreen() {
       const granted = await requestPhotoPermission();
       if (!granted) {
         showMessage(
-          "Photo access is off",
-          "To use this, allow Social Battery to access your photos in your phone’s settings.",
+          t("privacy.photoOffTitle"),
+          t("privacy.photoOffMessage"),
         );
         return;
       }
@@ -54,11 +56,11 @@ export function PrivacyDataScreen() {
     setExporting(true);
     try {
       const json = await dataService.exportData(user.id);
-      await Share.share({ title: "Social Battery data export", message: json });
+      await Share.share({ title: t("privacy.exportTitle"), message: json });
     } catch {
       showMessage(
-        "Couldn’t export your data",
-        "Please check your connection and try again.",
+        t("privacy.exportErrorTitle"),
+        t("privacy.exportErrorMessage"),
       );
     } finally {
       setExporting(false);
@@ -73,77 +75,74 @@ export function PrivacyDataScreen() {
       // RootNavigator swaps back to the Splash screen.
     } catch {
       setDeleting(false);
-      setDeleteError("We couldn’t delete your account. Please try again.");
+      setDeleteError(t("privacy.deleteError"));
     }
   };
 
   return (
     <Screen edges={["top"]}>
-      <BackLink label="Profile" />
+      <BackLink label={t("tabs.profile")} />
       <AppText variant="eyebrow" style={styles.eyebrow}>
-        Privacy & Data
+        {t("privacy.eyebrow")}
       </AppText>
       <AppText variant="title" accessibilityRole="header">
-        Your data and plans are private
+        {t("privacy.title")}
       </AppText>
       <AppText variant="body" color="muted" style={styles.intro}>
-        You can choose what the app connects to and how your information is
-        handled.
+        {t("privacy.intro")}
       </AppText>
 
-      <SectionLabel>Connections</SectionLabel>
+      <SectionLabel>{t("privacy.connections")}</SectionLabel>
       <ListGroup>
         <ListRow
-          title="Calendar"
-          subtitle="Help you plan around upcoming events"
+          title={t("privacy.calendar")}
+          subtitle={t("privacy.calendarHint")}
           right={
             <Toggle
               value={connections.calendar}
               onValueChange={(v) => setConnection("calendar", v)}
-              accessibilityLabel="Calendar connection"
+              accessibilityLabel={t("privacy.calendarLabel")}
             />
           }
         />
         <ListRow
-          title="Photos"
-          subtitle="Let you choose a profile picture"
+          title={t("privacy.photos")}
+          subtitle={t("privacy.photosHint")}
           right={
             <Toggle
               value={connections.photos}
               onValueChange={togglePhotos}
-              accessibilityLabel="Photos connection"
+              accessibilityLabel={t("privacy.photosLabel")}
             />
           }
         />
       </ListGroup>
 
-      <SectionLabel>Privacy</SectionLabel>
+      <SectionLabel>{t("privacy.section")}</SectionLabel>
       <ListGroup>
         <ListRow
-          title="Terms & Conditions"
+          title={t("privacy.terms")}
           emphasis={false}
-          onPress={() =>
-            openAppLink("terms", "Terms & Conditions", showMessage)
-          }
+          onPress={() => openAppLink("terms", t("privacy.terms"), showMessage)}
         />
         <ListRow
-          title="Help & FAQ"
+          title={t("privacy.help")}
           emphasis={false}
-          onPress={() => openAppLink("helpFaq", "Help & FAQ", showMessage)}
+          onPress={() => openAppLink("helpFaq", t("privacy.help"), showMessage)}
         />
         <ListRow
-          title={exporting ? "Preparing export…" : "Export data"}
+          title={exporting ? t("privacy.exporting") : t("privacy.export")}
           emphasis={false}
           disabled={exporting}
           onPress={exportData}
-          accessibilityHint="Shares a copy of your data"
+          accessibilityHint={t("privacy.exportHint")}
         />
       </ListGroup>
 
-      <SectionLabel>Delete account</SectionLabel>
+      <SectionLabel>{t("privacy.deleteSection")}</SectionLabel>
       <ListGroup style={styles.lastGroup}>
         <ListRow
-          title="Delete account"
+          title={t("privacy.deleteAccount")}
           emphasis={false}
           onPress={() => setDeleteOpen(true)}
         />
@@ -151,12 +150,12 @@ export function PrivacyDataScreen() {
 
       <AppDialog
         visible={deleteOpen}
-        title="Delete your account?"
-        message="This would remove your account, check-ins, plans, and preferences. Are you sure you’d like to continue?"
-        primaryLabel="Delete account"
+        title={t("privacy.deleteTitle")}
+        message={t("privacy.deleteMessage")}
+        primaryLabel={t("privacy.deleteAccount")}
         onPrimary={confirmDelete}
         primaryLoading={deleting}
-        secondaryLabel="Cancel"
+        secondaryLabel={t("common.cancel")}
         secondaryVariant="outline"
         onSecondary={() => {
           setDeleteOpen(false);

@@ -10,14 +10,14 @@ export const LINKS = {
 };
 
 /**
- * Tab labels. The flow map calls tab 2 "Journal"; the wireframes say "Tracker".
- * Change it here and it updates everywhere.
+ * Tab labels live in the locale files under tabs.* (home, tracker, insights, profile).
+ * The flow map calls tab 2 "Journal"; the wireframes say "Tracker". Change tabs.tracker to rename it.
  */
-export const TAB_LABELS = {
-  home: 'Home',
-  tracker: 'Tracker',
-  insights: 'Insights',
-  profile: 'Profile',
-};
+export const TAB_LABEL_KEYS = {
+  home: 'tabs.home',
+  tracker: 'tabs.tracker',
+  insights: 'tabs.insights',
+  profile: 'tabs.profile',
+} as const;
 
 export const PASSWORD_MIN_LENGTH = 8;

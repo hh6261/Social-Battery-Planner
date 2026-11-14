@@ -1,6 +1,7 @@
 import { Feather } from '@expo/vector-icons';
 import React from 'react';
 import { Pressable, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { makeStyles, useTheme } from '../theme/ThemeProvider';
 import { AppText } from './AppText';
 
@@ -15,6 +16,7 @@ interface ChipProps {
 }
 
 export function Chip({ label, selected = false, onPress, onRemove, size = 'md' }: ChipProps) {
+  const { t } = useTranslation();
   const theme = useTheme();
   const styles = useStyles();
   const fg = selected ? 'onPrimary' : 'ink';
@@ -41,7 +43,7 @@ export function Chip({ label, selected = false, onPress, onRemove, size = 'md' }
           onPress={onRemove}
           hitSlop={10}
           accessibilityRole="button"
-          accessibilityLabel={`Remove ${label}`}
+          accessibilityLabel={t('common.remove', { label })}
           style={styles.remove}
         >
           <Feather name="minus" size={10} color={theme.colors.ink} />
@@ -52,16 +54,18 @@ export function Chip({ label, selected = false, onPress, onRemove, size = 'md' }
 }
 
 /** Dashed "+ Add a situation" / "Add +" chip. */
-export function AddChip({ label = '+ Add a situation', onPress, size = 'md' }: { label?: string; onPress(): void; size?: 'md' | 'sm' }) {
+export function AddChip({ label, onPress, size = 'md' }: { label?: string; onPress(): void; size?: 'md' | 'sm' }) {
+  const { t } = useTranslation();
   const styles = useStyles();
+  const text = label ?? t('situation.addChip');
   return (
     <Pressable
       onPress={onPress}
       accessibilityRole="button"
-      accessibilityLabel={label.replace('+', '').trim()}
+      accessibilityLabel={text.replace('+', '').trim()}
       style={({ pressed }) => [styles.chip, styles.dashed, size === 'sm' && styles.small, pressed && styles.pressed]}
     >
-      <AppText variant={size === 'sm' ? 'bodySmall' : 'body'}>{label}</AppText>
+      <AppText variant={size === 'sm' ? 'bodySmall' : 'body'}>{text}</AppText>
     </Pressable>
   );
 }
@@ -89,7 +93,7 @@ const useStyles = makeStyles((t) => ({
   dashed: { borderStyle: 'dashed', borderColor: t.colors.muted, backgroundColor: 'transparent' },
   pressed: { opacity: 0.75 },
   remove: {
-    marginLeft: t.spacing.xs,
+    marginStart: t.spacing.xs,
     width: 16,
     height: 16,
     borderRadius: 8,

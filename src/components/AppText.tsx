@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import { Text, TextProps, TextStyle } from 'react-native';
 import { Palette } from '../theme/tokens';
 import { useTheme } from '../theme/ThemeProvider';
@@ -46,9 +47,12 @@ export function AppText({
   ...rest
 }: AppTextProps) {
   const theme = useTheme();
+  const { i18n } = useTranslation();
   const v = VARIANTS[variant];
-  const defaultColor: keyof Palette = variant === 'eyebrow' ? 'muted' : 'ink';
-  const text = v.upper && typeof children === 'string' ? children.toUpperCase() : children;
+  // Letter spacing would break the joined letters of Arabic.
+  const spacing = i18n.language === 'ar' ? 0 : v.spacing;
+  const defaultColor: keyof Palette = variant === 'eyebrow' ? 'detail' : 'ink';
+  const text = v.upper && typeof children === 'string' ? children.toLocaleUpperCase(i18n.language) : children;
 
   return (
     <Text
@@ -60,7 +64,7 @@ export function AppText({
           fontSize: theme.font(v.size),
           lineHeight: theme.font(v.line),
           fontWeight: weight ?? v.weight,
-          letterSpacing: v.spacing,
+          letterSpacing: spacing,
           textAlign: align,
         },
         style,

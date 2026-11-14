@@ -1,4 +1,5 @@
 import React, { createContext, useCallback, useContext, useMemo, useRef, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { ButtonVariant } from './Button';
 import { AppDialog } from './AppDialog';
 
@@ -24,6 +25,7 @@ const DialogContext = createContext<DialogContextValue | null>(null);
 
 /** Use this instead of Alert.alert so every dialog matches the wireframe shape. */
 export function DialogProvider({ children }: { children: React.ReactNode }) {
+  const { t } = useTranslation();
   const [options, setOptions] = useState<DialogOptions | null>(null);
   const resolver = useRef<((value: boolean) => void) | null>(null);
 
@@ -42,8 +44,8 @@ export function DialogProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const showMessage = useCallback(
-    (title: string, message: string) => showDialog({ title, message, primaryLabel: 'OK' }),
-    [showDialog],
+    (title: string, message: string) => showDialog({ title, message, primaryLabel: t('common.ok') }),
+    [showDialog, t],
   );
 
   const value = useMemo(() => ({ showDialog, showMessage }), [showDialog, showMessage]);
@@ -55,7 +57,7 @@ export function DialogProvider({ children }: { children: React.ReactNode }) {
         visible={!!options}
         title={options?.title ?? ''}
         message={options?.message}
-        primaryLabel={options?.primaryLabel ?? 'OK'}
+        primaryLabel={options?.primaryLabel ?? t('common.ok')}
         onPrimary={() => finish(true)}
         secondaryLabel={options?.secondaryLabel}
         secondaryVariant={options?.secondaryVariant}

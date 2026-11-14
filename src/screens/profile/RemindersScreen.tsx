@@ -1,4 +1,5 @@
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
   AppText,
   BackLink,
@@ -10,7 +11,7 @@ import {
   TimeField,
   Toggle,
 } from '../../components';
-import { FREQUENCY_OPTIONS } from '../../constants/situations';
+import { frequencyOptions } from '../../constants/situations';
 import { useSaveSettings } from '../../hooks/useSaveSettings';
 import { router } from 'expo-router';
 import { makeStyles } from '../../theme/ThemeProvider';
@@ -21,6 +22,7 @@ import { makeStyles } from '../../theme/ThemeProvider';
  * It edits the same settings.reminders values as Settings, so both stay in sync.
  */
 export function RemindersScreen() {
+  const { t } = useTranslation();
   const styles = useStyles();
   const { settings, save } = useSaveSettings();
   const { reminders, quietHours } = settings;
@@ -31,86 +33,86 @@ export function RemindersScreen() {
 
   return (
     <Screen edges={['top']}>
-      <BackLink label="Settings" />
+      <BackLink label={t('settings.title')} />
       <AppText variant="title" accessibilityRole="header" style={styles.title}>
-        Reminders
+        {t('settings.reminders')}
       </AppText>
       <AppText variant="body" color="muted">
-        Choose when gentle check-ins reach you, and what they include.
+        {t('reminders.intro')}
       </AppText>
 
-      <SectionLabel>Daily check-in</SectionLabel>
+      <SectionLabel>{t('reminders.daily')}</SectionLabel>
       <ListGroup>
         <ListRow
-          title="Reminders"
-          subtitle="Gentle check-ins and notifications"
+          title={t('settings.reminders')}
+          subtitle={t('settings.remindersHint')}
           right={
-            <Toggle value={reminders.enabled} onValueChange={(v) => setReminder('enabled', v)} accessibilityLabel="Reminders" />
+            <Toggle value={reminders.enabled} onValueChange={(v) => setReminder('enabled', v)} accessibilityLabel={t('settings.reminders')} />
           }
         />
         <ListRow
-          title="Frequency"
+          title={t('settings.frequency')}
           disabled={off}
           right={
             <SelectField
-              title="Reminder frequency"
+              title={t('settings.reminderFrequency')}
               value={reminders.frequency}
-              options={FREQUENCY_OPTIONS}
+              options={frequencyOptions()}
               disabled={off}
               onChange={(v) => setReminder('frequency', v)}
             />
           }
         />
         <ListRow
-          title="Time"
-          subtitle="When the check-in arrives"
+          title={t('reminders.time')}
+          subtitle={t('reminders.timeHint')}
           disabled={off}
           right={
             <TimeField
               value={reminders.time}
               disabled={off}
-              accessibilityLabel="Reminder time"
+              accessibilityLabel={t('reminders.timeLabel')}
               onChange={(v) => setReminder('time', v)}
             />
           }
         />
       </ListGroup>
 
-      <SectionLabel>What to include</SectionLabel>
+      <SectionLabel>{t('reminders.include')}</SectionLabel>
       <ListGroup>
         <ListRow
-          title="Tomorrow’s estimate"
-          subtitle="An estimate of the next day’s social battery drain, so you can plan ahead"
+          title={t('reminders.estimate')}
+          subtitle={t('reminders.estimateHint')}
           disabled={off}
           right={
             <Toggle
               value={reminders.includeDrainEstimate}
               disabled={off}
               onValueChange={(v) => setReminder('includeDrainEstimate', v)}
-              accessibilityLabel="Include tomorrow’s estimate"
+              accessibilityLabel={t('reminders.estimateLabel')}
             />
           }
         />
         <ListRow
-          title="Upcoming plans"
-          subtitle="A heads-up before plans in your journal"
+          title={t('reminders.plans')}
+          subtitle={t('reminders.plansHint')}
           disabled={off}
           right={
             <Toggle
               value={reminders.planReminders}
               disabled={off}
               onValueChange={(v) => setReminder('planReminders', v)}
-              accessibilityLabel="Upcoming plan reminders"
+              accessibilityLabel={t('reminders.plansLabel')}
             />
           }
         />
       </ListGroup>
 
-      <SectionLabel>Quiet hours</SectionLabel>
+      <SectionLabel>{t('settings.quietHours')}</SectionLabel>
       <ListGroup style={styles.lastGroup}>
         <ListRow
           title={`${quietHours.from} – ${quietHours.to}`}
-          subtitle="No reminders during quiet hours. Change them in Settings."
+          subtitle={t('reminders.quietHint')}
           onPress={() => router.back()}
         />
       </ListGroup>

@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { TextInput } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { makeStyles, useTheme } from '../theme/ThemeProvider';
 
 interface Props {
@@ -26,11 +27,16 @@ function formatDigits(raw: string): string {
  * snaps back to the last saved value.
  */
 export function TimeField({ value, onChange, accessibilityLabel, disabled }: Props) {
+  const { t } = useTranslation();
   const theme = useTheme();
   const styles = useStyles();
   const [draft, setDraft] = useState(value);
-
-  useEffect(() => setDraft(value), [value]);
+  // When the saved value changes from outside, show it (state adjusted while rendering, no effect).
+  const [seenValue, setSeenValue] = useState(value);
+  if (value !== seenValue) {
+    setSeenValue(value);
+    setDraft(value);
+  }
 
   const commit = () => {
     // Accept "9:30" / "930" → 09:30
@@ -44,16 +50,16 @@ export function TimeField({ value, onChange, accessibilityLabel, disabled }: Pro
   return (
     <TextInput
       value={draft}
-      onChangeText={(t) => setDraft(formatDigits(t))}
+      onChangeText={(text) => setDraft(formatDigits(text))}
       onBlur={commit}
       onSubmitEditing={commit}
       editable={!disabled}
       keyboardType="number-pad"
       returnKeyType="done"
       maxLength={5}
-      placeholder="HH:MM"
+      placeholder={t('timeField.placeholder')}
       placeholderTextColor={theme.colors.subtle}
-      accessibilityLabel={`${accessibilityLabel}, 24 hour time`}
+      accessibilityLabel={t('timeField.label', { label: accessibilityLabel })}
       style={[styles.input, { fontSize: theme.font(16) }, disabled && styles.disabled]}
     />
   );

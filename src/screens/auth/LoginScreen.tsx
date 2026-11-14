@@ -1,6 +1,7 @@
 import { router } from "expo-router";
 import React, { useRef, useState } from "react";
 import { View, type TextInputInstance } from "react-native";
+import { useTranslation } from "react-i18next";
 import {
   AppDialog,
   AppText,
@@ -24,6 +25,7 @@ import {
 
 /** Screen 2 · Log in */
 export function LoginScreen() {
+  const { t } = useTranslation();
   const styles = useStyles();
   const { signIn } = useAuth();
   const passwordRef = useRef<TextInputInstance>(null);
@@ -32,11 +34,10 @@ export function LoginScreen() {
   // Development builds only: wipe the local account so you can register again.
   const resetDevice = async () => {
     const confirmed = await showDialog({
-      title: "Reset this device?",
-      message:
-        "This deletes the account on this phone and all its data, so you can register again.",
-      primaryLabel: "Reset",
-      secondaryLabel: "Cancel",
+      title: t("auth.resetDeviceTitle"),
+      message: t("auth.resetDeviceMessage"),
+      primaryLabel: t("auth.reset"),
+      secondaryLabel: t("common.cancel"),
       secondaryVariant: "outline",
     });
     if (!confirmed) return;
@@ -57,7 +58,7 @@ export function LoginScreen() {
 
   const submit = async () => {
     const emailError = validateEmail(email);
-    const passwordError = password ? null : "Please enter your password.";
+    const passwordError = password ? null : t("validation.passwordEnter");
     setErrors({ email: emailError, password: passwordError });
     if (emailError || passwordError) return;
 
@@ -70,7 +71,7 @@ export function LoginScreen() {
         form:
           e instanceof ServiceError
             ? e.message
-            : "Something went wrong. Please try again.",
+            : t("common.genericError"),
       });
       setSubmitting(false);
     }
@@ -88,16 +89,16 @@ export function LoginScreen() {
         <Logo size={52} />
         <View style={styles.headerText}>
           <AppText variant="eyebrow" color="ink">
-            Social Battery
+            {t("app.name")}
           </AppText>
           <AppText variant="title" accessibilityRole="header">
-            Welcome back
+            {t("auth.welcomeBack")}
           </AppText>
         </View>
       </View>
 
       <TextField
-        label="Email address"
+        label={t("auth.email")}
         value={email}
         onChangeText={(v) => {
           setEmail(v);
@@ -116,13 +117,13 @@ export function LoginScreen() {
       />
       <TextField
         ref={passwordRef}
-        label="Password"
+        label={t("auth.password")}
         value={password}
         onChangeText={(v) => {
           setPassword(v);
           if (errors.password || errors.form) setErrors({});
         }}
-        placeholder="Enter your password"
+        placeholder={t("auth.passwordPlaceholder")}
         password
         autoCapitalize="none"
         autoComplete="current-password"
@@ -136,7 +137,7 @@ export function LoginScreen() {
       <Checkbox
         checked={remember}
         onChange={setRemember}
-        label="Remember me on this device"
+        label={t("auth.remember")}
         style={styles.remember}
       />
 
@@ -152,7 +153,7 @@ export function LoginScreen() {
       ) : null}
 
       <Button
-        label="Log in"
+        label={t("auth.logIn")}
         onPress={submit}
         loading={submitting}
         style={styles.submit}
@@ -166,14 +167,14 @@ export function LoginScreen() {
         onPress={() => setResetOpen(true)}
         accessibilityRole="link"
       >
-        Forgot your password?
+        {t("auth.forgot")}
       </AppText>
 
       <DashedDivider style={styles.dashed} />
 
       <View style={styles.signupRow}>
         <AppText variant="bodySmall" color="muted">
-          New to Social Battery?{" "}
+          {t("auth.newHere")}{" "}
         </AppText>
         <AppText
           variant="bodySmall"
@@ -182,13 +183,13 @@ export function LoginScreen() {
           onPress={() => router.replace("/register")}
           accessibilityRole="link"
         >
-          Sign up
+          {t("auth.signUp")}
         </AppText>
       </View>
 
       {__DEV__ && (
         <Button
-          label="Reset this device (dev only)"
+          label={t("auth.resetDev")}
           variant="outline"
           size="md"
           onPress={resetDevice}
@@ -226,6 +227,7 @@ function ForgotPasswordDialog({
   /** Called with the email after a successful reset, to prefill the log-in form. */
   onReset(email: string): void;
 }) {
+  const { t } = useTranslation();
   const styles = useStyles();
   const [email, setEmail] = useState(initialEmail);
   const [day, setDay] = useState("");
@@ -241,7 +243,10 @@ function ForgotPasswordDialog({
   const [saving, setSaving] = useState(false);
   const [done, setDone] = useState(false);
 
-  React.useEffect(() => {
+  // Start from an empty form every time the dialog opens (state adjusted while rendering, no effect).
+  const [wasVisible, setWasVisible] = useState(visible);
+  if (visible !== wasVisible) {
+    setWasVisible(visible);
     if (visible) {
       setEmail(initialEmail);
       setDay("");
@@ -252,7 +257,7 @@ function ForgotPasswordDialog({
       setDone(false);
       setSaving(false);
     }
-  }, [visible, initialEmail]);
+  }
 
   const digits = (value: string, max: number, set: (v: string) => void) => {
     set(value.replace(/\D/g, "").slice(0, max));
@@ -278,7 +283,7 @@ function ForgotPasswordDialog({
         form:
           e instanceof ServiceError
             ? e.message
-            : "Something went wrong. Please try again.",
+            : t("common.genericError"),
       });
     } finally {
       setSaving(false);
@@ -289,9 +294,9 @@ function ForgotPasswordDialog({
     return (
       <AppDialog
         visible={visible}
-        title="Password updated"
-        message="You can now log in with your new password."
-        primaryLabel="Log in"
+        title={t("auth.passwordUpdated")}
+        message={t("auth.passwordUpdatedMessage")}
+        primaryLabel={t("auth.logIn")}
         onPrimary={() => {
           onReset(email.trim());
           onClose();
@@ -304,16 +309,16 @@ function ForgotPasswordDialog({
   return (
     <AppDialog
       visible={visible}
-      title="Reset password"
-      message="Your account is stored only on this device, so we can’t email you a link. Confirm your email and birthday, then choose a new password."
-      primaryLabel="Save"
+      title={t("auth.resetTitle")}
+      message={t("auth.resetMessage")}
+      primaryLabel={t("common.save")}
       onPrimary={submit}
       primaryLoading={saving}
-      secondaryLabel="Cancel"
+      secondaryLabel={t("common.cancel")}
       onSecondary={onClose}
     >
       <TextField
-        label="Email address"
+        label={t("auth.email")}
         value={email}
         onChangeText={(v) => {
           setEmail(v);
@@ -327,34 +332,34 @@ function ForgotPasswordDialog({
         containerStyle={styles.dialogField}
       />
       <AppText variant="label" style={styles.dialogBirthdayLabel}>
-        Birthday
+        {t("auth.birthday")}
       </AppText>
       <View style={styles.dialogBirthdayRow}>
         <TextField
           value={day}
           onChangeText={(v) => digits(v, 2, setDay)}
-          placeholder="DD"
+          placeholder={t("auth.dayPlaceholder")}
           keyboardType="number-pad"
           maxLength={2}
-          accessibilityLabel="Birthday day"
+          accessibilityLabel={t("auth.birthdayDay")}
           containerStyle={styles.flex1}
         />
         <TextField
           value={month}
           onChangeText={(v) => digits(v, 2, setMonth)}
-          placeholder="MM"
+          placeholder={t("auth.monthPlaceholder")}
           keyboardType="number-pad"
           maxLength={2}
-          accessibilityLabel="Birthday month"
+          accessibilityLabel={t("auth.birthdayMonth")}
           containerStyle={styles.flex1}
         />
         <TextField
           value={year}
           onChangeText={(v) => digits(v, 4, setYear)}
-          placeholder="YYYY"
+          placeholder={t("auth.yearPlaceholder")}
           keyboardType="number-pad"
           maxLength={4}
-          accessibilityLabel="Birthday year"
+          accessibilityLabel={t("auth.birthdayYear")}
           containerStyle={styles.flex13}
         />
       </View>
@@ -368,13 +373,13 @@ function ForgotPasswordDialog({
         </AppText>
       ) : null}
       <TextField
-        label="New password"
+        label={t("auth.newPassword")}
         value={password}
         onChangeText={(v) => {
           setPassword(v);
           setErrors((e) => ({ ...e, password: null, form: null }));
         }}
-        placeholder="Create a password"
+        placeholder={t("auth.createPasswordPlaceholder")}
         password
         autoCapitalize="none"
         autoComplete="new-password"
@@ -405,7 +410,7 @@ const useStyles = makeStyles((t) => ({
     marginTop: t.spacing.xxl,
     marginBottom: t.spacing.xxl,
   },
-  headerText: { marginLeft: t.spacing.md, flex: 1 },
+  headerText: { marginStart: t.spacing.md, flex: 1 },
   field: { marginBottom: t.spacing.lg },
   remember: { marginBottom: t.spacing.xl },
   formError: { marginBottom: t.spacing.md },

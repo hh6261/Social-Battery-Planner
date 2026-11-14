@@ -1,57 +1,189 @@
 {
-   "app": {
-  "title": "Planer društvene baterije",
-  "loading": "Učitavanje…"
-},
-"checkin": {
-  "title": "Provjera stanja",
-  "progress": "Korak {{current}} od {{total}}",
-  "next": "Dalje",
-  "skip": "Preskoči",
-  "retry": "Pokušaj ponovno",
-  "battery": {
-    "question": "Koliko je društvena baterija napunjena upravo sada?",
-    "sliderLabel": "Razina društvene baterije",
-    "lower": "Manje",
-    "higher": "Više",
-    "state": {
-      "low": "Niska: vrijeme je za odmor",
-      "medium": "Srednja",
-      "high": "Visoka: dovoljno energije"
+  "app": {
+    "title": "Planer društvene baterije",
+    "loading": "Učitavanje…",
+    "name": "Social Battery",
+    "logoLabel": "Logotip aplikacije Social Battery"
+  },
+  "checkin": {
+    "title": "Provjera stanja",
+    "progress": "Korak {{current}} od {{total}}",
+    "next": "Dalje",
+    "skip": "Preskoči",
+    "retry": "Pokušaj ponovno",
+    "battery": {
+      "question": "Koliko je društvena baterija napunjena upravo sada?",
+      "sliderLabel": "Razina društvene baterije",
+      "lower": "Manje",
+      "higher": "Više",
+      "state": {
+        "low": "Niska: vrijeme je za odmor",
+        "medium": "Srednja",
+        "high": "Visoka: dovoljno energije"
+      }
+    },
+    "mood": {
+      "question": "Kako se osjećaš?",
+      "hint": "Odaberi sve što odgovara.",
+      "selectedCount_one": "Odabrano: {{count}} emocija",
+      "selectedCount_few": "Odabrano: {{count}} emocije",
+      "selectedCount_other": "Odabrano: {{count}} emocija",
+      "loading": "Učitavanje raspoloženja…",
+      "error": "Raspoloženja se nisu mogla učitati.",
+      "empty": "Nema dostupnih raspoloženja.",
+      "showList": "Prikaži kao popis",
+      "showWheel": "Prikaži kao kotač",
+      "options": {
+        "calm": "Smireno",
+        "happy": "Sretno",
+        "energised": "Puno energije",
+        "content": "Zadovoljno",
+        "tired": "Umorno",
+        "anxious": "Tjeskobno",
+        "irritable": "Razdražljivo",
+        "overwhelmed": "Preopterećeno",
+        "bad": "Loše",
+        "fearful": "Uplašeno",
+        "angry": "Ljutito",
+        "disgusted": "Zgađeno",
+        "sad": "Tužno",
+        "surprised": "Iznenađeno"
+      }
+    },
+    "back": "Natrag",
+    "backLabel": "Idi natrag",
+    "batteryIconLabel": "Baterija na {{percent}}",
+    "activity": {
+      "question": "Što se događalo?",
+      "hint": "Odaberi jedno ili upiši svoje. Ovaj korak možeš preskočiti.",
+      "yours": "Iz tvoje personalizacije",
+      "recent": "Nedavno",
+      "ownLabel": "Nešto drugo",
+      "ownPlaceholder": "Na primjer, obiteljska večera"
+    },
+    "attendees": {
+      "title": "Tko je bio tamo?",
+      "groupLabel": "Veličina grupe",
+      "group": {
+        "lt5": "Manje od 5 osoba",
+        "lt10": "Manje od 10 osoba",
+        "lt15": "Manje od 15 osoba",
+        "more": "15 osoba ili više"
+      },
+      "oneOnOneLabel": "Je li bilo u četiri oka?",
+      "yes": "Da",
+      "no": "Ne",
+      "strangers": "Stranci",
+      "friends": "Novi prijatelji",
+      "value": "{{label}}: {{value}}",
+      "decrease": "Smanji: {{what}}",
+      "increase": "Povećaj: {{what}}"
+    },
+    "impact": {
+      "title": "Kako je to utjecalo na tvoju energiju?",
+      "endDrain": "Iscrpilo me",
+      "endNeutral": "Bez promjene",
+      "endRecharge": "Napunilo me",
+      "slider": "Promjena energije",
+      "decrease": "Više iscrpljivanja",
+      "increase": "Više punjenja",
+      "caption": "Pomakni klizač da pokažeš koliko te je iscrpilo ili napunilo.",
+      "summary": "{{state}} {{value}}",
+      "state": {
+        "drain": "Iscrpljenost za",
+        "recharge": "Punjenje za",
+        "neutral": "Bez promjene"
+      }
+    },
+    "notes": {
+      "title": "Želiš li nešto dodati?",
+      "titleLabel": "Naslov bilješke",
+      "titlePlaceholder": "Naslov (neobavezno)",
+      "bodyLabel": "Bilješka",
+      "bodyPlaceholder": "Tekst…"
+    },
+    "confirm": {
+      "title": "Potvrdi svoj odabir",
+      "titleEdit": "Ažuriraj prijavu",
+      "state": "Trenutno stanje",
+      "activity": "Aktivnost",
+      "note": "Bilješka",
+      "none": "Ništa nije odabrano",
+      "noNote": "Nema bilješke",
+      "editHint": "Otvara ovaj korak radi promjene",
+      "cancel": "Odustani",
+      "confirm": "Potvrdi",
+      "confirmEdit": "Spremi promjene",
+      "saveError": "Prijavu nije moguće spremiti. Pokušaj ponovno.",
+      "missing": "Najprije odaberi razinu baterije.",
+      "notFound": "Ova prijava više ne postoji.",
+      "goBattery": "Idi na korak s baterijom",
+      "discardTitle": "Odbaciti ovu prijavu?",
+      "discardMessage": "Tvoji odgovori bit će izgubljeni.",
+      "discardKeep": "Nastavi uređivati",
+      "discardConfirm": "Odbaci",
+      "weather": "Vrijeme",
+      "weatherValue": "{{condition}}, {{temperature}} °C · {{city}}",
+      "weatherNone": "Nije dostupno. Prijava stanja bit će spremljena bez vremena."
+    },
+    "lowBattery": {
+      "title": "Tvoja društvena baterija je prazna",
+      "suggested": "Predložene radnje",
+      "noIdeas": "Tvoj popis za punjenje je prazan. Otvori ga i dodaj ideje.",
+      "minutes_one": "{{count}} minuta",
+      "minutes_few": "{{count}} minute",
+      "minutes_other": "{{count}} minuta",
+      "seeAll": "Prikaži sve",
+      "letKnow": "Obavijesti nekoga",
+      "proceed": "Nastavi",
+      "soonTitle": "Uskoro",
+      "soon": "Ovaj dio još nije spreman."
+    },
+    "log": {
+      "tabLog": "Dnevnik",
+      "tabPlan": "Plan",
+      "emptyToday": "Danas još nema prijava",
+      "today": "Danas",
+      "previous": "Prethodne prijave",
+      "noPrevious": "Još nema starijih prijava.",
+      "add": "Započni prijavu",
+      "error": "Prijave nije moguće učitati.",
+      "rowOptions": "Uredi ili izbriši prijavu od {{date}}, baterija {{percent}}",
+      "weather": "{{condition}}, {{temperature}} °C"
+    },
+    "options": {
+      "heading": "Uredi ili izbriši ovu prijavu",
+      "warning": "Ako je izbrišeš, svi njezini podaci bit će izbrisani.",
+      "edit": "Uredi",
+      "delete": "Izbriši",
+      "cancel": "Odustani",
+      "confirmTitle": "Izbrisati ovu prijavu?",
+      "confirmBody": "Svi podaci bit će izbrisani. Ovo se ne može poništiti.",
+      "errorTitle": "Nešto je pošlo po zlu",
+      "deleteError": "Prijavu nije moguće izbrisati. Pokušaj ponovno.",
+      "notFound": "Ova prijava više ne postoji.",
+      "close": "Zatvori"
     }
   },
-  "mood": {
-    "question": "Kako se osjećaš?",
-    "hint": "Odaberi sve što odgovara.",
-    "selectedCount_one": "Odabrano: {{count}} emocija",
-    "selectedCount_few": "Odabrano: {{count}} emocije",
-    "selectedCount_other": "Odabrano: {{count}} emocija",
-    "loading": "Učitavanje raspoloženja…",
-    "error": "Raspoloženja se nisu mogla učitati.",
-    "empty": "Nema dostupnih raspoloženja.",
-    "showList": "Prikaži kao popis",
-    "showWheel": "Prikaži kao kotač",
-    "options": {
-      "calm": "Smireno",
-      "happy": "Sretno",
-      "energised": "Puno energije",
-      "content": "Zadovoljno",
-      "tired": "Umorno",
-      "anxious": "Tjeskobno",
-      "irritable": "Razdražljivo",
-      "overwhelmed": "Preopterećeno",
-      "bad": "Loše",
-      "fearful": "Uplašeno",
-      "angry": "Ljutito",
-      "disgusted": "Zgađeno",
-      "sad": "Tužno",
-      "surprised": "Iznenađeno"
-    }
-  }
-},
-
   "home": {
-    "greeting": "Bok, {{name}}!"
+    "greeting": "Bok, {{name}}. Kako si?",
+    "noEstimate": "Još nema procjene baterije",
+    "batteryAbout": "Društvena baterija oko {{percent}} posto",
+    "estimatedTitle": "Procijenjeni trenutni postotak društvene baterije",
+    "estimateEmpty": "Napravi brzu prijavu stanja ispod za prvu procjenu",
+    "estimateBased": "Na temelju tvoje posljednje prijave stanja",
+    "quickTitle": "Brza prijava energije",
+    "sliderLabel": "Razina društvene baterije",
+    "low": "Nisko",
+    "high": "Visoko",
+    "checkInAt": "Prijavi stanje na {{percent}}",
+    "checkInHint": "Otvara prijavu stanja s ovom razinom baterije",
+    "today": "Danas",
+    "upcoming": "Nadolazeći planovi",
+    "addPlan": "Dodaj plan",
+    "nothingToday": "Danas ništa nije planirano.",
+    "planLabel": "{{time}}, {{title}}, potrošnja: {{drain}}",
+    "drain": "Potrošnja: {{level}}"
   },
   "event": {
     "form": {
@@ -306,5 +438,364 @@
       "save": "Nije uspjelo. Pokušaj ponovno.",
       "name": "Prvo upiši što te puni."
     }
+  },
+  "reminder": {
+    "count_one": "Sutra imaš {{count}} plan:",
+    "count_few": "Sutra imaš {{count}} plana:",
+    "count_other": "Sutra imaš {{count}} planova:",
+    "title": "Sutrašnji planovi",
+    "none": "Za sutra ništa nije planirano. Mogao bi biti dobar dan za punjenje.",
+    "gotIt": "Razumijem",
+    "settings": "Postavke podsjetnika",
+    "estimate": "Procijenjena potrošnja sutra",
+    "about": "Oko {{percent}}% · {{level}}"
+  },
+  "common": {
+    "add": "Dodaj",
+    "back": "Natrag",
+    "backTo": "Natrag na: {{label}}",
+    "cancel": "Odustani",
+    "closeDialog": "Zatvori dijalog",
+    "continue": "Nastavi",
+    "genericError": "Nešto je pošlo po zlu. Pokušaj ponovno.",
+    "goBack": "Natrag",
+    "hidePassword": "Sakrij lozinku",
+    "showPassword": "Prikaži lozinku",
+    "next": "Dalje",
+    "ok": "U redu",
+    "opensList": "Otvara popis opcija",
+    "remove": "Ukloni: {{label}}",
+    "save": "Spremi",
+    "skip": "Preskoči",
+    "tryAgain": "Pokušaj ponovno"
+  },
+  "tabs": {
+    "home": "Početna",
+    "tracker": "Praćenje",
+    "insights": "Uvidi",
+    "profile": "Profil"
+  },
+  "drain": {
+    "low": "Nizak",
+    "moderate": "Umjeren",
+    "high": "Visok"
+  },
+  "serviceError": {
+    "invalid_credentials": "E-adresa i lozinka se ne podudaraju. Pokušaj ponovno.",
+    "account_exists": "Na ovom uređaju već postoji račun za Social Battery. Prijavi se ili poništi lozinku na zaslonu za prijavu.",
+    "email_taken": "Račun s ovom e-adresom već postoji.",
+    "username_taken": "To korisničko ime je zauzeto. Probaj drugo.",
+    "not_found": "Nismo pronašli taj račun.",
+    "no_account": "Na ovom uređaju još nema računa. Izradi ga da bi počeo.",
+    "network": "Nema veze. Provjeri internet i pokušaj ponovno.",
+    "unknown": "Nešto je pošlo po zlu pri spremanju podataka. Pokušaj ponovno."
+  },
+  "validation": {
+    "emailRequired": "Unesi svoju e-adresu.",
+    "emailInvalid": "To ne izgleda kao e-adresa.",
+    "passwordRequired": "Izradi lozinku.",
+    "passwordEnter": "Unesi svoju lozinku.",
+    "passwordShort": "Koristi najmanje {{count}} znakova.",
+    "passwordWeak": "Koristi barem jedno slovo i jedan broj.",
+    "usernameRequired": "Odaberi korisničko ime.",
+    "usernameShort": "Koristi najmanje 2 znaka.",
+    "usernameLong": "Koristi najviše 30 znakova.",
+    "birthdayRequired": "Unesi cijeli datum rođenja.",
+    "birthdayFormat": "Koristi oblik DD / MM / GGGG.",
+    "birthdayInvalid": "Taj datum ne postoji.",
+    "birthdayFuture": "Datum rođenja ne može biti u budućnosti.",
+    "birthdayTooYoung": "Za korištenje aplikacije Social Battery moraš imati najmanje {{age}} godina."
+  },
+  "links": {
+    "unavailable": "Ova stranica još nije dostupna. Provjeri ponovno uskoro.",
+    "failed": "Nismo uspjeli otvoriti ovu stranicu. Pokušaj ponovno kasnije."
+  },
+  "timeField": {
+    "placeholder": "HH:MM",
+    "label": "{{label}}, 24-satno vrijeme"
+  },
+  "situation": {
+    "addChip": "+ Dodaj situaciju",
+    "addStressor": "Dodaj stresor",
+    "addRelaxer": "Dodaj opuštanje",
+    "stressorMessage": "Koja situacija obično troši tvoju društvenu energiju?",
+    "relaxerMessage": "Što ti pomaže da se napuniš?",
+    "stressorPlaceholder": "npr. Video pozivi",
+    "relaxerPlaceholder": "npr. Kuhanje",
+    "fieldLabel": "Situacija",
+    "stressorLevel": "Koliko energije troši?",
+    "relaxerLevel": "Koliko te obnavlja?",
+    "errorEmpty": "Opiši situaciju.",
+    "errorDuplicate": "To je već na tvom popisu.",
+    "errorSave": "Nismo uspjeli to spremiti. Pokušaj ponovno."
+  },
+  "situations": {
+    "level": {
+      "drain": {
+        "low": "Nisko",
+        "moderate": "Umjereno",
+        "strong": "Snažno"
+      },
+      "recharge": {
+        "low": "Lagano",
+        "moderate": "Umjereno",
+        "strong": "Snažno"
+      }
+    },
+    "hint": {
+      "drain": {
+        "low": "Troši malo energije",
+        "moderate": "Zahtijeva malo oporavka",
+        "strong": "Troši puno energije"
+      },
+      "recharge": {
+        "low": "Mali predah",
+        "moderate": "Pomaže mi da se smirim",
+        "strong": "Duboko obnavlja"
+      }
+    },
+    "drain": {
+      "options": {
+        "shortCalls": "Kratki telefonski pozivi",
+        "smallTalk": "Površni razgovor",
+        "quickErrands": "Brze obaveze",
+        "groupLunches": "Grupni ručkovi",
+        "busyWorkplaces": "Užurbana radna mjesta",
+        "meetingNewPeople": "Upoznavanje novih ljudi",
+        "largeGatherings": "Velika okupljanja",
+        "longSocialDays": "Dugi društveni dani",
+        "conflict": "Sukobi"
+      }
+    },
+    "recharge": {
+      "options": {
+        "freshAir": "Svjež zrak",
+        "warmDrink": "Topli napitak",
+        "shortBreak": "Kratka stanka",
+        "readingQuietly": "Tiho čitanje",
+        "timeAlone": "Vrijeme za sebe",
+        "gentleWalk": "Lagana šetnja",
+        "quietEvening": "Miran večer",
+        "fullDayAtHome": "Cijeli dan kod kuće",
+        "restfulSleep": "Odmarajući san"
+      }
+    }
+  },
+  "options": {
+    "frequency": {
+      "every_day": "Svaki dan",
+      "weekdays": "Radnim danom",
+      "weekends": "Vikendom",
+      "weekly": "Jednom tjedno"
+    },
+    "theme": {
+      "device": "Prema uređaju",
+      "light": "Svijetla",
+      "dark": "Tamna",
+      "colorblind": "Za daltonizam"
+    },
+    "fontSize": {
+      "small": "Mala",
+      "regular": "Uobičajena",
+      "large": "Velika"
+    }
+  },
+  "splash": {
+    "create": "Izradi račun",
+    "already": "Već pratiš svoju energiju?",
+    "title": "Ostavi mjesta za trenutke koji su važni",
+    "tagline": "Nježno prati svoju energiju, planiraj društvene trenutke i pronađi vrijeme za punjenje."
+  },
+  "auth": {
+    "logIn": "Prijava",
+    "welcomeBack": "Dobro došao natrag",
+    "email": "E-adresa",
+    "password": "Lozinka",
+    "passwordPlaceholder": "Unesi lozinku",
+    "createPasswordPlaceholder": "Izradi lozinku",
+    "remember": "Zapamti me na ovom uređaju",
+    "forgot": "Zaboravljena lozinka?",
+    "newHere": "Prvi put u aplikaciji Social Battery?",
+    "signUp": "Registracija",
+    "resetDev": "Poništi ovaj uređaj (samo za razvoj)",
+    "resetDeviceTitle": "Poništiti ovaj uređaj?",
+    "resetDeviceMessage": "Ovo briše račun na ovom telefonu i sve njegove podatke kako bi se mogao ponovno registrirati.",
+    "reset": "Poništi",
+    "resetTitle": "Poništi lozinku",
+    "resetMessage": "Tvoj račun postoji samo na ovom uređaju pa ti ne možemo poslati poveznicu e-poštom. Potvrdi e-adresu i datum rođenja, zatim odaberi novu lozinku.",
+    "passwordUpdated": "Lozinka je promijenjena",
+    "passwordUpdatedMessage": "Sada se možeš prijaviti novom lozinkom.",
+    "newPassword": "Nova lozinka",
+    "birthday": "Datum rođenja",
+    "dayPlaceholder": "DD",
+    "monthPlaceholder": "MM",
+    "yearPlaceholder": "GGGG",
+    "birthdayDay": "Dan rođenja",
+    "birthdayMonth": "Mjesec rođenja",
+    "birthdayYear": "Godina rođenja"
+  },
+  "register": {
+    "title": "Reci nam nešto o sebi",
+    "photo": "Fotografija",
+    "addPhoto": "Dodaj profilnu fotografiju (neobavezno)",
+    "changePhoto": "Promijeni profilnu fotografiju",
+    "username": "Korisničko ime",
+    "usernamePlaceholder": "Kako da te zovemo?",
+    "day": "Dan",
+    "month": "Mjesec",
+    "year": "Godina",
+    "agreeLabel": "Slažem se s uvjetima korištenja",
+    "agreePrefix": "Slažem se s",
+    "agreeLink": "uvjetima korištenja",
+    "agreeSuffix": ".",
+    "termsRequired": "Za nastavak se slože s uvjetima korištenja.",
+    "create": "Izradi račun",
+    "haveAccount": "Već imaš račun?",
+    "photoOffMessage": "Za dodavanje fotografije dopusti aplikaciji Social Battery pristup fotografijama u postavkama telefona. Fotografiju možeš dodati i kasnije iz profila.",
+    "genericError": "Nešto je pošlo po zlu pri izradi računa. Pokušaj ponovno."
+  },
+  "onboarding": {
+    "title": "Ostavi malo više mjesta za svoju energiju",
+    "skipHint": "Preskače uvod",
+    "hint": "Odaberi točku ili dodirni Dalje za pregled",
+    "slideLabel": "Slajd {{number}} od {{total}}: {{name}}",
+    "checkIn": {
+      "eyebrow": "Prijava stanja",
+      "title": "Primijeti kako se tvoja energija osjeća",
+      "body": "Brza prijava stanja može ti pomoći da shvatiš koji trenuci daju energiju, a koji zahtijevaju više oporavka.",
+      "sampleLabel": "Današnja prijava stanja",
+      "sampleValue": "Društvena baterija: stabilna · 6 od 10"
+    },
+    "plan": {
+      "eyebrow": "Planiraj unaprijed",
+      "title": "Vidi nadolazeće zauzete dane",
+      "body": "Dodaj planove u dnevnik i stekni dojam koliko će energije svaki od njih potrošiti kako bi ostavio prostora oko njih.",
+      "sampleLabel": "Sutra",
+      "sampleValue": "Ručak s timom · Potrošnja: umjerena"
+    },
+    "recharge": {
+      "eyebrow": "Punjenje",
+      "title": "Pronađi što ti pomaže da se oporaviš",
+      "body": "S vremenom uvidi pokazuju tvoje obrasce i predlažu nježne načine punjenja kad ti baterija padne.",
+      "sampleLabel": "Prijedlog",
+      "sampleValue": "Kratka šetnja nakon popodnevnog sastanka"
+    }
+  },
+  "personalization": {
+    "eyebrow": "Još malo",
+    "title": "Počinješ",
+    "intro": "Nekoliko izbora pomoći će da prijedlozi budu prilagođeni onome što tebi odgovara.",
+    "step": "Korak {{number}}",
+    "drainTitle": "Što te obično iscrpljuje?",
+    "drainSubtitle": "Odaberi situacije koje mogu trošiti tvoju društvenu energiju.",
+    "rechargeTitle": "Što ti pomaže da se napuniš?",
+    "rechargeSubtitle": "Odaberi trenutke koji ti mogu pomoći da se energija vrati.",
+    "note": "Ovi izbori nisu trajni. Možeš ih u bilo kojem trenutku promijeniti u profilu.",
+    "finish": "Završi",
+    "saveErrorTitle": "Nismo uspjeli spremiti tvoje izbore",
+    "saveErrorMessage": "Provjeri vezu i pokušaj ponovno."
+  },
+  "placeholder": {
+    "label": "Rezervirano mjesto",
+    "body": "Zasloni za {{owner}} izrađuju se zasebno. Navigacijska traka već je povezana s ovom karticom pa se zaslon može dodati bez dodirivanja navigacije."
+  },
+  "reminders": {
+    "intro": "Odaberi kada te nježni podsjetnici dosegnu i što sadrže.",
+    "daily": "Dnevna prijava stanja",
+    "time": "Vrijeme",
+    "timeHint": "Kada stiže podsjetnik",
+    "timeLabel": "Vrijeme podsjetnika",
+    "include": "Što uključiti",
+    "estimate": "Procjena za sutra",
+    "estimateHint": "Procjena potrošnje društvene baterije sljedećeg dana kako bi mogao planirati unaprijed",
+    "estimateLabel": "Uključi procjenu za sutra",
+    "plans": "Nadolazeći planovi",
+    "plansHint": "Upozorenje prije planova u tvom dnevniku",
+    "plansLabel": "Podsjetnici za nadolazeće planove",
+    "quietHint": "Nema podsjetnika tijekom tihih sati. Promijeni ih u Postavkama."
+  },
+  "settings": {
+    "title": "Postavke",
+    "intro": "Prilagodi aplikaciju na način koji ti odgovara.",
+    "remindersSection": "Podsjetnici",
+    "reminders": "Podsjetnici",
+    "remindersHint": "Nježni podsjetnici i obavijesti",
+    "frequency": "Učestalost",
+    "reminderFrequency": "Učestalost podsjetnika",
+    "timeAndContent": "Vrijeme i sadržaj podsjetnika",
+    "around": "Oko {{time}}",
+    "remindersOff": "Podsjetnici su isključeni",
+    "quietHours": "Tihi sati",
+    "from": "Od",
+    "to": "Do",
+    "quietBegin": "Tihi sati počinju",
+    "quietEnd": "Tihi sati završavaju",
+    "quietFrequency": "Učestalost tihih sati",
+    "display": "Prikaz",
+    "theme": "Tema aplikacije",
+    "fontSize": "Veličina slova",
+    "accessibility": "Pristupačnost",
+    "language": "Jezik",
+    "languageErrorTitle": "Nismo uspjeli promijeniti jezik",
+    "languageErrorMessage": "Pokušaj ponovno.",
+    "restartTitle": "Potrebno je ponovno pokretanje",
+    "restartMessage": "Smjer teksta mijenja se s ovim jezikom. Potpuno zatvori aplikaciju i ponovno je otvori da bi promjena bila dovršena.",
+    "logOut": "Odjava",
+    "logoutTitle": "Odjaviti se sada?",
+    "logoutMessage": "Spremaš se odjaviti iz aplikacije Social Battery. Želiš li nastaviti?",
+    "logoutError": "Nismo te uspjeli odjaviti. Pokušaj ponovno.",
+    "developer": "Za programere",
+    "dbViewer": "Pregled baze podataka",
+    "devOnly": "Samo razvojne inačice",
+    "saveFailedTitle": "Nismo uspjeli spremiti tu promjenu",
+    "saveFailedMessage": "Provjeri vezu i pokušaj ponovno.",
+    "themeHint": "Opcija za daltonizam koristi plavu i narančastu umjesto crvene i zelene, uz jači kontrast."
+  },
+  "privacy": {
+    "eyebrow": "Privatnost i podaci",
+    "title": "Tvoji podaci i planovi su privatni",
+    "intro": "Možeš odabrati s čime se aplikacija povezuje i kako se postupa s tvojim podacima.",
+    "connections": "Povezivanja",
+    "calendar": "Kalendar",
+    "calendarHint": "Pomaže ti planirati oko nadolazećih događaja",
+    "calendarLabel": "Povezivanje s kalendarom",
+    "photos": "Fotografije",
+    "photosHint": "Omogućuje ti odabir profilne fotografije",
+    "photosLabel": "Povezivanje s fotografijama",
+    "photoOffTitle": "Pristup fotografijama je isključen",
+    "photoOffMessage": "Za korištenje ove opcije dopusti aplikaciji Social Battery pristup fotografijama u postavkama telefona.",
+    "section": "Privatnost",
+    "terms": "Uvjeti korištenja",
+    "help": "Pomoć i česta pitanja",
+    "export": "Izvezi podatke",
+    "exporting": "Priprema izvoza…",
+    "exportHint": "Dijeli kopiju tvojih podataka",
+    "exportTitle": "Izvoz podataka aplikacije Social Battery",
+    "exportErrorTitle": "Nismo uspjeli izvesti tvoje podatke",
+    "exportErrorMessage": "Provjeri vezu i pokušaj ponovno.",
+    "deleteSection": "Brisanje računa",
+    "deleteAccount": "Izbriši račun",
+    "deleteTitle": "Izbrisati tvoj račun?",
+    "deleteMessage": "Ovo će ukloniti tvoj račun, prijave stanja, planove i postavke. Jesi li siguran da želiš nastaviti?",
+    "deleteError": "Nismo uspjeli izbrisati tvoj račun. Pokušaj ponovno."
+  },
+  "profile": {
+    "yourProfile": "Tvoj profil",
+    "edit": "Uredi profil",
+    "stressors": "Tvoji stresori",
+    "stressorsHint": "Situacije koje mogu trošiti tvoju društvenu energiju.",
+    "relaxers": "Tvoja opuštanja",
+    "relaxersHint": "Stvari koje ti mogu pomoći da se napuniš.",
+    "addChip": "Dodaj +",
+    "empty": "Ovdje još nema ničega. Dodirni „Dodaj +” za dodavanje.",
+    "privacy": "Privatnost i podaci",
+    "loadError": "Nismo uspjeli učitati tvoje postavke.",
+    "removeErrorTitle": "Nismo uspjeli ukloniti to",
+    "removeErrorMessage": "Provjeri vezu i pokušaj ponovno.",
+    "changePhoto": "Promijeni fotografiju",
+    "removePhoto": "Ukloni fotografiju",
+    "photoDenied": "Pristup fotografijama je odbijen. Možeš ga dopustiti u postavkama telefona.",
+    "openPrivacy": "Otvori Privatnost i podaci",
+    "saveError": "Nismo uspjeli spremiti promjene. Pokušaj ponovno."
   }
 }
