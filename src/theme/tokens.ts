@@ -1,4 +1,9 @@
-/** Design tokens taken from the wireframes (monochrome, hard offset shadows). */
+/**
+ * Design tokens: the hard offset shadows and 2px outlines from the wireframes, coloured with the
+ * brand palette (Almond Cream, Desert Sand, Light Bronze, Ash Grey, Dry Sage, Dusty Olive).
+ * Contrast of every text/background pair was checked against WCAG 2.2 AA (4.5:1 for text, 3:1 for
+ * borders and the battery bar). Re-check a pair before you change a colour.
+ */
 
 export interface Palette {
   /** Screen background */
@@ -25,44 +30,123 @@ export interface Palette {
   secondary: string;
   /** Logo disc fill and other quiet fills */
   fill: string;
+  /** Brand accent (Light Bronze in the default themes) */
+  accent: string;
+  /** Darker colour for small details: eyebrow labels, small icons */
+  detail: string;
+  /** Selected chips and rows (text in `primary` or `ink` stays readable on it) */
+  selected: string;
+  /** Drains, errors */
+  danger: string;
+  dangerSurface: string;
+  /** Rain hints and other cautions */
+  warning: string;
+  warningSurface: string;
+  /** Recharges, good news. Never the only signal: text always says it too. */
+  success: string;
+  /** Empty part of bars and charts */
+  track: string;
+  /** Battery bands. In the colorblind theme these are vermillion, grey and blue (no red/green pair). */
+  batteryLow: string;
+  batteryMid: string;
+  batteryHigh: string;
   overlay: string;
   error: string;
 }
 
+export type ThemeName = 'light' | 'dark' | 'colorblind';
+
+/** Default light theme: a light cream background, Almond Cream cards, Desert Sand dividers, Ash Grey fills, Light Bronze shadows, and dark Dusty Olive / bronze for small details. */
 export const lightPalette: Palette = {
-  background: '#F7F7F4',
-  card: '#F1F1EE',
-  surface: '#FFFFFF',
-  ink: '#1E1E1E',
-  muted: '#5C5C5C',
-  subtle: '#8C8C8C',
-  line: '#D2D2CF',
-  border: '#2A2A2A',
-  shadow: '#C6C6C2',
-  primary: '#1E1E1E',
-  onPrimary: '#FFFFFF',
-  secondary: '#EDEDEA',
-  fill: '#E4E4E1',
-  overlay: 'rgba(20,20,20,0.6)',
-  error: '#B3261E',
+  background: '#FFF8F2',
+  card: '#FFE8D6',
+  surface: '#FFFDFA',
+  ink: '#2B2F21',
+  muted: '#4F5442',
+  subtle: '#6B705C',
+  line: '#DDBEA9',
+  border: '#3A3F2E',
+  shadow: '#CB997E',
+  primary: '#4A4F3B',
+  onPrimary: '#FFF8F2',
+  secondary: '#B7B7A4',
+  fill: '#A5A58D',
+  accent: '#CB997E',
+  detail: '#7E4B33',
+  selected: '#EBCFBA',
+  danger: '#9B2C1F',
+  dangerSurface: '#FBE0D8',
+  warning: '#7A4A12',
+  warningSurface: '#F6E1C3',
+  success: '#3F6B34',
+  track: '#E3DFD0',
+  batteryLow: '#9B2C1F',
+  batteryMid: '#7A4A12',
+  batteryHigh: '#3F6B34',
+  error: '#9B2C1F',
+  overlay: 'rgba(43,47,33,0.6)',
 };
 
+/** Dark theme: deep olive background with Almond Cream and Desert Sand text and Light Bronze details. */
 export const darkPalette: Palette = {
-  background: '#141414',
-  card: '#1D1D1D',
-  surface: '#232323',
-  ink: '#F2F2F0',
-  muted: '#B4B4B0',
-  subtle: '#85857F',
-  line: '#3A3A38',
-  border: '#E2E2DE',
-  shadow: '#000000',
-  primary: '#F2F2F0',
-  onPrimary: '#141414',
-  secondary: '#2E2E2C',
-  fill: '#2E2E2C',
-  overlay: 'rgba(0,0,0,0.7)',
+  background: '#22251C',
+  card: '#2C3023',
+  surface: '#353A2B',
+  ink: '#FFE8D6',
+  muted: '#DDBEA9',
+  subtle: '#B7B7A4',
+  line: '#484D3A',
+  border: '#B7B7A4',
+  shadow: '#10120C',
+  primary: '#DDBEA9',
+  onPrimary: '#22251C',
+  secondary: '#41463A',
+  fill: '#4F5442',
+  accent: '#CB997E',
+  detail: '#CB997E',
+  selected: '#4A4F3C',
+  danger: '#F2B8B5',
+  dangerSurface: '#4A2623',
+  warning: '#F2D19C',
+  warningSurface: '#47381F',
+  success: '#B9D9A0',
+  track: '#484D3A',
+  batteryLow: '#F08A7D',
+  batteryMid: '#E8B84A',
+  batteryHigh: '#9CCB7E',
   error: '#F2B8B5',
+  overlay: 'rgba(0,0,0,0.7)',
+};
+
+/** Colour-blind friendly theme (Okabe-Ito colours): blue and vermillion instead of green and red, black text on white, extra strong contrast. */
+export const colorblindPalette: Palette = {
+  background: '#FFFFFF',
+  card: '#F1F6FB',
+  surface: '#FFFFFF',
+  ink: '#0B0B0B',
+  muted: '#3D3D3D',
+  subtle: '#595959',
+  line: '#C9D3DD',
+  border: '#0B0B0B',
+  shadow: '#56B4E9',
+  primary: '#0072B2',
+  onPrimary: '#FFFFFF',
+  secondary: '#DCEBF5',
+  fill: '#DCEBF5',
+  accent: '#E69F00',
+  detail: '#004F7C',
+  selected: '#E6F1FA',
+  danger: '#A63D00',
+  dangerSurface: '#FBE3D3',
+  warning: '#7A5200',
+  warningSurface: '#FFF0C7',
+  success: '#005B8F',
+  track: '#D5DEE8',
+  batteryLow: '#A63D00',
+  batteryMid: '#6E6E6E',
+  batteryHigh: '#0072B2',
+  error: '#A63D00',
+  overlay: 'rgba(11,11,11,0.6)',
 };
 
 export const spacing = {

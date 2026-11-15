@@ -3,7 +3,6 @@ import {
   Alert,
   Pressable,
   ScrollView,
-  StyleSheet,
   Switch,
   Text,
   TextInput,
@@ -16,7 +15,7 @@ import { ScreenState } from '@/components/ScreenState';
 import { createEvent, deleteEvent, getEvent, listEventTypes, updateEvent } from '@/db/events';
 import type { EventType, PlannedEvent } from '@/db/types';
 import { formatDate, formatPercent, formatShortDay, formatTime } from '@/i18n/format';
-import { colors, minTouchSize, spacing } from '@/theme/colors';
+import { makeLegacyStyles, minTouchSize, useLegacyColors } from '@/theme/legacy';
 
 import { addDays, startOfDay } from './dates';
 import { durationMinutes, formatDuration } from './plannerLogic';
@@ -111,6 +110,8 @@ export default function EventFormScreen({ eventId }: { eventId: number | null })
 }
 
 function EventForm({ types, existing }: { types: EventType[]; existing: PlannedEvent | null }) {
+  const styles = useStyles();
+  const colors = useLegacyColors();
   const { t } = useTranslation();
   const today = useMemo(() => startOfDay(new Date()), []);
 
@@ -237,7 +238,7 @@ function EventForm({ types, existing }: { types: EventType[]; existing: PlannedE
               <Pressable
                 key={type.id}
                 accessibilityRole="radio"
-                accessibilityState={{ checked: selected }}
+                aria-checked={selected}
                 onPress={() => pickType(type)}
                 style={[styles.chip, selected && styles.chipSelected]}
               >
@@ -300,7 +301,7 @@ function EventForm({ types, existing }: { types: EventType[]; existing: PlannedE
               <Pressable
                 key={offset}
                 accessibilityRole="radio"
-                accessibilityState={{ checked: selected }}
+                aria-checked={selected}
                 onPress={() => {
                   setDayOffset(offset);
                   if (error === 'past') setError(null);
@@ -377,7 +378,8 @@ function EventForm({ types, existing }: { types: EventType[]; existing: PlannedE
 
       <Pressable
         accessibilityRole="button"
-        accessibilityState={{ disabled: saving, busy: saving }}
+        aria-disabled={saving}
+        aria-busy={saving}
         disabled={saving}
         onPress={save}
         style={({ pressed }) => [styles.saveButton, (pressed || saving) && styles.pressed]}
@@ -399,6 +401,7 @@ function EventForm({ types, existing }: { types: EventType[]; existing: PlannedE
 }
 
 function ErrorText({ text }: { text: string }) {
+  const styles = useStyles();
   return (
     <Text style={styles.error} accessibilityRole="alert" accessibilityLiveRegion="assertive">
       {text}
@@ -414,6 +417,7 @@ function Stepper(props: {
   onDecrease: () => void;
   onIncrease: () => void;
 }) {
+  const styles = useStyles();
   const { t } = useTranslation();
   return (
     <View style={styles.stepperRow}>
@@ -449,7 +453,7 @@ function Stepper(props: {
   );
 }
 
-const styles = StyleSheet.create({
+const useStyles = makeLegacyStyles((colors, spacing) => ({
   screen: { flex: 1, backgroundColor: colors.background },
   content: { padding: spacing.lg, gap: spacing.xl, paddingBottom: spacing.xl * 2 },
   field: { gap: spacing.sm },
@@ -476,7 +480,7 @@ const styles = StyleSheet.create({
   chipSelected: { backgroundColor: colors.primarySurface, borderColor: colors.primary, borderWidth: 2 },
   chipText: { fontSize: 15, color: colors.text },
   chipTextSelected: { color: colors.primary, fontWeight: '700' },
-  stepperRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md, flexWrap: 'wrap' },
+  stepperRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.sm, flexWrap: 'wrap' },
   stepperLabel: { flexGrow: 1, flexBasis: 100 },
   stepButton: {
     width: minTouchSize,
@@ -488,7 +492,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   stepButtonText: { fontSize: 22, color: colors.primary, fontWeight: '600' },
-  stepValue: { minWidth: 90, textAlign: 'center', fontSize: 17, fontWeight: '600', color: colors.text },
+  stepValue: { minWidth: 64, textAlign: 'center', fontSize: 17, fontWeight: '600', color: colors.text },
   switchRow: { flexDirection: 'row', alignItems: 'center', gap: spacing.md },
   switchText: { flex: 1, gap: 2 },
   error: {
@@ -516,4 +520,4 @@ const styles = StyleSheet.create({
   },
   deleteText: { color: colors.danger, fontSize: 16, fontWeight: '600' },
   pressed: { opacity: 0.8 },
-});
+}));

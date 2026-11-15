@@ -1,56 +1,187 @@
 {
-   "app": {
-  "title": "Social Battery Planner",
-  "loading": "Loading…"
-},
-"checkin": {
-  "title": "Check-in",
-  "progress": "Step {{current}} of {{total}}",
-  "next": "Next",
-  "skip": "Skip",
-  "retry": "Try again",
-  "battery": {
-    "question": "How full is your social battery right now?",
-    "sliderLabel": "Social battery level",
-    "lower": "Lower",
-    "higher": "Higher",
-    "state": {
-      "low": "Low: time for some quiet",
-      "medium": "Medium",
-      "high": "High: plenty of energy"
+  "app": {
+    "title": "Social Battery Planner",
+    "loading": "Loading…",
+    "name": "Social Battery",
+    "logoLabel": "Social Battery logo"
+  },
+  "checkin": {
+    "title": "Check-in",
+    "progress": "Step {{current}} of {{total}}",
+    "next": "Next",
+    "skip": "Skip",
+    "retry": "Try again",
+    "battery": {
+      "question": "How full is your social battery right now?",
+      "sliderLabel": "Social battery level",
+      "lower": "Lower",
+      "higher": "Higher",
+      "state": {
+        "low": "Low: time for some quiet",
+        "medium": "Medium",
+        "high": "High: plenty of energy"
+      }
+    },
+    "mood": {
+      "question": "How do you feel?",
+      "hint": "Select all that apply.",
+      "selectedCount_one": "{{count}} emotion selected",
+      "selectedCount_other": "{{count}} emotions selected",
+      "loading": "Loading moods…",
+      "error": "The moods could not be loaded.",
+      "empty": "No moods available.",
+      "showList": "Show as list",
+      "showWheel": "Show as wheel",
+      "options": {
+        "calm": "Calm",
+        "happy": "Happy",
+        "energised": "Energised",
+        "content": "Content",
+        "tired": "Tired",
+        "anxious": "Anxious",
+        "irritable": "Irritable",
+        "overwhelmed": "Overwhelmed",
+        "bad": "Bad",
+        "fearful": "Fearful",
+        "angry": "Angry",
+        "disgusted": "Disgusted",
+        "sad": "Sad",
+        "surprised": "Surprised"
+      }
+    },
+    "back": "Back",
+    "backLabel": "Go back",
+    "batteryIconLabel": "Battery at {{percent}}",
+    "activity": {
+      "question": "What were you doing?",
+      "hint": "Pick one or write your own. You can skip this.",
+      "yours": "From your personalization",
+      "recent": "Recent",
+      "ownLabel": "Something else",
+      "ownPlaceholder": "For example, family dinner"
+    },
+    "attendees": {
+      "title": "Who was there?",
+      "groupLabel": "Group size",
+      "group": {
+        "lt5": "Fewer than 5 people",
+        "lt10": "Fewer than 10 people",
+        "lt15": "Fewer than 15 people",
+        "more": "15 people or more"
+      },
+      "oneOnOneLabel": "Was it one-on-one?",
+      "yes": "Yes",
+      "no": "No",
+      "strangers": "Strangers",
+      "friends": "New friends made",
+      "value": "{{label}}: {{value}}",
+      "decrease": "Fewer {{what}}",
+      "increase": "More {{what}}"
+    },
+    "impact": {
+      "title": "How did it change your energy?",
+      "endDrain": "Drained me",
+      "endNeutral": "No change",
+      "endRecharge": "Recharged me",
+      "slider": "Change in energy",
+      "decrease": "Drained more",
+      "increase": "Recharged more",
+      "caption": "Move the slider to show how much it drained or recharged you.",
+      "summary": "{{state}} {{value}}",
+      "state": {
+        "drain": "Drained you by",
+        "recharge": "Recharged you by",
+        "neutral": "No change"
+      }
+    },
+    "notes": {
+      "title": "Anything to add?",
+      "titleLabel": "Note title",
+      "titlePlaceholder": "Title (optional)",
+      "bodyLabel": "Note",
+      "bodyPlaceholder": "Text…"
+    },
+    "confirm": {
+      "title": "Confirm your selections",
+      "titleEdit": "Update your check-in",
+      "state": "Current state",
+      "activity": "Activity",
+      "note": "Note",
+      "none": "Nothing selected",
+      "noNote": "No note",
+      "editHint": "Opens this step so you can change it",
+      "cancel": "Cancel",
+      "confirm": "Confirm",
+      "confirmEdit": "Save changes",
+      "saveError": "Could not save your check-in. Please try again.",
+      "missing": "Please choose your battery level first.",
+      "notFound": "This check-in no longer exists.",
+      "goBattery": "Go to the battery step",
+      "discardTitle": "Discard this check-in?",
+      "discardMessage": "Your answers will be lost.",
+      "discardKeep": "Keep editing",
+      "discardConfirm": "Discard",
+      "weather": "Weather",
+      "weatherValue": "{{condition}}, {{temperature}} °C · {{city}}",
+      "weatherNone": "Not available. The check-in is saved without weather."
+    },
+    "lowBattery": {
+      "title": "Your social battery is low",
+      "suggested": "Suggested actions",
+      "noIdeas": "Your recharge list is empty. Open it to add ideas.",
+      "minutes_one": "{{count}} min",
+      "minutes_other": "{{count}} min",
+      "seeAll": "See all",
+      "letKnow": "Let someone know",
+      "proceed": "Proceed",
+      "soonTitle": "Coming soon",
+      "soon": "This part is not ready yet."
+    },
+    "log": {
+      "tabLog": "Log",
+      "tabPlan": "Plan",
+      "emptyToday": "No check-ins yet today",
+      "today": "Today",
+      "previous": "Previous check-ins",
+      "noPrevious": "No earlier check-ins yet.",
+      "add": "Start a check-in",
+      "error": "Could not load your check-ins.",
+      "rowOptions": "Edit or delete the check-in from {{date}}, battery {{percent}}",
+      "weather": "{{condition}}, {{temperature}} °C"
+    },
+    "options": {
+      "heading": "Edit or delete this check-in",
+      "warning": "If you delete it, all of its data will be deleted.",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "confirmTitle": "Delete this check-in?",
+      "confirmBody": "All data will be deleted. This cannot be undone.",
+      "errorTitle": "Something went wrong",
+      "deleteError": "Could not delete the check-in. Please try again.",
+      "notFound": "This check-in no longer exists.",
+      "close": "Close"
     }
   },
-  "mood": {
-    "question": "How do you feel?",
-    "hint": "Select all that apply.",
-    "selectedCount_one": "{{count}} emotion selected",
-    "selectedCount_other": "{{count}} emotions selected",
-    "loading": "Loading moods…",
-    "error": "The moods could not be loaded.",
-    "empty": "No moods available.",
-    "showList": "Show as list",
-    "showWheel": "Show as wheel",
-    "options": {
-      "calm": "Calm",
-      "happy": "Happy",
-      "energised": "Energised",
-      "content": "Content",
-      "tired": "Tired",
-      "anxious": "Anxious",
-      "irritable": "Irritable",
-      "overwhelmed": "Overwhelmed",
-      "bad": "Bad",
-      "fearful": "Fearful",
-      "angry": "Angry",
-      "disgusted": "Disgusted",
-      "sad": "Sad",
-      "surprised": "Surprised"
-    }
-  }
-},
-
   "home": {
-    "greeting": "Hello, {{name}}!"
+    "greeting": "Hello, {{name}}. How are you?",
+    "noEstimate": "No battery estimate yet",
+    "batteryAbout": "Social battery about {{percent}} percent",
+    "estimatedTitle": "Estimated current social battery percentage",
+    "estimateEmpty": "Do a quick check-in below to get your first estimate",
+    "estimateBased": "Based on your latest check-in",
+    "quickTitle": "Quick energy check-in",
+    "sliderLabel": "Social battery level",
+    "low": "Low",
+    "high": "High",
+    "checkInAt": "Check in at {{percent}}",
+    "checkInHint": "Opens the check-in with this battery level",
+    "today": "Today",
+    "upcoming": "Upcoming plans",
+    "addPlan": "Add a plan",
+    "nothingToday": "Nothing planned for today.",
+    "planLabel": "{{time}}, {{title}}, drain {{drain}}",
+    "drain": "Drain: {{level}}"
   },
   "event": {
     "form": {
@@ -299,5 +430,363 @@
       "save": "That did not work. Please try again.",
       "name": "Write what recharges you first."
     }
+  },
+  "common": {
+    "add": "Add",
+    "back": "Back",
+    "backTo": "Back to {{label}}",
+    "cancel": "Cancel",
+    "closeDialog": "Close dialog",
+    "continue": "Continue",
+    "genericError": "Something went wrong. Please try again.",
+    "goBack": "Go back",
+    "hidePassword": "Hide password",
+    "showPassword": "Show password",
+    "next": "Next",
+    "ok": "OK",
+    "opensList": "Opens a list of options",
+    "remove": "Remove {{label}}",
+    "save": "Save",
+    "skip": "Skip",
+    "tryAgain": "Try again"
+  },
+  "tabs": {
+    "home": "Home",
+    "tracker": "Tracker",
+    "insights": "Insights",
+    "profile": "Profile"
+  },
+  "drain": {
+    "low": "Low",
+    "moderate": "Moderate",
+    "high": "High"
+  },
+  "serviceError": {
+    "invalid_credentials": "That email and password don’t match. Please try again.",
+    "account_exists": "This device already has a Social Battery account. Log in instead, or reset your password from the log-in screen.",
+    "email_taken": "An account with this email already exists.",
+    "username_taken": "That username is taken. Try another one.",
+    "not_found": "We couldn’t find that account.",
+    "no_account": "There’s no account on this device yet. Create one to get started.",
+    "network": "No connection. Check your internet and try again.",
+    "unknown": "Something went wrong saving your data. Please try again."
+  },
+  "validation": {
+    "emailRequired": "Please enter your email address.",
+    "emailInvalid": "That doesn’t look like an email address.",
+    "passwordRequired": "Please create a password.",
+    "passwordEnter": "Please enter your password.",
+    "passwordShort": "Use at least {{count}} characters.",
+    "passwordWeak": "Use at least one letter and one number.",
+    "usernameRequired": "Please choose a username.",
+    "usernameShort": "Use at least 2 characters.",
+    "usernameLong": "Use 30 characters or fewer.",
+    "birthdayRequired": "Please enter your full birthday.",
+    "birthdayFormat": "Please use DD / MM / YYYY.",
+    "birthdayInvalid": "That date doesn’t exist.",
+    "birthdayFuture": "Your birthday can’t be in the future.",
+    "birthdayTooYoung": "You need to be at least {{age}} to use Social Battery."
+  },
+  "links": {
+    "unavailable": "This page isn’t available yet. Please check back soon.",
+    "failed": "We couldn’t open this page. Please try again later."
+  },
+  "timeField": {
+    "placeholder": "HH:MM",
+    "label": "{{label}}, 24 hour time"
+  },
+  "situation": {
+    "addChip": "+ Add a situation",
+    "addStressor": "Add a stressor",
+    "addRelaxer": "Add a relaxer",
+    "stressorMessage": "What’s a situation that tends to use your social energy?",
+    "relaxerMessage": "What’s something that helps you feel recharged?",
+    "stressorPlaceholder": "e.g. Video calls",
+    "relaxerPlaceholder": "e.g. Cooking",
+    "fieldLabel": "Situation",
+    "stressorLevel": "How much energy does it use?",
+    "relaxerLevel": "How restoring is it?",
+    "errorEmpty": "Please describe the situation.",
+    "errorDuplicate": "That one is already on your list.",
+    "errorSave": "We couldn’t save that. Please try again."
+  },
+  "situations": {
+    "level": {
+      "drain": {
+        "low": "Low",
+        "moderate": "Moderate",
+        "strong": "Strong"
+      },
+      "recharge": {
+        "low": "Light",
+        "moderate": "Moderate",
+        "strong": "Strong"
+      }
+    },
+    "hint": {
+      "drain": {
+        "low": "Uses a little energy",
+        "moderate": "Needs some recovery",
+        "strong": "Uses a lot of energy"
+      },
+      "recharge": {
+        "low": "A small reset",
+        "moderate": "Helps me settle",
+        "strong": "Feels deeply restoring"
+      }
+    },
+    "drain": {
+      "options": {
+        "shortCalls": "Short phone calls",
+        "smallTalk": "Small talk",
+        "quickErrands": "Quick errands",
+        "groupLunches": "Group lunches",
+        "busyWorkplaces": "Busy workplaces",
+        "meetingNewPeople": "Meeting new people",
+        "largeGatherings": "Large gatherings",
+        "longSocialDays": "Long social days",
+        "conflict": "Conflict"
+      }
+    },
+    "recharge": {
+      "options": {
+        "freshAir": "Fresh air",
+        "warmDrink": "A warm drink",
+        "shortBreak": "A short break",
+        "readingQuietly": "Reading quietly",
+        "timeAlone": "Time alone",
+        "gentleWalk": "A gentle walk",
+        "quietEvening": "A quiet evening",
+        "fullDayAtHome": "A full day at home",
+        "restfulSleep": "Restful sleep"
+      }
+    }
+  },
+  "options": {
+    "frequency": {
+      "every_day": "Every day",
+      "weekdays": "Weekdays",
+      "weekends": "Weekends",
+      "weekly": "Once a week"
+    },
+    "theme": {
+      "device": "Device",
+      "light": "Light",
+      "dark": "Dark",
+      "colorblind": "Colorblind-friendly"
+    },
+    "fontSize": {
+      "small": "Small",
+      "regular": "Regular",
+      "large": "Large"
+    }
+  },
+  "splash": {
+    "create": "Create my account",
+    "already": "Already keeping track?",
+    "title": "Make space for the moments that matter",
+    "tagline": "Gently track your energy, plan for social time, and find room to recharge."
+  },
+  "auth": {
+    "logIn": "Log in",
+    "welcomeBack": "Welcome back",
+    "email": "Email address",
+    "password": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "createPasswordPlaceholder": "Create a password",
+    "remember": "Remember me on this device",
+    "forgot": "Forgot your password?",
+    "newHere": "New to Social Battery?",
+    "signUp": "Sign up",
+    "resetDev": "Reset this device (dev only)",
+    "resetDeviceTitle": "Reset this device?",
+    "resetDeviceMessage": "This deletes the account on this phone and all its data, so you can register again.",
+    "reset": "Reset",
+    "resetTitle": "Reset password",
+    "resetMessage": "Your account is stored only on this device, so we can’t email you a link. Confirm your email and birthday, then choose a new password.",
+    "passwordUpdated": "Password updated",
+    "passwordUpdatedMessage": "You can now log in with your new password.",
+    "newPassword": "New password",
+    "birthday": "Birthday",
+    "dayPlaceholder": "DD",
+    "monthPlaceholder": "MM",
+    "yearPlaceholder": "YYYY",
+    "birthdayDay": "Birthday day",
+    "birthdayMonth": "Birthday month",
+    "birthdayYear": "Birthday year"
+  },
+  "register": {
+    "title": "Tell us a little about yourself",
+    "photo": "Photo",
+    "addPhoto": "Add a profile photo (optional)",
+    "changePhoto": "Change profile photo",
+    "username": "Username",
+    "usernamePlaceholder": "How should we call you?",
+    "day": "Day",
+    "month": "Month",
+    "year": "Year",
+    "agreeLabel": "I agree to the terms and conditions",
+    "agreePrefix": "I agree to the",
+    "agreeLink": "terms and conditions",
+    "agreeSuffix": ".",
+    "termsRequired": "Please agree to the terms and conditions to continue.",
+    "create": "Create account",
+    "haveAccount": "Already have an account?",
+    "photoOffMessage": "To add a photo, allow Social Battery to access your photos in your phone’s settings. You can also add one later from your profile.",
+    "genericError": "Something went wrong creating your account. Please try again."
+  },
+  "onboarding": {
+    "title": "Make a little more room for your energy",
+    "skipHint": "Skips the introduction",
+    "hint": "Choose a dot or tap Next to explore",
+    "slideLabel": "Slide {{number}} of {{total}}: {{name}}",
+    "checkIn": {
+      "eyebrow": "Check in",
+      "title": "Notice how your energy feels",
+      "body": "A quick check-in can help you understand which moments feel energizing and which may need more recovery time.",
+      "sampleLabel": "Today’s check-in",
+      "sampleValue": "Social battery: steady · 6 out of 10"
+    },
+    "plan": {
+      "eyebrow": "Plan ahead",
+      "title": "See busy days coming",
+      "body": "Add plans to your journal and get a sense of how much energy each one may take, so you can leave room around them.",
+      "sampleLabel": "Tomorrow",
+      "sampleValue": "Team lunch · Drain: moderate"
+    },
+    "recharge": {
+      "eyebrow": "Recharge",
+      "title": "Find what helps you recover",
+      "body": "Over time, insights show your patterns and suggest gentle ways to recharge when your battery runs low.",
+      "sampleLabel": "Suggestion",
+      "sampleValue": "A short walk after your afternoon meeting"
+    }
+  },
+  "personalization": {
+    "eyebrow": "Almost there",
+    "title": "You’re getting started",
+    "intro": "A few choices can help shape suggestions around what feels right for you.",
+    "step": "Step {{number}}",
+    "drainTitle": "What tends to drain you?",
+    "drainSubtitle": "Choose any situations that may use your social energy.",
+    "rechargeTitle": "What helps you recharge?",
+    "rechargeSubtitle": "Choose the moments that may help your energy return.",
+    "note": "These choices aren’t permanent. You can adjust them at any time from your profile.",
+    "finish": "Finish",
+    "saveErrorTitle": "Couldn’t save your choices",
+    "saveErrorMessage": "Please check your connection and try again."
+  },
+  "placeholder": {
+    "label": "Placeholder",
+    "body": "{{owner}} screens are being built separately. The navbar is already wired to this tab, so they can drop their screen in without touching navigation."
+  },
+  "reminder": {
+    "title": "Tomorrow’s plans",
+    "none": "Nothing is planned for tomorrow. It could be a good day to recharge.",
+    "count_one": "You have {{count}} plan tomorrow:",
+    "count_other": "You have {{count}} plans tomorrow:",
+    "gotIt": "Got it",
+    "settings": "Reminder settings",
+    "estimate": "Estimated drain tomorrow",
+    "about": "About {{percent}}% · {{level}}"
+  },
+  "reminders": {
+    "intro": "Choose when gentle check-ins reach you, and what they include.",
+    "daily": "Daily check-in",
+    "time": "Time",
+    "timeHint": "When the check-in arrives",
+    "timeLabel": "Reminder time",
+    "include": "What to include",
+    "estimate": "Tomorrow’s estimate",
+    "estimateHint": "An estimate of the next day’s social battery drain, so you can plan ahead",
+    "estimateLabel": "Include tomorrow’s estimate",
+    "plans": "Upcoming plans",
+    "plansHint": "A heads-up before plans in your journal",
+    "plansLabel": "Upcoming plan reminders",
+    "quietHint": "No reminders during quiet hours. Change them in Settings."
+  },
+  "settings": {
+    "title": "Settings",
+    "intro": "Adjust the app in ways that feel comfortable for you.",
+    "remindersSection": "Reminders",
+    "reminders": "Reminders",
+    "remindersHint": "Gentle check-ins and notifications",
+    "frequency": "Frequency",
+    "reminderFrequency": "Reminder frequency",
+    "timeAndContent": "Reminder time & content",
+    "around": "Around {{time}}",
+    "remindersOff": "Reminders are off",
+    "quietHours": "Quiet hours",
+    "from": "From",
+    "to": "To",
+    "quietBegin": "Quiet hours begin",
+    "quietEnd": "Quiet hours end",
+    "quietFrequency": "Quiet hours frequency",
+    "display": "Display",
+    "theme": "App theme",
+    "fontSize": "Font size",
+    "accessibility": "Accessibility",
+    "language": "Language",
+    "languageErrorTitle": "Couldn’t change the language",
+    "languageErrorMessage": "Please try again.",
+    "restartTitle": "Restart needed",
+    "restartMessage": "The text direction changes with this language. Close the app completely and open it again to finish the switch.",
+    "logOut": "Log out",
+    "logoutTitle": "Log out now?",
+    "logoutMessage": "You’re about to log out of Social Battery. Are you comfortable continuing?",
+    "logoutError": "We couldn’t log you out. Please try again.",
+    "developer": "Developer",
+    "dbViewer": "Database viewer",
+    "devOnly": "Development builds only",
+    "saveFailedTitle": "Couldn’t save that change",
+    "saveFailedMessage": "Please check your connection and try again.",
+    "themeHint": "Colorblind-friendly uses blue and orange instead of red and green, with extra strong contrast."
+  },
+  "privacy": {
+    "eyebrow": "Privacy & Data",
+    "title": "Your data and plans are private",
+    "intro": "You can choose what the app connects to and how your information is handled.",
+    "connections": "Connections",
+    "calendar": "Calendar",
+    "calendarHint": "Help you plan around upcoming events",
+    "calendarLabel": "Calendar connection",
+    "photos": "Photos",
+    "photosHint": "Let you choose a profile picture",
+    "photosLabel": "Photos connection",
+    "photoOffTitle": "Photo access is off",
+    "photoOffMessage": "To use this, allow Social Battery to access your photos in your phone’s settings.",
+    "section": "Privacy",
+    "terms": "Terms & Conditions",
+    "help": "Help & FAQ",
+    "export": "Export data",
+    "exporting": "Preparing export…",
+    "exportHint": "Shares a copy of your data",
+    "exportTitle": "Social Battery data export",
+    "exportErrorTitle": "Couldn’t export your data",
+    "exportErrorMessage": "Please check your connection and try again.",
+    "deleteSection": "Delete account",
+    "deleteAccount": "Delete account",
+    "deleteTitle": "Delete your account?",
+    "deleteMessage": "This would remove your account, check-ins, plans, and preferences. Are you sure you’d like to continue?",
+    "deleteError": "We couldn’t delete your account. Please try again."
+  },
+  "profile": {
+    "yourProfile": "Your profile",
+    "edit": "Edit profile",
+    "stressors": "Your stressors",
+    "stressorsHint": "Situations that may drain your social energy.",
+    "relaxers": "Your relaxers",
+    "relaxersHint": "Things that may help you feel recharged.",
+    "addChip": "Add +",
+    "empty": "Nothing here yet. Tap “Add +” to add one.",
+    "privacy": "Privacy and Data",
+    "loadError": "We couldn’t load your preferences.",
+    "removeErrorTitle": "Couldn’t remove that",
+    "removeErrorMessage": "Please check your connection and try again.",
+    "changePhoto": "Change photo",
+    "removePhoto": "Remove photo",
+    "photoDenied": "Photo access was denied. You can allow it in your phone’s settings.",
+    "openPrivacy": "Open Privacy & Data",
+    "saveError": "We couldn’t save your changes. Please try again."
   }
 }

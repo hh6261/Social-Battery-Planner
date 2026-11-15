@@ -1,11 +1,13 @@
 import React from 'react';
 import { View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { AppText, Button, Logo, Screen } from '../../components';
 import { router } from 'expo-router';
 import { makeStyles } from '../../theme/ThemeProvider';
 
 /** Screen 1 · Splash / Welcome */
 export function SplashScreen() {
+  const { t } = useTranslation();
   const styles = useStyles();
 
   return (
@@ -13,10 +15,10 @@ export function SplashScreen() {
       contentStyle={styles.content}
       footer={
         <View>
-          <Button label="Create my account" onPress={() => router.push('/register')} />
+          <Button label={t('splash.create')} onPress={() => router.push('/register')} />
           <View style={styles.loginRow}>
             <AppText variant="body" color="muted">
-              Already keeping track?{' '}
+              {t('splash.already')}{' '}
             </AppText>
             <AppText
               variant="body"
@@ -24,10 +26,10 @@ export function SplashScreen() {
               style={styles.link}
               onPress={() => router.push('/login')}
               accessibilityRole="link"
-              accessibilityLabel="Log in"
+              accessibilityLabel={t('auth.logIn')}
               suppressHighlighting={false}
             >
-              Log in
+              {t('auth.logIn')}
             </AppText>
           </View>
         </View>
@@ -36,13 +38,13 @@ export function SplashScreen() {
       <View style={styles.hero}>
         <Logo size={128} badges />
         <AppText variant="eyebrow" color="ink" style={styles.brand}>
-          Social Battery
+          {t('app.name')}
         </AppText>
         <AppText variant="display" align="center" accessibilityRole="header">
-          Make space for the moments that matter
+          {t('splash.title')}
         </AppText>
         <AppText variant="body" color="muted" align="center" style={styles.tagline}>
-          Gently track your energy, plan for social time, and find room to recharge.
+          {t('splash.tagline')}
         </AppText>
       </View>
     </Screen>

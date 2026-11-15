@@ -68,7 +68,7 @@ export function createMockDataService(): DataService {
 
   const find = (userId: string): StoredAccount => {
     const account = accounts.get(userId);
-    if (!account) throw new ServiceError('not_found', 'We couldn’t find that account.');
+    if (!account) throw new ServiceError('not_found');
     return account;
   };
 
@@ -92,10 +92,7 @@ export function createMockDataService(): DataService {
         (a) => a.user.email === normalizeEmail(email),
       );
       if (!account || account.password !== password) {
-        throw new ServiceError(
-          'invalid_credentials',
-          'That email and password don’t match. Please try again.',
-        );
+        throw new ServiceError('invalid_credentials');
       }
       current = { userId: account.user.id, remember };
       return toSession(account);
@@ -106,10 +103,10 @@ export function createMockDataService(): DataService {
       const email = normalizeEmail(input.email);
       const all = [...accounts.values()];
       if (all.some((a) => a.user.email === email)) {
-        throw new ServiceError('email_taken', 'An account with this email already exists.');
+        throw new ServiceError('email_taken');
       }
       if (all.some((a) => a.user.username.toLowerCase() === input.username.trim().toLowerCase())) {
-        throw new ServiceError('username_taken', 'That username is taken. Try another one.');
+        throw new ServiceError('username_taken');
       }
       const id = `user-${Date.now().toString(36)}`;
       const account: StoredAccount = {
@@ -135,7 +132,7 @@ export function createMockDataService(): DataService {
       await wait();
       const account = [...accounts.values()].find((a) => a.user.email === normalizeEmail(email));
       if (!account || account.user.birthday !== birthday) {
-        throw new ServiceError('invalid_credentials', 'Those details don’t match an account.');
+        throw new ServiceError('invalid_credentials');
       }
       account.password = newPassword;
     },
@@ -159,7 +156,7 @@ export function createMockDataService(): DataService {
         const taken = [...accounts.values()].some(
           (a) => a.user.id !== userId && a.user.username.toLowerCase() === name.toLowerCase(),
         );
-        if (taken) throw new ServiceError('username_taken', 'That username is taken. Try another one.');
+        if (taken) throw new ServiceError('username_taken');
         account.user.username = name;
       }
       if (patch.photoUri !== undefined) account.user.photoUri = patch.photoUri;

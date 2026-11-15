@@ -1,6 +1,7 @@
 import { Feather, MaterialCommunityIcons } from '@expo/vector-icons';
 import React, { useState } from 'react';
 import { Pressable, View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { makeStyles, useTheme } from '../theme/ThemeProvider';
 import { AppDialog } from './AppDialog';
 import { AppText } from './AppText';
@@ -21,6 +22,7 @@ interface Props<V extends string> {
 
 /** Compact dropdown ("Every day ⌃⌄") that opens a list in the app's dialog shape. */
 export function SelectField<V extends string>({ title, value, options, onChange, disabled }: Props<V>) {
+  const { t } = useTranslation();
   const theme = useTheme();
   const styles = useStyles();
   const [open, setOpen] = useState(false);
@@ -33,7 +35,7 @@ export function SelectField<V extends string>({ title, value, options, onChange,
         disabled={disabled}
         accessibilityRole="button"
         accessibilityLabel={`${title}: ${current}`}
-        accessibilityHint="Opens a list of options"
+        accessibilityHint={t('common.opensList')}
         style={({ pressed }) => [styles.field, pressed && styles.pressed, disabled && styles.disabled]}
       >
         <AppText variant="label" style={styles.value} numberOfLines={1}>
@@ -45,7 +47,7 @@ export function SelectField<V extends string>({ title, value, options, onChange,
       <AppDialog
         visible={open}
         title={title}
-        secondaryLabel="Cancel"
+        secondaryLabel={t('common.cancel')}
         onSecondary={() => setOpen(false)}
       >
         <View accessibilityRole="radiogroup">
@@ -85,10 +87,10 @@ const useStyles = makeStyles((t) => ({
     borderColor: t.colors.border,
     borderRadius: t.radius.sm,
     backgroundColor: t.colors.surface,
-    paddingLeft: t.spacing.sm,
-    paddingRight: t.spacing.xs,
+    paddingStart: t.spacing.sm,
+    paddingEnd: t.spacing.xs,
   },
-  value: { flex: 1, marginRight: t.spacing.xs },
+  value: { flex: 1, marginEnd: t.spacing.xs },
   pressed: { opacity: 0.7 },
   disabled: { opacity: 0.4 },
   option: {

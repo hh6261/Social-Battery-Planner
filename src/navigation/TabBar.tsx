@@ -2,11 +2,12 @@ import { router } from 'expo-router';
 import { Feather, Ionicons } from '@expo/vector-icons';
 import type { BottomTabBarProps } from 'expo-router/tabs';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Keyboard, Platform, Pressable, View } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { AppText } from '../components/AppText';
 import { HardShadow } from '../components/HardShadow';
-import { TAB_LABELS } from '../constants/config';
+import { TAB_LABEL_KEYS } from '../constants/config';
 import { makeStyles, useTheme } from '../theme/ThemeProvider';
 
 type TabName = 'index' | 'tracker' | 'insights' | 'profile';
@@ -14,11 +15,11 @@ type TabName = 'index' | 'tracker' | 'insights' | 'profile';
 /** Tabs that contain more than one screen, and the path of their first screen. */
 const STACK_ROOTS: Partial<Record<TabName, '/profile'>> = { profile: '/profile' };
 
-const TABS: Record<TabName, { label: string; icon: (color: string) => React.ReactNode }> = {
-  index: { label: TAB_LABELS.home, icon: (c) => <Ionicons name="heart" size={22} color={c} /> },
-  tracker: { label: TAB_LABELS.tracker, icon: (c) => <Feather name="file-text" size={21} color={c} /> },
-  insights: { label: TAB_LABELS.insights, icon: (c) => <Feather name="sliders" size={20} color={c} /> },
-  profile: { label: TAB_LABELS.profile, icon: (c) => <Feather name="user" size={21} color={c} /> },
+const TABS: Record<TabName, { labelKey: string; icon: (color: string) => React.ReactNode }> = {
+  index: { labelKey: TAB_LABEL_KEYS.home, icon: (c) => <Ionicons name="heart" size={22} color={c} /> },
+  tracker: { labelKey: TAB_LABEL_KEYS.tracker, icon: (c) => <Feather name="file-text" size={21} color={c} /> },
+  insights: { labelKey: TAB_LABEL_KEYS.insights, icon: (c) => <Feather name="sliders" size={20} color={c} /> },
+  profile: { labelKey: TAB_LABEL_KEYS.profile, icon: (c) => <Feather name="user" size={21} color={c} /> },
 };
 
 /**
@@ -29,6 +30,7 @@ const TABS: Record<TabName, { label: string; icon: (color: string) => React.Reac
  *  - long press emits tabLongPress for anyone who wants it
  */
 export function TabBar({ state, emitter, navigateToTab, descriptors }: BottomTabBarProps) {
+  const { t } = useTranslation();
   const theme = useTheme();
   const styles = useStyles();
   const insets = useSafeAreaInsets();
@@ -46,7 +48,7 @@ export function TabBar({ state, emitter, navigateToTab, descriptors }: BottomTab
           {state.routes.map((route, index) => {
             const focused = state.index === index;
             const tab = TABS[route.name as TabName];
-            const color = focused ? theme.colors.onPrimary : theme.colors.ink;
+            const color = focused ? theme.colors.onPrimary : theme.colors.detail;
 
             
             const onPress = () => {
@@ -68,7 +70,7 @@ export function TabBar({ state, emitter, navigateToTab, descriptors }: BottomTab
                 onLongPress={onLongPress}
                 accessibilityRole="tab"
                 accessibilityState={{ selected: focused }}
-                accessibilityLabel={tab.label}
+                accessibilityLabel={t(tab.labelKey)}
                 testID={`tab-${route.name}`}
                 style={({ pressed }) => [styles.item, focused && styles.itemActive, pressed && !focused && styles.pressed]}
               >
@@ -80,7 +82,7 @@ export function TabBar({ state, emitter, navigateToTab, descriptors }: BottomTab
                   numberOfLines={1}
                   maxFontSizeMultiplier={1.2}
                 >
-                  {tab.label.toUpperCase()}
+                  {t(tab.labelKey).toLocaleUpperCase()}
                 </AppText>
               </Pressable>
             );

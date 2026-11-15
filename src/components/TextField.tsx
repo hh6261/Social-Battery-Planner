@@ -1,6 +1,7 @@
 import { Feather } from '@expo/vector-icons';
 import React, { forwardRef, useState } from 'react';
 import { Pressable, StyleProp, TextInput, TextInputProps, View, ViewStyle, type TextInputInstance } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { makeStyles, useTheme } from '../theme/ThemeProvider';
 import { AppText } from './AppText';
 
@@ -18,6 +19,7 @@ export const TextField = forwardRef<TextInputInstance, TextFieldProps>(function 
   { label, sublabel, error, containerStyle, password, onFocus, onBlur, ...inputProps },
   ref,
 ) {
+  const { t } = useTranslation();
   const theme = useTheme();
   const styles = useStyles();
   const [focused, setFocused] = useState(false);
@@ -63,10 +65,10 @@ export const TextField = forwardRef<TextInputInstance, TextFieldProps>(function 
             onPress={() => setRevealed((r) => !r)}
             hitSlop={10}
             accessibilityRole="button"
-            accessibilityLabel={revealed ? 'Hide password' : 'Show password'}
+            accessibilityLabel={revealed ? t('common.hidePassword') : t('common.showPassword')}
             style={styles.eye}
           >
-            <Feather name={revealed ? 'eye-off' : 'eye'} size={18} color={theme.colors.muted} />
+            <Feather name={revealed ? 'eye-off' : 'eye'} size={18} color={theme.colors.detail} />
           </Pressable>
         ) : null}
       </View>
@@ -99,6 +101,6 @@ const useStyles = makeStyles((t) => ({
     color: t.colors.ink,
     paddingVertical: t.spacing.sm,
   },
-  eye: { paddingLeft: t.spacing.xs },
+  eye: { paddingStart: t.spacing.xs },
   error: { marginTop: t.spacing.xxs },
 }));

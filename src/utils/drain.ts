@@ -1,3 +1,5 @@
+import i18n from '../i18n';
+
 export type DrainLevel = 'low' | 'moderate' | 'high';
 
 /** Turns a 0–100 drain estimate into a word for display. */
@@ -7,11 +9,10 @@ export function drainLevel(drain: number): DrainLevel {
   return 'high';
 }
 
-export const DRAIN_LABELS: Record<DrainLevel, string> = {
-  low: 'Low',
-  moderate: 'Moderate',
-  high: 'High',
-};
+/** Translated word for a drain level ("Low", "Niedrig", ...). */
+export function drainLabel(level: DrainLevel): string {
+  return i18n.t(`drain.${level}`);
+}
 
 /** Estimated drain for a whole day: the events' drains added up, capped at 100%. */
 export function totalDrain(events: { drain: number }[]): number {

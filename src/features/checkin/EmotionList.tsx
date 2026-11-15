@@ -1,4 +1,7 @@
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Feather } from '@expo/vector-icons';
+import { Pressable, View } from 'react-native';
+import { AppText } from '@/components/AppText';
+import { makeStyles, useTheme } from '@/theme/ThemeProvider';
 import type { EmotionItem } from './EmotionWheel';
 
 type Props = {
@@ -7,9 +10,9 @@ type Props = {
   onToggle: (key: string) => void;
 };
 
-const CHECK = '\u2713';
-
 export default function EmotionList({ items, selected, onToggle }: Props) {
+  const theme = useTheme();
+  const styles = useStyles();
   return (
     <View style={styles.chips}>
       {items.map((item) => {
@@ -21,10 +24,13 @@ export default function EmotionList({ items, selected, onToggle }: Props) {
             accessibilityState={{ checked: isOn }}
             accessibilityLabel={item.label}
             onPress={() => onToggle(item.key)}
-            style={[styles.chip, isOn && styles.chipOn]}
+            style={({ pressed }) => [styles.chip, isOn && styles.chipOn, pressed && styles.pressed]}
           >
-            <Text style={styles.check}>{isOn ? CHECK : null}</Text>
-            <Text style={styles.chipText}>{item.label}</Text>
+            {/* The check mark means a selection is not shown by colour alone */}
+            {isOn ? <Feather name="check" size={16} color={theme.colors.onPrimary} /> : null}
+            <AppText variant="body" color={isOn ? 'onPrimary' : 'ink'}>
+              {item.label}
+            </AppText>
           </Pressable>
         );
       })}
@@ -32,20 +38,19 @@ export default function EmotionList({ items, selected, onToggle }: Props) {
   );
 }
 
-const styles = StyleSheet.create({
-  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: 12 },
+const useStyles = makeStyles((t) => ({
+  chips: { flexDirection: 'row', flexWrap: 'wrap', gap: t.spacing.xs },
   chip: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 6,
+    gap: t.spacing.xs,
     minHeight: 48,
-    paddingHorizontal: 16,
-    borderRadius: 24,
-    borderWidth: 2,
-    borderColor: '#667085',
-    backgroundColor: '#FFFFFF',
+    paddingHorizontal: t.spacing.md,
+    borderRadius: t.radius.pill,
+    borderWidth: t.borderWidth,
+    borderColor: t.colors.border,
+    backgroundColor: t.colors.surface,
   },
-  chipOn: { borderColor: '#1D4ED8', backgroundColor: '#DBEAFE' },
-  check: { width: 16, fontSize: 16, fontWeight: '700', color: '#1D4ED8' },
-  chipText: { fontSize: 16, color: '#101828' },
-});
+  chipOn: { backgroundColor: t.colors.primary, borderColor: t.colors.primary },
+  pressed: { opacity: 0.75 },
+}));

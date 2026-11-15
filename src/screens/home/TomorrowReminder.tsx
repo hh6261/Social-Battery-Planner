@@ -7,7 +7,7 @@ import { useSettings } from "../../context/SettingsContext";
 import { listEventsForDay, type DayEvent } from "../../db/home";
 import { makeStyles } from "../../theme/ThemeProvider";
 import {
-    DRAIN_LABELS,
+    drainLabel,
     drainLevel,
     formatTime,
     totalDrain,
@@ -23,7 +23,7 @@ import {
  */
 export function TomorrowReminder() {
   const styles = useStyles();
-  const { i18n } = useTranslation();
+  const { t, i18n } = useTranslation();
   const { settings } = useSettings();
   const { enabled, includeDrainEstimate } = settings.reminders;
 
@@ -78,15 +78,15 @@ export function TomorrowReminder() {
   return (
     <AppDialog
       visible={visible}
-      title="Tomorrow’s plans"
+      title={t("reminder.title")}
       message={
         events && events.length === 0
-          ? "Nothing is planned for tomorrow. It could be a good day to recharge."
-          : `You have ${events?.length ?? 0} ${events?.length === 1 ? "plan" : "plans"} tomorrow:`
+          ? t("reminder.none")
+          : t("reminder.count", { count: events?.length ?? 0 })
       }
-      primaryLabel="Got it"
+      primaryLabel={t("reminder.gotIt")}
       onPrimary={close}
-      secondaryLabel="Reminder settings"
+      secondaryLabel={t("reminder.settings")}
       onSecondary={() => {
         close();
         router.push("/profile/settings");
@@ -100,7 +100,7 @@ export function TomorrowReminder() {
               key={e.id}
               style={styles.row}
               accessible
-              accessibilityLabel={`${formatTime(e.startsAtUtc, i18n.language)}, ${e.title}, drain ${DRAIN_LABELS[drainLevel(e.drain)]}`}
+              accessibilityLabel={t("home.planLabel", { time: formatTime(e.startsAtUtc, i18n.language), title: e.title, drain: drainLabel(drainLevel(e.drain)) })}
             >
               <AppText variant="label" style={styles.time}>
                 {formatTime(e.startsAtUtc, i18n.language)}
@@ -110,7 +110,7 @@ export function TomorrowReminder() {
               </AppText>
               {includeDrainEstimate ? (
                 <AppText variant="caption" color="muted">
-                  {DRAIN_LABELS[drainLevel(e.drain)]}
+                  {drainLabel(drainLevel(e.drain))}
                 </AppText>
               ) : null}
             </View>
@@ -120,9 +120,9 @@ export function TomorrowReminder() {
 
       {events && events.length > 0 && includeDrainEstimate ? (
         <View style={styles.estimate}>
-          <AppText variant="eyebrow">Estimated drain tomorrow</AppText>
+          <AppText variant="eyebrow">{t("reminder.estimate")}</AppText>
           <AppText variant="heading">
-            {`About ${dayDrain}% · ${DRAIN_LABELS[drainLevel(dayDrain)]}`}
+            {t("reminder.about", { percent: dayDrain, level: drainLabel(drainLevel(dayDrain)) })}
           </AppText>
         </View>
       ) : null}

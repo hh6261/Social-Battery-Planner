@@ -1,6 +1,7 @@
 import { Feather } from '@expo/vector-icons';
 import React, { useRef, useState } from 'react';
 import { Image } from 'expo-image';
+import { useTranslation } from 'react-i18next';
 import { Pressable, View, type TextInputInstance } from 'react-native';
 import {
   AppText,
@@ -29,6 +30,7 @@ type Errors = Partial<Record<Field, string | null>>;
 
 /** Screen 3 · Registration */
 export function RegistrationScreen() {
+  const { t } = useTranslation();
   const theme = useTheme();
   const styles = useStyles();
   const { register } = useAuth();
@@ -60,8 +62,8 @@ export function RegistrationScreen() {
     if (result.status === 'picked') setPhotoUri(result.uri);
     if (result.status === 'denied') {
       showMessage(
-        'Photo access is off',
-        'To add a photo, allow Social Battery to access your photos in your phone’s settings. You can also add one later from your profile.',
+        t('privacy.photoOffTitle'),
+        t('register.photoOffMessage'),
       );
     }
   };
@@ -81,7 +83,7 @@ export function RegistrationScreen() {
       email: validateEmail(email),
       password: validateNewPassword(password),
       birthday: birthday.error,
-      terms: agreed ? null : 'Please agree to the terms and conditions to continue.',
+      terms: agreed ? null : t('register.termsRequired'),
     };
     setErrors(next);
     if (Object.values(next).some(Boolean) || !birthday.iso) return;
@@ -101,7 +103,7 @@ export function RegistrationScreen() {
       if (e instanceof ServiceError && e.code === 'email_taken') setErrors({ email: e.message });
       else if (e instanceof ServiceError && e.code === 'username_taken') setErrors({ username: e.message });
       else if (e instanceof ServiceError && e.code === 'account_exists') setErrors({ form: e.message });
-      else setErrors({ form: 'Something went wrong creating your account. Please try again.' });
+      else setErrors({ form: t('register.genericError') });
     }
   };
 
@@ -109,18 +111,18 @@ export function RegistrationScreen() {
     <Screen>
       <BackLink />
       <AppText variant="title" accessibilityRole="header" style={styles.title}>
-        Tell us a little about yourself
+        {t('register.title')}
       </AppText>
 
       <View style={styles.photoRow}>
         <View>
           <AppText variant="label" style={styles.photoLabel}>
-            Photo
+            {t('register.photo')}
           </AppText>
           <Pressable
             onPress={choosePhoto}
             accessibilityRole="button"
-            accessibilityLabel={photoUri ? 'Change profile photo' : 'Add a profile photo (optional)'}
+            accessibilityLabel={photoUri ? t('register.changePhoto') : t('register.addPhoto')}
             style={({ pressed }) => [styles.avatar, pressed && styles.pressed]}
           >
             {photoUri ? (
@@ -134,13 +136,13 @@ export function RegistrationScreen() {
           </Pressable>
         </View>
         <TextField
-          label="Username"
+          label={t('register.username')}
           value={username}
           onChangeText={(v) => {
             setUsername(v);
             clear('username');
           }}
-          placeholder="How should we call you?"
+          placeholder={t('register.usernamePlaceholder')}
           autoCapitalize="words"
           autoComplete="username"
           textContentType="username"
@@ -154,7 +156,7 @@ export function RegistrationScreen() {
 
       <TextField
         ref={emailRef}
-        label="Email address"
+        label={t('auth.email')}
         value={email}
         onChangeText={(v) => {
           setEmail(v);
@@ -174,13 +176,13 @@ export function RegistrationScreen() {
 
       <TextField
         ref={passwordRef}
-        label="Password"
+        label={t('auth.password')}
         value={password}
         onChangeText={(v) => {
           setPassword(v);
           clear('password');
         }}
-        placeholder="Create a password"
+        placeholder={t('auth.createPasswordPlaceholder')}
         password
         autoCapitalize="none"
         autoComplete="new-password"
@@ -192,40 +194,40 @@ export function RegistrationScreen() {
       />
 
       <AppText variant="label" style={styles.birthdayLabel} accessibilityRole="header">
-        Birthday
+        {t('auth.birthday')}
       </AppText>
       <View style={styles.birthdayRow}>
         <TextField
           ref={dayRef}
-          sublabel="Day"
+          sublabel={t('register.day')}
           value={day}
           onChangeText={(v) => onDigits(v, 2, setDay, monthRef)}
-          placeholder="DD"
+          placeholder={t('auth.dayPlaceholder')}
           keyboardType="number-pad"
           maxLength={2}
-          accessibilityLabel="Birthday day"
+          accessibilityLabel={t('auth.birthdayDay')}
           containerStyle={styles.dayField}
         />
         <TextField
           ref={monthRef}
-          sublabel="Month"
+          sublabel={t('register.month')}
           value={month}
           onChangeText={(v) => onDigits(v, 2, setMonth, yearRef)}
-          placeholder="MM"
+          placeholder={t('auth.monthPlaceholder')}
           keyboardType="number-pad"
           maxLength={2}
-          accessibilityLabel="Birthday month"
+          accessibilityLabel={t('auth.birthdayMonth')}
           containerStyle={styles.monthField}
         />
         <TextField
           ref={yearRef}
-          sublabel="Year"
+          sublabel={t('register.year')}
           value={year}
           onChangeText={(v) => onDigits(v, 4, setYear)}
-          placeholder="YYYY"
+          placeholder={t('auth.yearPlaceholder')}
           keyboardType="number-pad"
           maxLength={4}
-          accessibilityLabel="Birthday year"
+          accessibilityLabel={t('auth.birthdayYear')}
           containerStyle={styles.yearField}
         />
       </View>
@@ -241,22 +243,22 @@ export function RegistrationScreen() {
           setAgreed(v);
           clear('terms');
         }}
-        accessibilityLabel="I agree to the terms and conditions"
+        accessibilityLabel={t('register.agreeLabel')}
         error={errors.terms}
         style={styles.terms}
       >
         <AppText variant="bodySmall">
-          I agree to the{' '}
+          {t('register.agreePrefix')}{' '}
           <AppText
             variant="bodySmall"
             weight="600"
             style={styles.underline}
-            onPress={() => openAppLink('terms', 'Terms & Conditions', showMessage)}
+            onPress={() => openAppLink('terms', t('privacy.terms'), showMessage)}
             accessibilityRole="link"
           >
-            terms and conditions
+            {t('register.agreeLink')}
           </AppText>
-          .
+          {t('register.agreeSuffix')}
         </AppText>
       </Checkbox>
 
@@ -266,11 +268,11 @@ export function RegistrationScreen() {
         </AppText>
       ) : null}
 
-      <Button label="Create account" onPress={submit} loading={submitting} style={styles.submit} />
+      <Button label={t('register.create')} onPress={submit} loading={submitting} style={styles.submit} />
 
       <View style={styles.loginRow}>
         <AppText variant="bodySmall" color="muted">
-          Already have an account?{' '}
+          {t('register.haveAccount')}{' '}
         </AppText>
         <AppText
           variant="bodySmall"
@@ -279,7 +281,7 @@ export function RegistrationScreen() {
           onPress={() => router.replace('/login')}
           accessibilityRole="link"
         >
-          Log in
+          {t('auth.logIn')}
         </AppText>
       </View>
     </Screen>
@@ -306,7 +308,7 @@ const useStyles = makeStyles((t) => ({
   avatarImage: { width: AVATAR - 4, height: AVATAR - 4, borderRadius: (AVATAR - 4) / 2 },
   avatarBadge: {
     position: 'absolute',
-    right: -4,
+    end: -4,
     bottom: -4,
     width: 22,
     height: 22,
@@ -318,7 +320,7 @@ const useStyles = makeStyles((t) => ({
     justifyContent: 'center',
   },
   pressed: { opacity: 0.7 },
-  usernameField: { flex: 1, marginLeft: t.spacing.md, marginTop: t.spacing.xs },
+  usernameField: { flex: 1, marginStart: t.spacing.md, marginTop: t.spacing.xs },
   field: { marginBottom: t.spacing.lg },
   birthdayLabel: { marginBottom: t.spacing.xs },
   birthdayRow: { flexDirection: 'row', gap: t.spacing.sm },

@@ -1,7 +1,9 @@
 import { Feather } from '@expo/vector-icons';
 import { router } from 'expo-router';
 import React from 'react';
+import { useTranslation } from 'react-i18next';
 import {
+  I18nManager,
   KeyboardAvoidingView,
   Platform,
   Pressable,
@@ -57,7 +59,8 @@ export function Screen({ children, scroll = true, footer, edges = ['top', 'botto
 }
 
 /** "← Back" / "← Profile" link at the top of a screen. */
-export function BackLink({ label = 'Back', onPress }: { label?: string; onPress?: () => void }) {
+export function BackLink({ label, onPress }: { label?: string; onPress?: () => void }) {
+  const { t } = useTranslation();
   const theme = useTheme();
   const styles = useStyles();
   const handle = onPress ?? (() => router.canGoBack() && router.back());
@@ -66,12 +69,12 @@ export function BackLink({ label = 'Back', onPress }: { label?: string; onPress?
       onPress={handle}
       hitSlop={12}
       accessibilityRole="button"
-      accessibilityLabel={label === 'Back' ? 'Go back' : `Back to ${label}`}
+      accessibilityLabel={label ? t('common.backTo', { label }) : t('common.goBack')}
       style={({ pressed }) => [styles.back, pressed && styles.pressed]}
     >
-      <Feather name="arrow-left" size={18} color={theme.colors.muted} />
+      <Feather name={I18nManager.isRTL ? 'arrow-right' : 'arrow-left'} size={18} color={theme.colors.detail} />
       <AppText variant="body" color="muted" style={styles.backLabel}>
-        {label}
+        {label ?? t('common.back')}
       </AppText>
     </Pressable>
   );
@@ -104,7 +107,7 @@ const useStyles = makeStyles((t) => ({
     backgroundColor: t.colors.background,
   },
   back: { flexDirection: 'row', alignItems: 'center', alignSelf: 'flex-start', paddingVertical: t.spacing.xxs },
-  backLabel: { marginLeft: t.spacing.xs },
+  backLabel: { marginStart: t.spacing.xs },
   pressed: { opacity: 0.6 },
   section: { marginTop: t.spacing.xl, marginBottom: t.spacing.sm },
 }));

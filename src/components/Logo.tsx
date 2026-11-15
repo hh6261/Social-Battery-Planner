@@ -1,6 +1,7 @@
 import { Feather } from '@expo/vector-icons';
 import React from 'react';
 import { View } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { useTheme } from '../theme/ThemeProvider';
 
 interface Props {
@@ -12,6 +13,7 @@ interface Props {
 
 /** Social Battery mark: a battery inside a disc, two bars full, one dashed. */
 export function Logo({ size = 120, badges = false }: Props) {
+  const { t } = useTranslation();
   const { colors } = useTheme();
   const stroke = Math.max(2, Math.round(size / 45));
   const bodyW = size * 0.52;
@@ -61,7 +63,7 @@ export function Logo({ size = 120, badges = false }: Props) {
     <View
       accessible
       accessibilityRole="image"
-      accessibilityLabel="Social Battery logo"
+      accessibilityLabel={t('app.logoLabel')}
       style={{ width: size, height: size }}
     >
       <View

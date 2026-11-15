@@ -7,6 +7,7 @@ import {
   ScrollView,
   View,
 } from 'react-native';
+import { useTranslation } from 'react-i18next';
 import { makeStyles, useTheme } from '../theme/ThemeProvider';
 import { AppText } from './AppText';
 import { Button, ButtonVariant } from './Button';
@@ -48,6 +49,7 @@ export function AppDialog({
   secondaryVariant = 'secondary',
   onRequestClose,
 }: AppDialogProps) {
+  const { t } = useTranslation();
   const theme = useTheme();
   const styles = useStyles();
   const close = onRequestClose ?? onSecondary;
@@ -71,7 +73,7 @@ export function AppDialog({
           onPress={() => {
             if (!primaryLoading) close?.();
           }}
-          accessibilityLabel="Close dialog"
+          accessibilityLabel={t('common.closeDialog')}
           accessibilityRole="button"
         >
           {/* Inner Pressable swallows taps so they don't close the dialog. */}

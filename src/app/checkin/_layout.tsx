@@ -1,12 +1,14 @@
 import { Stack } from 'expo-router';
-import { useTranslation } from 'react-i18next';
 import { CheckInDraftProvider } from '@/features/checkin/CheckInDraft';
 
+/**
+ * The draft lives here, so it is created when a check-in starts and thrown away when the
+ * whole flow is closed. That is also how an abandoned check-in is cleaned up.
+ */
 export default function CheckInLayout() {
-  const { t } = useTranslation();
   return (
     <CheckInDraftProvider>
-      <Stack screenOptions={{ title: t('checkin.title') }} />
+      <Stack screenOptions={{ headerShown: false }} />
     </CheckInDraftProvider>
   );
 }

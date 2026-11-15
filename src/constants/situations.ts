@@ -1,4 +1,13 @@
-import type { EnergyLevel, Situation, SituationKind, UserSettings } from '../services/types';
+import i18n from '../i18n';
+import type {
+  EnergyLevel,
+  FontSizePreference,
+  ReminderFrequency,
+  Situation,
+  SituationKind,
+  ThemePreference,
+  UserSettings,
+} from '../services/types';
 
 export interface SituationGroup {
   level: EnergyLevel;
@@ -7,54 +16,37 @@ export interface SituationGroup {
   options: string[];
 }
 
-/** Step 1 of personalization: "What tends to drain you?" */
-export const DRAIN_GROUPS: SituationGroup[] = [
-  {
-    level: 'low',
-    title: 'Low',
-    hint: 'Uses a little energy',
-    options: ['Short phone calls', 'Small talk', 'Quick errands'],
-  },
-  {
-    level: 'moderate',
-    title: 'Moderate',
-    hint: 'Needs some recovery',
-    options: ['Group lunches', 'Busy workplaces', 'Meeting new people'],
-  },
-  {
-    level: 'strong',
-    title: 'Strong',
-    hint: 'Uses a lot of energy',
-    options: ['Large gatherings', 'Long social days', 'Conflict'],
-  },
-];
+const LEVELS: EnergyLevel[] = ['low', 'moderate', 'strong'];
 
-/** Step 2 of personalization: "What helps you recharge?" */
-export const RECHARGE_GROUPS: SituationGroup[] = [
-  {
-    level: 'low',
-    title: 'Light',
-    hint: 'A small reset',
-    options: ['Fresh air', 'A warm drink', 'A short break'],
+// Preset options. The text lives in the locale files (situations.<kind>.options.<key>).
+// When the user picks one it is saved as the translated text, like a custom entry.
+const OPTION_KEYS: Record<SituationKind, Record<EnergyLevel, string[]>> = {
+  drain: {
+    low: ['shortCalls', 'smallTalk', 'quickErrands'],
+    moderate: ['groupLunches', 'busyWorkplaces', 'meetingNewPeople'],
+    strong: ['largeGatherings', 'longSocialDays', 'conflict'],
   },
-  {
-    level: 'moderate',
-    title: 'Moderate',
-    hint: 'Helps me settle',
-    options: ['Reading quietly', 'Time alone', 'A gentle walk'],
+  recharge: {
+    low: ['freshAir', 'warmDrink', 'shortBreak'],
+    moderate: ['readingQuietly', 'timeAlone', 'gentleWalk'],
+    strong: ['quietEvening', 'fullDayAtHome', 'restfulSleep'],
   },
-  {
-    level: 'strong',
-    title: 'Strong',
-    hint: 'Feels deeply restoring',
-    options: ['A quiet evening', 'A full day at home', 'Restful sleep'],
-  },
-];
-
-export const LEVEL_LABELS: Record<SituationKind, Record<EnergyLevel, string>> = {
-  drain: { low: 'Low', moderate: 'Moderate', strong: 'Strong' },
-  recharge: { low: 'Light', moderate: 'Moderate', strong: 'Strong' },
 };
+
+/** Personalization step 1 ("What tends to drain you?") and step 2 ("What helps you recharge?"). */
+export function getSituationGroups(kind: SituationKind): SituationGroup[] {
+  return LEVELS.map((level) => ({
+    level,
+    title: i18n.t(`situations.level.${kind}.${level}`),
+    hint: i18n.t(`situations.hint.${kind}.${level}`),
+    options: OPTION_KEYS[kind][level].map((key) => i18n.t(`situations.${kind}.options.${key}`)),
+  }));
+}
+
+/** "Low", "Moderate", "Strong" (or "Light" for recharge), translated. */
+export function levelLabel(kind: SituationKind, level: EnergyLevel): string {
+  return i18n.t(`situations.level.${kind}.${level}`);
+}
 
 let idCounter = 0;
 export function makeSituation(
@@ -86,21 +78,14 @@ export const DEFAULT_SETTINGS: UserSettings = {
   connections: { messages: false, calendar: true, photos: false },
 };
 
-export const FREQUENCY_OPTIONS = [
-  { value: 'every_day', label: 'Every day' },
-  { value: 'weekdays', label: 'Weekdays' },
-  { value: 'weekends', label: 'Weekends' },
-  { value: 'weekly', label: 'Once a week' },
-] as const;
+const FREQUENCIES: ReminderFrequency[] = ['every_day', 'weekdays', 'weekends', 'weekly'];
+const THEMES: ThemePreference[] = ['device', 'light', 'dark', 'colorblind'];
+const FONT_SIZES: FontSizePreference[] = ['small', 'regular', 'large'];
 
-export const THEME_OPTIONS = [
-  { value: 'device', label: 'Device' },
-  { value: 'light', label: 'Light' },
-  { value: 'dark', label: 'Dark' },
-] as const;
+export const frequencyOptions = () =>
+  FREQUENCIES.map((value) => ({ value, label: i18n.t(`options.frequency.${value}`) }));
 
-export const FONT_SIZE_OPTIONS = [
-  { value: 'small', label: 'Small' },
-  { value: 'regular', label: 'Regular' },
-  { value: 'large', label: 'Large' },
-] as const;
+export const themeOptions = () => THEMES.map((value) => ({ value, label: i18n.t(`options.theme.${value}`) }));
+
+export const fontSizeOptions = () =>
+  FONT_SIZES.map((value) => ({ value, label: i18n.t(`options.fontSize.${value}`) }));
