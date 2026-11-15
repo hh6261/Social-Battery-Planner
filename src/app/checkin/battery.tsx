@@ -13,10 +13,10 @@ import { makeStyles } from '@/theme/ThemeProvider';
 
 const clampLevel = (n: number) => Math.min(100, Math.max(0, Math.round(n)));
 
-function stateOf(level: number): 'low' | 'medium' | 'high' {
-  if (level <= 30) return 'low';
-  if (level <= 60) return 'medium';
-  return 'high';
+function stateOf(level: number): "low" | "medium" | "high" {
+  if (level <= 30) return "low";
+  if (level <= 60) return "medium";
+  return "high";
 }
 
 export default function BatteryStep() {
@@ -39,7 +39,7 @@ export default function BatteryStep() {
 
   const next = () => {
     update({ batteryLevel: level });
-    router.push('/checkin/mood');
+    router.push("/checkin/mood");
   };
 
   return (
